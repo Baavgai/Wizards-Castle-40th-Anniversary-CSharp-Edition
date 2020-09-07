@@ -28,10 +28,16 @@ https://archive.org/details/1980-07-recreational-computing
 ## Technologies
 * C# Console Application
 * .NET Framework 4.8
+* .NET Core 3.1
 * Microsoft Visual Studio Community 2019
 
 ## Setup
-Clone the repository and build the game using Visual Studio 2019, or play the pre-compiled exe.
+  Clone the repository:
+git clone "https://github.com/yourwishismine/Wizards-Castle-40th-Anniversary-CSharp-Edition.git"
+  open Visual Studio 2019 and build it, or you can download the .NET Core 3.1 SDK:
+https://dotnet.microsoft.com/download
+  and compile using: 
+dotnet publish --runtime win-x64 --configuration Release /p:PublishSingleFile=true /p:PublishTrimmed=true
 
 ## Features
 Game is fully playable.
