@@ -1,7 +1,7 @@
 # Wizard's Castle (40th Anniversary C# Edition)
-> A remake of the 1980 Exidy Sorcerer game written by JOSEPH R. POWER
-> The instructions are included with the game.
-> I stayed mostly true to the original, but added some additional functionality.
+> A remake of the 1980 Exidy Sorcerer game written by JOSEPH R. POWER  
+> The instructions are included with the game.  
+> I stayed mostly true to the original, but added some additional functionality.  
 
 ## Table of contents
 * [General info](#general-info)
@@ -15,11 +15,11 @@
 * [Contact](#contact)
 
 ## General info
-A full C# remake of the 1980 classic, the Wizard's Castle.\
-In addition I have added some new elements to the game.\
-I deeply enjoyed this game growing up and wanted to make it for a modern programming language.\
-Exidy Sorcerer game code originally published in the July 1980 edition of Recreational Computing:\
-https://archive.org/details/1980-07-recreational-computing
+A full C# remake of the 1980 classic, the Wizard's Castle.  
+In addition I have added some new elements to the game.  
+I deeply enjoyed this game growing up and wanted to make it for a modern programming language.  
+Exidy Sorcerer game code originally published in the July 1980 edition of Recreational Computing:  
+* https://archive.org/details/1980-07-recreational-computing
 
 ## Screenshots
 ![ScreenShot1 screenshot](./images/ScreenShot1.jpg)
