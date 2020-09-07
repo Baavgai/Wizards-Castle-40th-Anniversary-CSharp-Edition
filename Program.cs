@@ -44,9 +44,9 @@ namespace The_Wizard_s_Castle
             GameCollections.RuneStaffLocation = Map.FindMonster(theMap, GameCollections.Monsters[new Random().Next(0, GameCollections.Monsters.Count)]);
             Console.Clear();
             Console.WriteLine($"\tOk, {player.race}, you are now entering Zot's castle!\n");
-            player.strength = 999;//*** Testing *** 
-            player.intelligence = 999;//*** Testing *** 
-            player.flares = 999;//*** Testing *** 
+            //*** Testing *** player.strength = 999;
+            //*** Testing *** player.intelligence = 999;
+            //*** Testing *** player.flares = 999;
             do
             {
                 Console.Clear();
