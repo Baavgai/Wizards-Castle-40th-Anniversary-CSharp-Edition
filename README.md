@@ -6,6 +6,7 @@
 ## Table of contents
 * [General info](#general-info)
 * [Screenshots](#screenshots)
+* [YouTube Videos](#youtube-videos)
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Features](#features)
@@ -24,6 +25,9 @@ Exidy Sorcerer game code originally published in the July 1980 edition of Recrea
 ## Screenshots
 ![ScreenShot1 screenshot](./images/ScreenShot1.jpg)
 ![ScreenShot2 screenshot](./images/ScreenShot2.jpg)
+
+## YouTube Videos
+* https://www.youtube.com/watch?v=wMHVUTNWXXc&list=PLd5LdvEbbj5SdOHW24EfNK57g9FkS9E_l
 
 ## Technologies
 * C# Console Application
