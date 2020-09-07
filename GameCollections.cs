@@ -12,7 +12,8 @@ namespace The_Wizard_s_Castle
     class GameCollections
     {
         public static int ExitCode = 999;
-        public static int[] runestaffLocation;
+        public static int[] RuneStaffLocation;
+        public static bool AllVendorMad = false;
         public static Dictionary<string, Monster> monstersDict = new Dictionary<string, Monster>();
         public static Dictionary<string, Vendor> vendorsDict = new Dictionary<string, Vendor>();
         public static List<string> Weapons = new List<string>

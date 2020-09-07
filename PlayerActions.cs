@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using YWMenuNS;
 
@@ -210,6 +211,37 @@ namespace The_Wizard_s_Castle
                     } else
                     {
                         Console.WriteLine($"\nSorry, {player.race}, there's no vendor in the room.");
+                        SharedMethods.WaitForKey();
+                    }
+                    break;
+                case "A":
+                    if (knownMap[player.location[0], player.location[1], player.location[2]] == "Vendor")
+                    {
+                        Vendor vendor = Vendor.GetOrCreateVendor(theMap, player, string.Join(string.Empty, new[] { player.location[0], player.location[1], player.location[2] }));
+                        GameCollections.AllVendorMad = true;
+                        vendor.mad = true;
+                        Console.WriteLine($"\n{Vendor.VendorMadMessage(vendor)}\n");
+                        BattleVendor.BattleSequence(ref player, ref vendor, theMap);
+                        if (vendor.strength < 1)
+                        {
+                            theMap[player.location[0], player.location[1], player.location[2]] = "-";
+                        }
+                    }
+                    else if (GameCollections.Monsters.Contains(theMap[player.location[0], player.location[1], player.location[2]]))
+                    {
+                        Monster monster = Monster.GetOrCreateMonster(theMap, player, string.Join(string.Empty, new[] { player.location[0], player.location[1], player.location[2] }));
+                        monster.mad = true;
+                        Console.WriteLine($"\n{Monster.MonsterMadMessage(monster)}\n");
+                        Battle.BattleSequence(ref player, ref monster, theMap);
+                        if (monster.strength < 1)
+                        {
+                            theMap[player.location[0], player.location[1], player.location[2]] = "-";
+                        }
+                        SharedMethods.WaitForKey();
+                    }
+                    else
+                    {
+                        Console.WriteLine("\n{0}\n", ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages)[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
                         SharedMethods.WaitForKey();
                     }
                     break;

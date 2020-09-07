@@ -40,13 +40,13 @@ namespace The_Wizard_s_Castle
             bool fallThrough;
             Map.BlankMap(knownMap);
             Player player = Player.CreatePlayer();
-            //*** Testing *** int[] locationOfZot = Map.FindOrbOfZot(theMap); // COMMENT THIS
-            GameCollections.runestaffLocation = Map.FindMonster(theMap, GameCollections.Monsters[new Random().Next(0, GameCollections.Monsters.Count)]);
+            //*** Testing *** int[] locationOfZot = Map.FindOrbOfZot(theMap);
+            GameCollections.RuneStaffLocation = Map.FindMonster(theMap, GameCollections.Monsters[new Random().Next(0, GameCollections.Monsters.Count)]);
             Console.Clear();
             Console.WriteLine($"\tOk, {player.race}, you are now entering Zot's castle!\n");
-            //*** Testing *** player.strength = 999;        // For testing
-            //*** Testing *** player.intelligence = 999;    // For testing
-            //*** Testing *** player.flares = 999;          // For testing
+            player.strength = 999;//*** Testing *** 
+            player.intelligence = 999;//*** Testing *** 
+            player.flares = 999;//*** Testing *** 
             do
             {
                 Console.Clear();

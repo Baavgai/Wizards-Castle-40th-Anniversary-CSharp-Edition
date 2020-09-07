@@ -160,15 +160,23 @@ namespace The_Wizard_s_Castle
                 {
                     case "North":
                         player.North(theMap);
+                        Console.WriteLine("\nYou retreat to the North!");
+                        SharedMethods.WaitForKey();
                         break;
                     case "South":
                         player.South(theMap);
+                        Console.WriteLine("\nYou retreat to the South!");
+                        SharedMethods.WaitForKey();
                         break;
                     case "East":
                         player.East(theMap);
+                        Console.WriteLine("\nYou retreat to the East!");
+                        SharedMethods.WaitForKey();
                         break;
                     case "West":
                         player.West(theMap);
+                        Console.WriteLine("\nYou retreat to the West!");
+                        SharedMethods.WaitForKey();
                         break;
                 }
             }

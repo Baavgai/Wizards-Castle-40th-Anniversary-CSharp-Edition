@@ -1,20 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace The_Wizard_s_Castle
 {
     class Vendor : Character
     {
-        public bool mad = false;
-        public bool webbed = false;
-
-        Vendor(string race, int dexterity, int intelligence, int strength)
+        public bool mad = true;
+        public int webbedTurns = 0;
+        public bool runeStaff = false;
+        public Vendor (string race, int dexterity, int intelligence, int strength)
         {
             this.race = race;
             this.dexterity = dexterity;
             this.intelligence = intelligence;
             this.strength = strength;
         }
-
         public static Vendor GetOrCreateVendor(string[,,] theMap, Player player, string locationStr)
         {
             Random rand = new Random();
@@ -30,6 +31,21 @@ namespace The_Wizard_s_Castle
                 GameCollections.vendorsDict.Add(locationStr, vendor);
             }
             return GameCollections.vendorsDict[locationStr];
+        }
+        public static string VendorMadMessage(Vendor vendor)
+        {
+            List<string> messageList = new List<string>
+            {
+                $"The {vendor.race} sees you, snarls and lunges towards you!",
+                $"The {vendor.race} looks angrily at you moves in your direction!",
+                $"The {vendor.race} stops what it's doing and focuses its attention on you!",
+                $"The {vendor.race} looks at you agitatedly!",
+                $"The {vendor.race} says, you've come seeking treasure and instead have found death!",
+                $"The {vendor.race} growls and prepares for battle!",
+                $"The {vendor.race} says, you will be a small meal for a me!",
+                $"The {vendor.race} says, welcome to your death pitiful!"
+            };
+            return messageList[new Random().Next(0, messageList.Count)];
         }
     }
 }

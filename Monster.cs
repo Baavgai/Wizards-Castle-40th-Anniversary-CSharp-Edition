@@ -31,7 +31,7 @@ namespace The_Wizard_s_Castle
                 else if (monster.race == "Chimera" || monster.race == "Minotaur" || monster.race == "Ogre") { monster.strength += 4; }
                 else if (monster.race == "Balrog") { monster.strength += 5; } 
                 else if (monster.race == "Dragon") { monster.strength += 8; }
-                if (monster.location.SequenceEqual(GameCollections.runestaffLocation))
+                if (monster.location.SequenceEqual(GameCollections.RuneStaffLocation))
                 {
                     monster.runeStaff = true;
                 }

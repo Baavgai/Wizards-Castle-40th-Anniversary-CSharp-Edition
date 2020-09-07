@@ -49,6 +49,25 @@ namespace The_Wizard_s_Castle
                     //*** Testing *** Console.WriteLine($"race={monster.race}, dexerity={monster.dexterity}, intelligence={monster.intelligence}, strength={monster.strength}, mad={monster.mad}, runeStaff={monster.runeStaff}, treasures={string.Join("+", player.treasures)}");
                     break;
 
+                case "Vendor":
+                    if (GameCollections.AllVendorMad)
+                    {
+                        Vendor vendor = Vendor.GetOrCreateVendor(theMap, player, string.Join(string.Empty, new[] { player.location[0], player.location[1], player.location[2] }));
+                        vendor.mad = true;
+                        Console.WriteLine($"\n{Vendor.VendorMadMessage(vendor)}\n");
+                        BattleVendor.BattleSequence(ref player, ref vendor, theMap);
+                        if (vendor.strength < 1)
+                        {
+                            theMap[player.location[0], player.location[1], player.location[2]] = "-";
+                        }
+                        if (!player.location.SequenceEqual(vendor.location))
+                        {
+                            return true;
+                        }
+                        //*** Testing *** Console.WriteLine($"race={monster.race}, dexerity={monster.dexterity}, intelligence={monster.intelligence}, strength={monster.strength}, mad={monster.mad}, runeStaff={monster.runeStaff}, treasures={string.Join("+", player.treasures)}");
+                    }
+                    break;
+
                 case "SinkHole":
                     player.Sink();
                     for (int i = 0; i < 30; i++)

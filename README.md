@@ -59,9 +59,7 @@ Game is fully playable.
 * Added non-interactive elements to empty rooms
 
 ## To-do-list
-* Fix Orb gaze doesn't always give correct location of some items (Note: Orb of Zot location isn't always supposed to be correct)
-* Add ability to attack Vendors
-* Add ability to attack non-mad Monsters
+* Fix Orb gaze doesn't always give correct location of some items (Note: Orb of Zot location isn't always supposed to be correct) [may be fixed, needs more testing]
 * Fix any other bugs that become known
 * Add addtional monsters, spells and curses
 * Other possibilities...
