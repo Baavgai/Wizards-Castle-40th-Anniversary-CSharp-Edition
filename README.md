@@ -54,7 +54,7 @@ Game is fully playable.
 * Other possibilities...
 
 ## Status
-Project is: _nearly_
+Project is: _finished_
 
 ## Inspiration
 Project based on the 1980 Exidy Sorcerer game written by JOSEPH R. POWER
