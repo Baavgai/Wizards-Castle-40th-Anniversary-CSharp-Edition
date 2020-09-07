@@ -40,7 +40,7 @@ namespace The_Wizard_s_Castle
             bool fallThrough;
             Map.BlankMap(knownMap);
             Player player = Player.CreatePlayer();
-            int[] locationOfZot = Map.FindOrbOfZot(theMap); // COMMENT THIS
+            //*** Testing *** int[] locationOfZot = Map.FindOrbOfZot(theMap); // COMMENT THIS
             GameCollections.runestaffLocation = Map.FindMonster(theMap, GameCollections.Monsters[new Random().Next(0, GameCollections.Monsters.Count)]);
             Console.Clear();
             Console.WriteLine($"\tOk, {player.race}, you are now entering Zot's castle!\n");
@@ -58,12 +58,7 @@ namespace The_Wizard_s_Castle
                 CheckIfDead(player, ref fallThrough);
                 if (! fallThrough)
                 {
-                    if (rand.Next(0, 10) > 8)
-                    {
-                        Console.WriteLine(
-                            ManipulateListObjects.ReplaceRandomMonster(GameCollections.GameMessages)[rand.Next(0, GameCollections.GameMessages.Count)]
-                        );
-                    }
+                    if (rand.Next(0, 10) > 8) { Console.WriteLine($"\n{ManipulateListObjects.ReplaceRandomMonster(GameCollections.GameMessages)[rand.Next(0, GameCollections.GameMessages.Count)]}"); }
                     //*** Testing *** Console.WriteLine($"locationOfZot: {locationOfZot[0] + 1}, {locationOfZot[1] + 1}, {locationOfZot[2] + 1}");
                     //*** Testing *** Console.WriteLine($"runestaffLocation: {GameCollections.runestaffLocation[0] + 1}, {GameCollections.runestaffLocation[1] + 1}, {GameCollections.runestaffLocation[2] + 1}");
                     //*** Testing *** Console.WriteLine($"\nRace'{player.race}', player.sex='{player.sex}', player.dexterity='{player.dexterity}', player.intelligence='{player.intelligence}', player.strength='{player.strength}'\nplayer.armor='{player.armor}', player.weapon='{player.weapon}', player.gold='{player.gold}', player.flares='{player.flares}'\nplayer.blind='{player.blind}', player.bookStuck='{player.bookStuck}', player.forgetfulness='{player.forgetfulness}', player.leech='{player.leech}', player.lethargy='{player.lethargy}'\nplayer.lamp='{player.lamp}', player.orbOfZot='{player.orbOfZot}', player.runeStaff='{player.runeStaff}, player.turns='{player.turns}'\nplayer.treasures='{string.Join(", ", player.treasures)}'");
@@ -217,7 +212,14 @@ namespace The_Wizard_s_Castle
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.WriteLine("\n\tWhen you died: ");
                 Console.WriteLine($"\nYou were a {player.sex} {player.race}.");
-                Console.WriteLine($"\nYou wore {player.armor} armor and had a {player.weapon}.");
+                if (player.armor.Length > 0)
+                {
+                    Console.WriteLine($"\nYou wore {player.armor} armor.");
+                }
+                if (player.weapon.Length > 0)
+                {
+                    Console.WriteLine($"\nYou had a {player.weapon}.");
+                }
                 Console.WriteLine($"\nYou had {player.gold} Gold Pieces and {player.flares} flares.");
                 if (player.lamp == true)
                 {

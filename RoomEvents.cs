@@ -11,7 +11,7 @@ namespace The_Wizard_s_Castle
         {
             Random rand = new Random();
             Console.WriteLine($"You are at Level {player.location[0] + 1} Row {player.location[1] + 1} Column {player.location[2] + 1}");
-            Console.WriteLine($"Here you find '{theMap[player.location[0], player.location[1], player.location[2]]}'");
+            Console.WriteLine($"\nHere you find '{theMap[player.location[0], player.location[1], player.location[2]]}'");
             switch (theMap[player.location[0], player.location[1], player.location[2]])
             {
                 case "Flares":
