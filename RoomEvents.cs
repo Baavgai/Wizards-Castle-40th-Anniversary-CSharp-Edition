@@ -46,7 +46,7 @@ namespace The_Wizard_s_Castle
                     {
                         return true;
                     }
-                    Console.WriteLine($"race={monster.race}, dexerity={monster.dexterity}, intelligence={monster.intelligence}, strength={monster.strength}, mad={monster.mad}, runeStaff={monster.runeStaff}, treasures={string.Join("+", player.treasures)}");
+                    //*** Testing *** Console.WriteLine($"race={monster.race}, dexerity={monster.dexterity}, intelligence={monster.intelligence}, strength={monster.strength}, mad={monster.mad}, runeStaff={monster.runeStaff}, treasures={string.Join("+", player.treasures)}");
                     break;
 
                 case "SinkHole":

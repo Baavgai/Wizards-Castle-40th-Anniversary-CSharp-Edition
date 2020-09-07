@@ -44,11 +44,9 @@ namespace The_Wizard_s_Castle
             GameCollections.runestaffLocation = Map.FindMonster(theMap, GameCollections.Monsters[new Random().Next(0, GameCollections.Monsters.Count)]);
             Console.Clear();
             Console.WriteLine($"\tOk, {player.race}, you are now entering Zot's castle!\n");
-
-            //player.strength = 999;        // For testing
-            //player.intelligence = 999;    // For testing
-            //player.flares = 999;          // For testing
-
+            //*** Testing *** player.strength = 999;        // For testing
+            //*** Testing *** player.intelligence = 999;    // For testing
+            //*** Testing *** player.flares = 999;          // For testing
             do
             {
                 Console.Clear();
@@ -66,9 +64,9 @@ namespace The_Wizard_s_Castle
                             ManipulateListObjects.ReplaceRandomMonster(GameCollections.GameMessages)[rand.Next(0, GameCollections.GameMessages.Count)]
                         );
                     }
-                    Console.WriteLine($"locationOfZot: {locationOfZot[0] + 1}, {locationOfZot[1] + 1}, {locationOfZot[2] + 1}");
-                    Console.WriteLine($"runestaffLocation: {GameCollections.runestaffLocation[0] + 1}, {GameCollections.runestaffLocation[1] + 1}, {GameCollections.runestaffLocation[2] + 1}");
-                    Console.WriteLine($"\nRace'{player.race}', player.sex='{player.sex}', player.dexterity='{player.dexterity}', player.intelligence='{player.intelligence}', player.strength='{player.strength}'\nplayer.armor='{player.armor}', player.weapon='{player.weapon}', player.gold='{player.gold}', player.flares='{player.flares}'\nplayer.blind='{player.blind}', player.bookStuck='{player.bookStuck}', player.forgetfulness='{player.forgetfulness}', player.leech='{player.leech}', player.lethargy='{player.lethargy}'\nplayer.lamp='{player.lamp}', player.orbOfZot='{player.orbOfZot}', player.runeStaff='{player.runeStaff}, player.turns='{player.turns}'\nplayer.treasures='{string.Join(", ", player.treasures)}'");
+                    //*** Testing *** Console.WriteLine($"locationOfZot: {locationOfZot[0] + 1}, {locationOfZot[1] + 1}, {locationOfZot[2] + 1}");
+                    //*** Testing *** Console.WriteLine($"runestaffLocation: {GameCollections.runestaffLocation[0] + 1}, {GameCollections.runestaffLocation[1] + 1}, {GameCollections.runestaffLocation[2] + 1}");
+                    //*** Testing *** Console.WriteLine($"\nRace'{player.race}', player.sex='{player.sex}', player.dexterity='{player.dexterity}', player.intelligence='{player.intelligence}', player.strength='{player.strength}'\nplayer.armor='{player.armor}', player.weapon='{player.weapon}', player.gold='{player.gold}', player.flares='{player.flares}'\nplayer.blind='{player.blind}', player.bookStuck='{player.bookStuck}', player.forgetfulness='{player.forgetfulness}', player.leech='{player.leech}', player.lethargy='{player.lethargy}'\nplayer.lamp='{player.lamp}', player.orbOfZot='{player.orbOfZot}', player.runeStaff='{player.runeStaff}, player.turns='{player.turns}'\nplayer.treasures='{string.Join(", ", player.treasures)}'");
                     knownMap[player.location[0], player.location[1], player.location[2]] = theMap[player.location[0], player.location[1], player.location[2]];
                     string[] choice = gameMenu.Menu("Your action", GameCollections.availableActions, ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages));
                     dynamicTemp = choice;
