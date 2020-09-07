@@ -15,10 +15,10 @@
 * [Contact](#contact)
 
 ## General info
-A full C# remake of the 1980 classic, the Wizard's Castle.
-In addition I have added some new elements to the game.
-I deeply enjoyed this game growing up and wanted to make if for a modern language.
-Exidy Sorcerer game code originally published in the July 1980 edition of Recreational Computing:
+A full C# remake of the 1980 classic, the Wizard's Castle.\
+In addition I have added some new elements to the game.\
+I deeply enjoyed this game growing up and wanted to make if for a modern language.\
+Exidy Sorcerer game code originally published in the July 1980 edition of Recreational Computing:\
 https://archive.org/details/1980-07-recreational-computing
 
 ## Screenshots
@@ -32,11 +32,11 @@ https://archive.org/details/1980-07-recreational-computing
 * Microsoft Visual Studio Community 2019
 
 ## Setup
-  Clone the repository:
-git clone "https://github.com/yourwishismine/Wizards-Castle-40th-Anniversary-CSharp-Edition.git"
-  open Visual Studio 2019 and build it, or you can download the .NET Core 3.1 SDK:
-https://dotnet.microsoft.com/download
-  and compile using: 
+&nbsp;&nbsp;Clone the repository:\
+git clone "https://github.com/yourwishismine/Wizards-Castle-40th-Anniversary-CSharp-Edition.git"\
+&nbsp;&nbsp;open Visual Studio 2019 and build it, or you can download the .NET Core 3.1 SDK:\
+https://dotnet.microsoft.com/download\
+&nbsp;&nbsp;and compile using:\
 dotnet publish --runtime win-x64 --configuration Release /p:PublishSingleFile=true /p:PublishTrimmed=true
 
 ## Features
