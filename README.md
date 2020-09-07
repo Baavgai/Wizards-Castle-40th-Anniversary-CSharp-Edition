@@ -43,6 +43,14 @@ git clone "https://github.com/yourwishismine/Wizards-Castle-40th-Anniversary-CSh
 https://dotnet.microsoft.com/download  
 * Compile with the .NET Core 3.1 SDK:  
 dotnet publish --runtime win-x64 --configuration Release /p:PublishSingleFile=true /p:PublishTrimmed=true
+* Compile with the .NET Core 3.1 SDK on Linux:
+Comment (put a // in front of them) the following 3 lines in the Program.cs file  
+> Console.SetWindowPosition(0, 0);  
+> System.Console.WindowHeight = System.Console.LargestWindowHeight - 25;  
+> System.Console.WindowWidth = System.Console.LargestWindowWidth - 50;  
+Then run:  
+> dotnet publish --runtime linux-x64 --configuration Release /p:PublishSingleFile=true /p:PublishTrimmed=true  
+I tested it on a Acer Chromebook Spin 13 which runs Debian 10 (buster) in its Linux (Beta) environment
 
 ## Features
 Game is fully playable.
