@@ -11,6 +11,17 @@ namespace The_Wizard_s_Castle
         {
             Random rand = new Random();
             Console.WriteLine($"You are at Level {player.location[0] + 1} Row {player.location[1] + 1} Column {player.location[2] + 1}");
+            Console.WriteLine($"You are a {player.sex} {player.race}");
+            Console.WriteLine($"Dexterity={player.dexterity} Intelligence={player.intelligence} Strength={player.strength}");
+            Console.WriteLine($"Gold={player.gold} Flares={player.flares} Armor={player.armor} Weapon={player.weapon}");
+            if (player.treasures.Count > 0)
+            {
+                Console.WriteLine($"Treasures='{string.Join(",", player.treasures)}'"); 
+            }
+            if (player.blind || player.bookStuck || player.forgetfulness || player.leech || player.lethargy)
+            {
+                Console.WriteLine($"Cursed with='{string.Join(" ", new string[] {player.blind ? "Blind": "", player.bookStuck ? "Book-Stuck-To-Hands" : "", player.forgetfulness ? "Forgetfulness" : "", player.leech ? "Leech" : "", player.lethargy ? "Lethargy" : ""}).Trim().Replace("  "," ")}'");
+            }
             Console.WriteLine($"\nHere you find '{theMap[player.location[0], player.location[1], player.location[2]]}'");
             switch (theMap[player.location[0], player.location[1], player.location[2]])
             {

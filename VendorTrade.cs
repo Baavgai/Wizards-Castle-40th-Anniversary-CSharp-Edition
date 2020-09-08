@@ -44,16 +44,21 @@ namespace The_Wizard_s_Castle
                     {
                         player.treasures.Remove(item);
                     }
+                    if (player.gold < 1000)
+                    {
+                        Console.WriteLine($"\nSorry, {player.race}. You are too poor to trade.");
+                        SharedMethods.WaitForKey();
+                    }
                 }
-                if  (player.gold > 1499)
+                if  ((player.gold > 1499) && (player.armor != "Plate"))
                 {
                     Player.GetPlayerArmor(ref player, new int[] { 1500, 2000, 2500 });
                 }
-                if (player.gold > 1499)
+                if ((player.gold > 1499) && (player.weapon != "Sword"))
                 {
                     Player.GetPlayerWeapon(ref player, new int[] { 1500, 2000, 2500 });
                 }
-                if (player.gold > 999)
+                if ((player.gold > 999) && (! player.lamp))
                 {
                     Player.GetLamp(ref player, 1000);
                 }
@@ -84,12 +89,18 @@ namespace The_Wizard_s_Castle
                     {
                         case "Dexterity":
                             player.IncDexterity(rand.Next(1, 6));
+                            Console.WriteLine($"\nDexterity={player.dexterity}");
+                            SharedMethods.WaitForKey();
                             break;
                         case "Intelligence":
                             player.IncIntelligence(rand.Next(1, 6));
+                            Console.WriteLine($"\nIntelligence={player.intelligence}");
+                            SharedMethods.WaitForKey();
                             break;
                         case "Strength":
                             player.IncStrength(rand.Next(1, 6));
+                            Console.WriteLine($"\nStrength={player.strength}");
+                            SharedMethods.WaitForKey();
                             break;
                     }
                     player.gold -= Convert.ToInt32(numberOnly);

@@ -225,6 +225,7 @@ namespace The_Wizard_s_Castle
                         if (vendor.strength < 1)
                         {
                             theMap[player.location[0], player.location[1], player.location[2]] = "-";
+                            SharedMethods.WaitForKey();
                         }
                     }
                     else if (GameCollections.Monsters.Contains(theMap[player.location[0], player.location[1], player.location[2]]))

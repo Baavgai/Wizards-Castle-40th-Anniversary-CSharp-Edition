@@ -56,6 +56,10 @@ namespace The_Wizard_s_Castle
                 vendor.gold = rand.Next(1, 1001);
                 Console.WriteLine($"\nYou killed the evil {vendor.race}");
                 Console.WriteLine($"You get his hoard of {vendor.gold} Gold Pieces");
+                Console.WriteLine($"You also get the {vendor.race}'s Sword and Plate armor and Lamp");
+                player.weapon = "Sword";
+                player.armor = "Plate";
+                player.lamp = true;
                 player.gold += vendor.gold;
                 if (vendor.runeStaff)
                 {
