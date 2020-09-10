@@ -3,6 +3,10 @@
 > The instructions are included with the game.  
 > I stayed mostly true to the original, but added some additional functionality.  
 
+## Refactor
+
+When I saw this code, I started compulsively refactoring it.  That's, also, a kind of game.  So, I forked to save my progress in the game.
+
 ## Table of contents
 * [General info](#general-info)
 * [Screenshots](#screenshots)
