@@ -15,7 +15,7 @@ namespace The_Wizard_s_Castle
             if (player.treasures.Count < 1 && player.gold < 1000)
             {
                 Console.WriteLine($"Sorry, {player.race}. You are too poor to trade.");
-                SharedMethods.WaitForKey();
+                Util.WaitForKey();
             }
             else
             {
@@ -47,7 +47,7 @@ namespace The_Wizard_s_Castle
                     if (player.gold < 1000)
                     {
                         Console.WriteLine($"\nSorry, {player.race}. You are too poor to trade.");
-                        SharedMethods.WaitForKey();
+                        Util.WaitForKey();
                     }
                 }
                 if  ((player.gold > 1499) && (player.armor != "Plate"))
@@ -90,17 +90,17 @@ namespace The_Wizard_s_Castle
                         case "Dexterity":
                             player.IncDexterity(rand.Next(1, 6));
                             Console.WriteLine($"\nDexterity={player.dexterity}");
-                            SharedMethods.WaitForKey();
+                            Util.WaitForKey();
                             break;
                         case "Intelligence":
                             player.IncIntelligence(rand.Next(1, 6));
                             Console.WriteLine($"\nIntelligence={player.intelligence}");
-                            SharedMethods.WaitForKey();
+                            Util.WaitForKey();
                             break;
                         case "Strength":
                             player.IncStrength(rand.Next(1, 6));
                             Console.WriteLine($"\nStrength={player.strength}");
-                            SharedMethods.WaitForKey();
+                            Util.WaitForKey();
                             break;
                     }
                     player.gold -= Convert.ToInt32(numberOnly);

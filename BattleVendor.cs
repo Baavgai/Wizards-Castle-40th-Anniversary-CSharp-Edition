@@ -137,7 +137,7 @@ namespace The_Wizard_s_Castle
                     {
                         Console.WriteLine($"\nDEATH! The STUPID {player.race}'s death.");
                         player.strength = 0;
-                        SharedMethods.WaitForKey();
+                        Util.WaitForKey();
                     }
                     break;
             }
@@ -166,22 +166,22 @@ namespace The_Wizard_s_Castle
                     case "North":
                         player.North(theMap);
                         Console.WriteLine("\nYou retreat to the North!");
-                        SharedMethods.WaitForKey();
+                        Util.WaitForKey();
                         break;
                     case "South":
                         player.South(theMap);
                         Console.WriteLine("\nYou retreat to the South!");
-                        SharedMethods.WaitForKey();
+                        Util.WaitForKey();
                         break;
                     case "East":
                         player.East(theMap);
                         Console.WriteLine("\nYou retreat to the East!");
-                        SharedMethods.WaitForKey();
+                        Util.WaitForKey();
                         break;
                     case "West":
                         player.West(theMap);
                         Console.WriteLine("\nYou retreat to the West!");
-                        SharedMethods.WaitForKey();
+                        Util.WaitForKey();
                         break;
                 }
             }

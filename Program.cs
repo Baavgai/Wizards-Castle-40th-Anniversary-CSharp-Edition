@@ -116,7 +116,7 @@ namespace The_Wizard_s_Castle
                 Console.BackgroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("The Ruby Red cures your Lethargy!");
                 Console.BackgroundColor = ConsoleColor.Black;
-                SharedMethods.WaitForKey();
+                Util.WaitForKey();
             }
             if (player.treasures.Contains("The Pale Pearl") && player.leech == true)
             {
@@ -124,7 +124,7 @@ namespace The_Wizard_s_Castle
                 Console.BackgroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("The Pale Pearl heals the curse of the Leech!");
                 Console.BackgroundColor = ConsoleColor.Black;
-                SharedMethods.WaitForKey();
+                Util.WaitForKey();
             }
             if (player.leech == true)
             {
@@ -136,7 +136,7 @@ namespace The_Wizard_s_Castle
                 Console.BackgroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("The Green Gem cures your forgetfulness!");
                 Console.BackgroundColor = ConsoleColor.Black;
-                SharedMethods.WaitForKey();
+                Util.WaitForKey();
             }
             if (player.forgetfulness == true)
             {
@@ -149,7 +149,7 @@ namespace The_Wizard_s_Castle
                 Console.BackgroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("The Opal Eye cures your blindness!");
                 Console.BackgroundColor = ConsoleColor.Black;
-                SharedMethods.WaitForKey();
+                Util.WaitForKey();
             }
             if (player.treasures.Contains("The Blue Flame") && player.bookStuck == true)
             {
@@ -157,7 +157,7 @@ namespace The_Wizard_s_Castle
                 Console.BackgroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("The Blue Flame burns the book off your hands!");
                 Console.BackgroundColor = ConsoleColor.Black;
-                SharedMethods.WaitForKey();
+                Util.WaitForKey();
             }
         }
         public static void PlayerExit(Player player)
@@ -198,7 +198,7 @@ namespace The_Wizard_s_Castle
                 Console.WriteLine($"\nYou also had the following treasures: {string.Join(", ", player.treasures)}");
             }
             GameCollections.ExitCode = 0;
-            SharedMethods.WaitForKey();
+            Util.WaitForKey();
         }
         public static void CheckIfDead(Player player, ref bool fallThrough)
         {
@@ -234,7 +234,7 @@ namespace The_Wizard_s_Castle
                     Console.WriteLine($"\nYou also had the following treasures: {string.Join(", ", player.treasures)}");
                 }
                 Console.WriteLine($"\nYou * were * alive for {player.turns} turns.");
-                SharedMethods.WaitForKey();
+                Util.WaitForKey();
             }
         }
     }
