@@ -8,6 +8,8 @@ namespace The_Wizard_s_Castle {
     internal static partial class Util {
         public static readonly Random Rand = new Random();
 
+        public static int RandInt(int maxValue) => Rand.Next(maxValue);
+        public static int RandInt(int minValue, int maxValue) => Rand.Next(minValue, maxValue);
         public static void WriteLine(string s = "") => Console.WriteLine(s);
         public static void Write(string s = "") => Console.Write(s);
 

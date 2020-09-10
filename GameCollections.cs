@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using The_Wizard_s_Castle.Models;
 
 
 namespace The_Wizard_s_Castle {
