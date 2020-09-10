@@ -1,46 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 
-namespace The_Wizard_s_Castle
-{
-    class Race
-    {
-        public string RaceName { get; set; }
-        public int Dexterity { get; set; }
-        public int Intelligence { get; set; }
-        public int Strength { get; set; }
-    }
-    class GameCollections
-    {
+
+namespace The_Wizard_s_Castle {
+    class GameCollections {
         public static int ExitCode = 999;
         public static int[] RuneStaffLocation;
         public static bool AllVendorMad = false;
         public static Dictionary<string, Monster> monstersDict = new Dictionary<string, Monster>();
         public static Dictionary<string, Vendor> vendorsDict = new Dictionary<string, Vendor>();
-        public static List<string> Weapons = new List<string>
-        {
+        public static readonly List<string> Weapons = new List<string> {
             "Dagger",
             "Mace",
             "Sword"
         };
-        public static List<string> Armor = new List<string>
-        {
+        public static readonly List<string> Armor = new List<string> {
             "Leather",
             "ChainMail",
             "Plate"
         };
-        public static List<string> Abilities = new List<string>
+        public static readonly List<string> Abilities = new List<string>
         {
             "Dexterity",
             "Intelligence",
             "Strength"
         };
-        public static List<string> Curses = new List<string>
+        public static readonly List<string> Curses = new List<string>
         {
             "Forgetfulness",
             "Leech",
             "Lethargy"
         };
-        public static List<string> Monsters = new List<string>
+        public static readonly List<string> Monsters = new List<string>
         {
             "Balrog",
             "Bear",
@@ -55,7 +47,7 @@ namespace The_Wizard_s_Castle
             "Troll",
             "Wolf"
         };
-        public static List<string> Treasures = new List<string>
+        public static readonly List<string> Treasures = new List<string>
         {
             "The Blue Flame",
             "The Green Gem",
@@ -66,7 +58,7 @@ namespace The_Wizard_s_Castle
             "The Ruby Red",
             "The Silmaril"
         };
-        public static List<string> RoomContents = new List<string>
+        public static readonly List<string> RoomContents = new List<string>
         {
             "Book",
             "Chest",
@@ -82,14 +74,14 @@ namespace The_Wizard_s_Castle
             "x",
             "Entrance/Exit"
         };
-        public static List<Race> Races = new List<Race>
+        public static readonly List<Race> Races = new List<Race>
         {
             new Race { RaceName = "Dwarf", Dexterity = 6, Intelligence = 8, Strength = 10},
             new Race { RaceName = "Elf", Dexterity = 10, Intelligence = 8, Strength = 6},
             new Race { RaceName = "Hobbit", Dexterity = 12, Intelligence = 8, Strength = 4},
             new Race { RaceName = "Homo-Sapien", Dexterity = 8, Intelligence = 8, Strength = 8}
         };
-        public static Dictionary<char, string> availableActions = new Dictionary<char, string>
+        public static readonly Dictionary<char, string> availableActions = new Dictionary<char, string>
         {
             {'A', "Attack monster or vendor"},
             {'B', "Bribe monster or vendor"},
@@ -111,8 +103,11 @@ namespace The_Wizard_s_Castle
             {'W', "West"},
             {'Z', "Trade with Vendor" }
         };
-        public static List<string> ErrorMesssages = new List<string>
-        {
+
+        private static IEnumerable<string> ReplaceRandomMonster(IEnumerable<string> list) =>
+            list.Select(x => x.Replace("//RandomMonster", Util.RandPick(GameCollections.Monsters)));
+
+        private static readonly List<string> errorMesssages = new List<string> {
             "How very original, now try again.",
             "Even a //RandomMonster could do better than that.",
             "While you're messing around a //RandomMonster is going hungry.",
@@ -131,8 +126,12 @@ namespace The_Wizard_s_Castle
             "Would you please just pick one.",
             "Maybe next time you should play solitaire."
         };
-        public static List<string> GameMessages = new List<string>
-        {
+
+
+        public static List<string> ErrorMesssages =>
+            ReplaceRandomMonster(errorMesssages).ToList();
+
+        private static readonly List<string> gameMessages = new List<string> {
             "You smell a //RandomMonster frying.",
             "You feel like you are being watched.",
             "You stepped on a frog.",
@@ -152,7 +151,11 @@ namespace The_Wizard_s_Castle
             "You yawned loudly.",
             "You coughed loudly."
         };
-        public static List<string> Directions = new List<string>
+
+        public static List<string> GameMessages =>
+            ReplaceRandomMonster(gameMessages).ToList();
+
+        public static readonly List<string> Directions = new List<string>
         {
             "North",
             "South",

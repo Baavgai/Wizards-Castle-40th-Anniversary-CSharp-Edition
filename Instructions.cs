@@ -144,7 +144,7 @@ namespace The_Wizard_s_Castle
             {
                 {'Y', "View the Instructions"},
                 {'N', "Start the Game"}
-            }, ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages));
+            }, GameCollections.ErrorMesssages);
             if (choice[0] == "Y")
             {
                 System.Console.Clear();

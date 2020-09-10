@@ -29,7 +29,7 @@ namespace The_Wizard_s_Castle
                 if (player.intelligence > 14) { choicesDict.Add('C', "Cast"); }
                 if (player.strength > 0)
                 {
-                    string[] choice = battleMenu.Menu(question, choicesDict, ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages));
+                    string[] choice = battleMenu.Menu(question, choicesDict, GameCollections.ErrorMesssages);
                     switch (choice[1])
                     {
                         case "Attack":
@@ -84,7 +84,7 @@ namespace The_Wizard_s_Castle
                     { 'Y', "Yes" },
                     { 'N', "No" }
                 };
-                string[] choice = battleMenu.Menu(question, choicesDict, ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages));
+                string[] choice = battleMenu.Menu(question, choicesDict, GameCollections.ErrorMesssages);
                 if (choice[0] == "Y")
                 {
                     Console.WriteLine($"\nThe {monster.race} says, ok, just don't tell anyone.");
@@ -109,7 +109,7 @@ namespace The_Wizard_s_Castle
                     { 'F', "Fireball" },
                     { 'D', "Deathspell" }
                 };
-            string[] choice = battleMenu.Menu(question, choicesDict, ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages));
+            string[] choice = battleMenu.Menu(question, choicesDict, GameCollections.ErrorMesssages);
             switch (choice[0])
             {
                 case "W":
@@ -155,7 +155,7 @@ namespace The_Wizard_s_Castle
                     { 'E', "East" },
                     { 'W', "West" }
                 };
-                string[] choice = battleMenu.Menu(question, choicesDict, ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages));
+                string[] choice = battleMenu.Menu(question, choicesDict, GameCollections.ErrorMesssages);
                 switch (choice[1])
                 {
                     case "North":

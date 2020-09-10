@@ -71,7 +71,7 @@ namespace The_Wizard_s_Castle {
             {
                 {'F', "FeMale"},
                 {'M', "Male"}
-            }, ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages));
+            }, GameCollections.ErrorMesssages);
             return choice;
         }
 
@@ -111,7 +111,7 @@ namespace The_Wizard_s_Castle {
                 choicesDict.Add(i.ToString()[0], $"{GameCollections.Armor[i]}, {costs[i]} Gold Pieces");
             }
             choicesDict.Add(choicesDict.Count.ToString()[0], $"None, 0 Gold Pieces");
-            string[] choice = menu.Menu($"You have {player.gold} Gold Pieces to buy items, what type of Armor do you want to purchase", choicesDict, ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages));
+            string[] choice = menu.Menu($"You have {player.gold} Gold Pieces to buy items, what type of Armor do you want to purchase", choicesDict, GameCollections.ErrorMesssages);
             string numberOnly = Regex.Replace(choice[1], "[^0-9]", "");
             if (!(Convert.ToInt32(numberOnly) > player.gold) && !(choice[1].Split(',')[0] == "None")) {
                 player.gold -= Convert.ToInt32(numberOnly);
@@ -130,7 +130,7 @@ namespace The_Wizard_s_Castle {
                 choicesDict.Add(i.ToString()[0], $"{GameCollections.Weapons[i]}, {costs[i]} Gold Pieces");
             }
             choicesDict.Add(choicesDict.Count.ToString()[0], $"None, 0 Gold Pieces");
-            string[] choice = menu.Menu($"You have {player.gold} Gold Pieces to buy items, what type of Weapon do you want to purchase", choicesDict, ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages));
+            string[] choice = menu.Menu($"You have {player.gold} Gold Pieces to buy items, what type of Weapon do you want to purchase", choicesDict, GameCollections.ErrorMesssages);
             string numberOnly = Regex.Replace(choice[1], "[^0-9]", "");
             if (!(Convert.ToInt32(numberOnly) > player.gold) && !(choice[1].Split(',')[0] == "None")) {
                 player.weapon = choice[1].Split(',')[0];
@@ -147,7 +147,7 @@ namespace The_Wizard_s_Castle {
             {
                 {'Y', $"Purchase lamp ({cost} Gold Pieces)"},
                 {'N', "Don't purchase"}
-            }, ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages));
+            }, GameCollections.ErrorMesssages);
             if (choice[0] == "Y") {
                 int numberOnly = Convert.ToInt32(Regex.Replace(choice[1], "[^0-9]", ""));
                 player.gold -= numberOnly;

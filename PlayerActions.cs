@@ -40,7 +40,7 @@ namespace The_Wizard_s_Castle {
                             Console.WriteLine("Lighting a flare won't do you any good since you are BLIND!");
                         }
                     } else {
-                        Console.WriteLine("\n{0}\n", ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages)[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
+                        Console.WriteLine("\n{0}\n", Util.RandPick(GameCollections.ErrorMesssages));
                     }
                     Util.WaitForKey();
                     break;
@@ -87,14 +87,14 @@ namespace The_Wizard_s_Castle {
                             {'S', "South"},
                             {'E', "East"},
                             {'W', "West"}
-                        }, ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages));
+                        }, GameCollections.ErrorMesssages);
                             Map.RevealRoom(choice[1], player.location, theMap, ref knownMap);
                             Map.DisplayLevel(knownMap, player);
                         } else {
                             Util.WaitForKey($"You're BLIND and can't see anything, silly {player.race}.");
                         }
                     } else {
-                        Console.WriteLine("\n{0}\n", ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages)[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
+                        Console.WriteLine("\n{0}\n", GameCollections.ErrorMesssages[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
                     }
                     Util.WaitForKey();
                     break;
@@ -102,7 +102,7 @@ namespace The_Wizard_s_Castle {
                     if (knownMap[player.location[0], player.location[1], player.location[2]] == "DownStairs") {
                         player.Down();
                     } else {
-                        Console.WriteLine("\n{0}\n", ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages)[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
+                        Console.WriteLine("\n{0}\n", GameCollections.ErrorMesssages[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
                         Util.WaitForKey();
                     }
                     break;
@@ -110,7 +110,7 @@ namespace The_Wizard_s_Castle {
                     if (knownMap[player.location[0], player.location[1], player.location[2]] == "UpStairs") {
                         player.Up();
                     } else {
-                        Console.WriteLine("\n{0}\n", ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages)[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
+                        Console.WriteLine("\n{0}\n", GameCollections.ErrorMesssages[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
                         Util.WaitForKey();
                     }
                     break;
@@ -123,7 +123,7 @@ namespace The_Wizard_s_Castle {
                         }
                         Util.WaitForKey();
                     } else {
-                        Console.WriteLine("\n{0}\n", ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages)[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
+                        Console.WriteLine("\n{0}\n", GameCollections.ErrorMesssages[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
                         Util.WaitForKey();
                     }
                     break;
@@ -139,7 +139,7 @@ namespace The_Wizard_s_Castle {
                         Console.WriteLine(Chest.ChestEvent(ref player, ref theMap, ref knownMap));
                         Util.WaitForKey();
                     } else {
-                        Console.WriteLine("\n{0}\n", ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages)[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
+                        Console.WriteLine("\n{0}\n", GameCollections.ErrorMesssages[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
                         Util.WaitForKey();
                     }
                     break;
@@ -148,7 +148,7 @@ namespace The_Wizard_s_Castle {
                         Console.WriteLine(Util.PoolEvent(player));
                         Util.WaitForKey();
                     } else {
-                        Console.WriteLine("\n{0}\n", ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages)[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
+                        Console.WriteLine("\n{0}\n", GameCollections.ErrorMesssages[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
                     }
                     break;
                 case "Z":
@@ -181,7 +181,7 @@ namespace The_Wizard_s_Castle {
                         }
                         Util.WaitForKey();
                     } else {
-                        Console.WriteLine("\n{0}\n", ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages)[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
+                        Console.WriteLine("\n{0}\n", GameCollections.ErrorMesssages[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
                         Util.WaitForKey();
                     }
                     break;
@@ -191,7 +191,7 @@ namespace The_Wizard_s_Castle {
                 case "Q":
                     break;
                 default:
-                    Console.WriteLine("\n{0}\n", ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages)[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
+                    Console.WriteLine("\n{0}\n", GameCollections.ErrorMesssages[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
                     Util.WaitForKey();
                     break;
             }

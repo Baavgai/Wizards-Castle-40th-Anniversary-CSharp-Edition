@@ -31,7 +31,7 @@ namespace The_Wizard_s_Castle
                             { 'Y', "Yes" },
                             { 'N', "No" }
                         };
-                        string[] choice = vtMenu.Menu(question, choicesDict, ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages));
+                        string[] choice = vtMenu.Menu(question, choicesDict, GameCollections.ErrorMesssages);
                         if (choice[0] == "Y")
                         {
                             Console.WriteLine($"\nYou have accepted the Vendor's offer for {item}.");
@@ -81,7 +81,7 @@ namespace The_Wizard_s_Castle
             string numberOnly;
             do
             {
-                choice = vtMenu.Menu($"You have {player.gold} Gold Pieces to buy items, what type of Potion do you want to purchase", choicesDict, ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages));
+                choice = vtMenu.Menu($"You have {player.gold} Gold Pieces to buy items, what type of Potion do you want to purchase", choicesDict, GameCollections.ErrorMesssages);
                 numberOnly = Regex.Replace(choice[1], "[^0-9]", "");
                 if (!(Convert.ToInt32(numberOnly) > player.gold) && !(choice[1].Split(',')[0] == "None"))
                 {

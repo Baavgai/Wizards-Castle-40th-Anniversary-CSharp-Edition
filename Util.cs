@@ -13,20 +13,22 @@ namespace The_Wizard_s_Castle {
 
         public static T RandPick<T>(IEnumerable<T> xs) => xs.Skip(Rand.Next(xs.Count())).First();
 
-        private static IEnumerable<string> DefaultErrorMessages =>
-            ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages);
+        // public static IEnumerable<string> ReplaceRandomMonster(IEnumerable<string> list) =>            list.Select(x => x.Replace("//RandomMonster", RandPick(GameCollections.Monsters)));
+
+
+        // private static IEnumerable<string> DefaultErrorMessages =>            ReplaceRandomMonster(GameCollections.ErrorMesssages);
 
         public static string Menu(string question, IEnumerable<string> choices) =>
-            Menu(question, choices, (x, _) => x[0], DefaultErrorMessages);
+            Menu(question, choices, (x, _) => x[0], GameCollections.ErrorMesssages);
 
         public static T Menu<T>(string question, IEnumerable<T> choices, Func<T, int, char> getKey) =>
-            Menu(question, choices, getKey, DefaultErrorMessages);
+            Menu(question, choices, getKey, GameCollections.ErrorMesssages);
 
         public static T Menu<T>(string question, IEnumerable<T> choices, Func<T, int, char> getKey, IEnumerable<string> errorMessages) =>
             Menu(question, new Dictionary<char, T>(choices.Select((x, i) => new KeyValuePair<char, T>(getKey(x, i), x))), errorMessages);
 
         public static T Menu<T>(string question, IDictionary<char, T> choices) =>
-            Menu(question, choices, DefaultErrorMessages);
+            Menu(question, choices, GameCollections.ErrorMesssages);
 
 
         public static T Menu<T>(string question, IDictionary<char, T> choices, IEnumerable<string> errorMessages) {

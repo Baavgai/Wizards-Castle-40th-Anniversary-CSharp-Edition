@@ -213,7 +213,7 @@ namespace The_Wizard_s_Castle
             {
                 {'S', "Standard 8x8x8 Map"},
                 {'R', "Random Map"}
-            }, ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages));
+            }, GameCollections.ErrorMesssages);
             System.Console.Clear();
             if (choice[0] == "R")
             {

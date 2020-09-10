@@ -58,12 +58,12 @@ namespace The_Wizard_s_Castle
                 CheckIfDead(player, ref fallThrough);
                 if (! fallThrough)
                 {
-                    if (rand.Next(0, 10) > 8) { Console.WriteLine($"\n{ManipulateListObjects.ReplaceRandomMonster(GameCollections.GameMessages)[rand.Next(0, GameCollections.GameMessages.Count)]}"); }
+                    if (rand.Next(0, 10) > 8) { Console.WriteLine($"\n{Util.RandPick(GameCollections.GameMessages)}"); }
                     //*** Testing *** Console.WriteLine($"locationOfZot: {locationOfZot[0] + 1}, {locationOfZot[1] + 1}, {locationOfZot[2] + 1}");
                     //*** Testing *** Console.WriteLine($"RuneStaffLocation: {GameCollections.RuneStaffLocation[0] + 1}, {GameCollections.RuneStaffLocation[1] + 1}, {GameCollections.RuneStaffLocation[2] + 1}");
                     //*** Testing *** Console.WriteLine($"\nRace'{player.race}', player.sex='{player.sex}', player.dexterity='{player.dexterity}', player.intelligence='{player.intelligence}', player.strength='{player.strength}'\nplayer.armor='{player.armor}', player.weapon='{player.weapon}', player.gold='{player.gold}', player.flares='{player.flares}'\nplayer.blind='{player.blind}', player.bookStuck='{player.bookStuck}', player.forgetfulness='{player.forgetfulness}', player.leech='{player.leech}', player.lethargy='{player.lethargy}'\nplayer.lamp='{player.lamp}', player.orbOfZot='{player.orbOfZot}', player.runeStaff='{player.runeStaff}, player.turns='{player.turns}'\nplayer.treasures='{string.Join(", ", player.treasures)}'");
                     knownMap[player.location[0], player.location[1], player.location[2]] = theMap[player.location[0], player.location[1], player.location[2]];
-                    string[] choice = gameMenu.Menu("Your action", GameCollections.availableActions, ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages));
+                    string[] choice = gameMenu.Menu("Your action", GameCollections.availableActions, GameCollections.ErrorMesssages);
                     dynamicTemp = choice;
                     PlayerActions.Action(ref player, choice, ref knownMap, ref theMap);
                 }
