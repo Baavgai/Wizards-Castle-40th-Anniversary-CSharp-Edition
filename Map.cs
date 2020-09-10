@@ -66,6 +66,7 @@ namespace The_Wizard_s_Castle
                         Console.ForegroundColor = ConsoleColor.White;
                         roomValue = (map[player.location[0], j, k])[0].ToString();
                     }
+
                     if (player.location.SequenceEqual(new int[] { player.location[0], j, k }))
                     {
                         Console.BackgroundColor = ConsoleColor.DarkMagenta;

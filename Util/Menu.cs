@@ -6,20 +6,6 @@ using System.Collections.Generic;
 
 namespace The_Wizard_s_Castle {
     internal static partial class Util {
-        public static readonly Random Rand = new Random();
-
-        public static int RandInt(int maxValue) => Rand.Next(maxValue);
-        public static int RandInt(int minValue, int maxValue) => Rand.Next(minValue, maxValue);
-        public static void WriteLine(string s = "") => Console.WriteLine(s);
-        public static void Write(string s = "") => Console.Write(s);
-
-        public static T RandPick<T>(IEnumerable<T> xs) => xs.Skip(Rand.Next(xs.Count())).First();
-
-        // public static IEnumerable<string> ReplaceRandomMonster(IEnumerable<string> list) =>            list.Select(x => x.Replace("//RandomMonster", RandPick(GameCollections.Monsters)));
-
-
-        // private static IEnumerable<string> DefaultErrorMessages =>            ReplaceRandomMonster(GameCollections.ErrorMesssages);
-
         public static string Menu(string question, IEnumerable<string> choices) =>
             Menu(question, choices, (x, _) => x[0], GameCollections.ErrorMesssages);
 
@@ -61,17 +47,5 @@ namespace The_Wizard_s_Castle {
             }
         }
 
-
-        public static void WaitForKey(string msg = null) {
-            if (!string.IsNullOrWhiteSpace(msg)) { WriteLine(msg); }
-            WriteLine("\nPress ENTER to continue");
-            ConsoleKeyInfo keyPressed;
-            string regExPattern = @"[0-9a-zA-Z\?]";
-            Regex regEx = new Regex(regExPattern);
-            do {
-                keyPressed = Console.ReadKey(true);
-            }
-            while ((!(regEx.IsMatch(keyPressed.KeyChar.ToString()))) && keyPressed.KeyChar != (char)13);
-        }
     }
 }

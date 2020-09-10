@@ -6,4 +6,8 @@
     <RootNamespace>Wizards_Castle_40th_Anniversary_CSharp_Edition</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Models\MapLevel.cs" />
+  </ItemGroup>
+
 </Project>

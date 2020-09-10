@@ -5,13 +5,7 @@ using YWMenuNS;
 
 namespace The_Wizard_s_Castle.Models {
     class Map {
-        public class Cell {
-            public Item Contents { get; set; }
-            public bool Known { get; set; }
-
-        }
-
-        private readonly Cell[,,] state;
+        private readonly MapValue[,,] state;
         public Map(bool random) {
             if (random) {
                 Levels = Util.RandInt(8, 31);
@@ -20,19 +14,19 @@ namespace The_Wizard_s_Castle.Models {
             } else {
                 Levels = Rows = Cols = 8;
             }
-            state = new Cell[Levels, Rows, Cols];
+            state = new MapValue[Levels, Rows, Cols];
         }
 
         public int Levels { get; private set; }
         public int Rows { get; private set; }
         public int Cols { get; private set; }
 
-        public Cell this[MapPos p] {
+        public MapValue this[MapPos p] {
             get => state[p.Level, p.Row, p.Col];
             set => state[p.Level, p.Row, p.Col] = value;
         }
 
-        public Cell this[int level, int row, int col] {
+        public MapValue this[int level, int row, int col] {
             get => state[level, row, col];
             set => state[level, row, col] = value;
         }
