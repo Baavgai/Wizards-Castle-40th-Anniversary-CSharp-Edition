@@ -22,6 +22,7 @@ namespace The_Wizard_s_Castle.Models {
 
         public override bool Equals(object obj) => this.Equals(obj as MapPos);
         public override string ToString() => $"({Level},{Row},{Col})";
+        public string Display => $"({Level + 1}, {Row + 1}, {Col + 1})";
 
         public override int GetHashCode() => ToString().GetHashCode();
 

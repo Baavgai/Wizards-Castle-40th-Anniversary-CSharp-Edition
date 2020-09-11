@@ -13,7 +13,5 @@ namespace The_Wizard_s_Castle.Models {
             Intelligence = intelligence;
             Strength = strength;
         }
-
-
     }
 }

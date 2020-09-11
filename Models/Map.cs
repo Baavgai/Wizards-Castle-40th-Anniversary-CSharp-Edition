@@ -9,6 +9,8 @@ namespace The_Wizard_s_Castle.Models {
             public Item Contents { get; set; }
             public bool Known { get; set; }
 
+            public void Clear() => Contents = null;
+            public bool IsEmpty => Contents == null;
         }
 
         private readonly Cell[,,] state;
@@ -72,7 +74,9 @@ namespace The_Wizard_s_Castle.Models {
             Col = Util.RandInt(Cols),
         };
 
-        public void Clear() => Traverse((_, p) => this[p] = MapValue.Clear);
+        public MapPos FindGold() => null;
+
+        public void Clear() => Traverse((_, p) => this[p].Clear());
 
         public Map Populate() {
             // GameCollections collections = new GameCollections();

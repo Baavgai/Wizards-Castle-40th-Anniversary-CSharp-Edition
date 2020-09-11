@@ -4,8 +4,8 @@ using System.Linq;
 using YWMenuNS;
 
 namespace The_Wizard_s_Castle.Models {
-    class Player : IAbilities {
-        public const int MaxAttrib = 18;
+    class Player {
+        public int MaxAttrib => 18;
         public List<Item> Inventory { get; } = new List<Item>();
         
         private int dexterity = 0;
@@ -29,10 +29,11 @@ namespace The_Wizard_s_Castle.Models {
         public string Sex { get; set; }
         public string Gold { get; set; }
 
+        public MapPos Location { get; set; }
+
 
         private int MaxCap(int attr) =>
             attr > MaxAttrib ? MaxAttrib : attr;
-        
 
         public int Dexterity {
             get => dexterity;

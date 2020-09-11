@@ -8,61 +8,55 @@ namespace The_Wizard_s_Castle.Models {
         public Player Player { get; }
         public Map Map { get; }
         public State(Map map, Player player) {
-            this.Map = map;
-            this.Player = player;
+            Map = map;
+            Player = player;
         }
 
+        public Map.Cell CurrentCell => Map[Player.Location];
 
-        public void East() {
-            if (this.location[2] == (map.GetLength(2) - 1)) {
-                this.location[2] = 0;
+    }
+
+    static class ExtState {
+
+        public static void RevealMap(this State state, MapPos loc) =>
+            state.Map[loc].Known = true;
+
+        public static MapPos RandLocation(this State state) => new MapPos() {
+            Level = Util.RandInt(state.Map.Levels),
+            Row = Util.RandInt(state.Map.Rows),
+            Col = Util.RandInt(state.Map.Cols),
+        };
+
+        public static void GoNorth(this State state) {
+            if (state.Player.Location.Row == 0) {
+                state.Player.Location.Row = state.Map.Rows - 1;
             } else {
-                this.location[2] += 1;
+                state.Player.Location.Row -= 1;
             }
         }
 
-        public void West(string[,,] map) {
-            if (this.location[2] == 0) {
-                this.location[2] = (map.GetLength(2) - 1);
+        public static void GoSouth(this State state) {
+            if (state.Player.Location.Row == state.Map.Rows - 1) {
+                state.Player.Location.Row = 0;
             } else {
-                this.location[2] -= 1;
+                state.Player.Location.Row += 1;
+            }
+        }
+        public static void GoEast(this State state) {
+            if (state.Player.Location.Col == state.Map.Cols - 1) {
+                state.Player.Location.Col = 0;
+            } else {
+                state.Player.Location.Col += 1;
+            }
+        }
+        public static void GoWest(this State state) {
+            if (state.Player.Location.Col == 0) {
+                state.Player.Location.Col = state.Map.Cols - 1;
+            } else {
+                state.Player.Location.Col -= 1;
             }
         }
 
-        public void North(string[,,] map) {
-            if (this.location[1] == 0) {
-                this.location[1] = (map.GetLength(1) - 1);
-            } else {
-                this.location[1] -= 1;
-            }
-        }
-
-        public void South(string[,,] map) {
-            if (this.location[1] == (map.GetLength(1) - 1)) {
-                this.location[1] = 0;
-            } else {
-                this.location[1] += 1;
-            }
-        }
-
-        public void Down() {
-            this.location[0] += 1;
-        }
-
-        public void Up() {
-            this.location[0] -= 1;
-        }
-
-        public void Sink() {
-            this.location[0] += 1;
-        }
-
-        public void Warp(string[,,] map) {
-            int level = rand.Next(0, map.GetLength(0));
-            int row = rand.Next(0, map.GetLength(1));
-            int column = rand.Next(0, map.GetLength(2));
-            this.location = (new int[] { level, row, column });
-        }
     }
 
 }

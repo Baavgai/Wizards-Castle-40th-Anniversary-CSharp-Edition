@@ -5,24 +5,18 @@ using YWMenuNS;
 using The_Wizard_s_Castle.Models;
 
 namespace The_Wizard_s_Castle {
-    class RoomContent : Item {
-        private readonly Func<RoomContent, Player, bool> onEntry;
-        private readonly Func<RoomContent, Player, char, bool> onCommand;
-        private RoomContent(string name, Func<RoomContent, Player, bool> onEntry = null, Func<RoomContent, Player, char, bool> onCommand = null) : base(name) {
-            this.onEntry = onEntry;
-            this.onCommand = onCommand;
-        }
-        public override ItemType ItemType => ItemType.Content;
+    class RoomContentImpl : Item {
+        private static Item.EntryHandler Wrapper(string name, Item.EntryHandler onEntry) =>
+            (state) => {
+                Util.WriteLine($"\nHere you find '{name}'");
+                onEntry?.Invoke(state);
+            };
 
-        public MapPos Location { get; set; } = MapPos.Void;
+        public RoomContentImpl(string name, Item.EntryHandler onEntry = null) : base(name, ItemType.Content, Wrapper(name, onEntry)) { }
 
-        public bool OnEntry(Player player) {
-            Util.WriteLine($"\nHere you find '{Name}'");
-            return onEntry?.Invoke(this, player) ?? false;
-        }
-        public bool OnCommand(Player player, char command) => onCommand?.Invoke(this, player, command) ?? false;
+    }
 
-
+    /*
         public static readonly List<RoomContent> AllContent = new List<RoomContent>() {
             new RoomContent("Book"),
             new RoomContent("Chest"),

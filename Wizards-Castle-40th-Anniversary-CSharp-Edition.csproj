@@ -7,8 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Action.cs" />
     <Compile Remove="Models\MapCell.cs" />
     <Compile Remove="Models\MapLevel.cs" />
+    <Compile Remove="Player.cs" />
   </ItemGroup>
 
 </Project>
