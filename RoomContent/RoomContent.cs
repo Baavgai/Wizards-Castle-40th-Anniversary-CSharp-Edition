@@ -2,32 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using YWMenuNS;
+using The_Wizard_s_Castle.Models;
 
-namespace The_Wizard_s_Castle.Models {
-    /*
-    class RoomContentImpl : Item {
+namespace The_Wizard_s_Castle {
+    class RoomContent : Item {
         private readonly Func<RoomContent, Player, bool> onEntry;
         private readonly Func<RoomContent, Player, char, bool> onCommand;
         private RoomContent(string name, Func<RoomContent, Player, bool> onEntry = null, Func<RoomContent, Player, char, bool> onCommand = null) : base(name) {
             this.onEntry = onEntry;
             this.onCommand = onCommand;
         }
-        public override ItemType ItemType => ItemType.Content;
-
-        public MapPos Location { get; set; } = MapPos.Void;
-
-        public bool OnEntry(Player player) {
-            Util.WriteLine($"\nHere you find '{Name}'");
-            return onEntry?.Invoke(this, player) ?? false;
-        }
-        public bool OnCommand(Player player, char command) => onCommand?.Invoke(this, player, command) ?? false;
-    }
-    */
-
-
-      
-    abstract class RoomContent : Item {
-        private RoomContent(string name) : base(name) { }
         public override ItemType ItemType => ItemType.Content;
 
         public MapPos Location { get; set; } = MapPos.Void;

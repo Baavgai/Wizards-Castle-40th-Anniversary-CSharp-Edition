@@ -25,7 +25,7 @@ namespace The_Wizard_s_Castle.Models {
 
         public override int GetHashCode() => ToString().GetHashCode();
 
-        public static readonly MapPos Void = new MapPos(-1, -1, -1);
-        public static readonly MapPos PlayerInventory = new MapPos(-2, -1, -1);
+        // public static readonly MapPos Void = new MapPos(-1, -1, -1);
+        // public static readonly MapPos PlayerInventory = new MapPos(-2, -1, -1);
     }
 }

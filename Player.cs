@@ -5,6 +5,7 @@ using YWMenuNS;
 
 namespace The_Wizard_s_Castle {
     class Player : Character {
+        public List<Models.Item> Inventory { get; } = new List<Models.Item>();
         public Player() {
         }
 

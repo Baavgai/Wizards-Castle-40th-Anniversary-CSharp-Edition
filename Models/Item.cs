@@ -6,7 +6,7 @@ using YWMenuNS;
 
 namespace The_Wizard_s_Castle.Models {
     enum ItemType {
-        Nothing, Treasure, Monster, Curse, Content
+        Treasure, Monster, Curse, Content, UniqueItem, StackItem
     }
     abstract class Item : IEquatable<Item> {
 
