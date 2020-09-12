@@ -5,7 +5,7 @@ using System.Linq;
 using YWMenuNS;
 using The_Wizard_s_Castle.Models;
 
-namespace The_Wizard_s_Castle {
+namespace WizardCastle {
     internal static class Actions {
         public interface IAction : IEquatable<IAction> {
             public char Cmd { get; }

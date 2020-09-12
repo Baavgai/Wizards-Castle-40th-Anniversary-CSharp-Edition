@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using YWMenuNS;
 
-namespace The_Wizard_s_Castle.Models {
+namespace WizardCastle {
     class Map {
         public class Cell {
-            public Item Contents { get; set; }
+            public IHasOnEntry Contents { get; set; }
             public bool Known { get; set; }
 
             public void Clear() => Contents = null;

@@ -3,23 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using YWMenuNS;
 
-namespace The_Wizard_s_Castle.Models {
+namespace WizardCastle {
     class TreasureItem : Item {
-        private readonly Action<TreasureItem, Player> update;
-        private TreasureItem(string name, Action<TreasureItem, Player> update = null) : base(name) {
+        private readonly Action<State> update;
+        private TreasureItem(string name, Action<State> update = null) : base(name, ItemType.Treasure) {
             this.update = update;
         }
-        public override ItemType ItemType => ItemType.Treasure;
 
-        public MapPos Location { get; set; } = MapPos.Void;
-
-        public void UpdatePlayer(Player player) => update?.Invoke(this, player);
-
+        public void Exec(State state) => update?.Invoke(state);
 
         public static readonly List<TreasureItem> AllTreasures = new List<TreasureItem>() {
-            new TreasureItem("The Blue Flame", (item, p) => {
-                if (p.bookStuck && item.Location == MapPos.PlayerInventory) {
-                    p.bookStuck = false;
+            new TreasureItem("The Blue Flame", state => {
+                if (state.Player.bookStuck) {
+                    state.Player.bookStuck = false;
                     Util.WriteLine("The Blue Flame burns the book off your hands!", bgColor: ConsoleColor.DarkGray);
                     Util.WaitForKey();
                 }

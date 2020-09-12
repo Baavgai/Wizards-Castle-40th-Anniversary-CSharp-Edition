@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace The_Wizard_s_Castle.Models {
+namespace WizardCastle {
     class Curse {
         public string Name { get; private set; }
         public Action<State> Exec { get; private set; }

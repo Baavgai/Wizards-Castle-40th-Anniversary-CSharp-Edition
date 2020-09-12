@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using YWMenuNS;
 
-namespace The_Wizard_s_Castle.Models {
-    class Player {
+namespace WizardCastle {
+    class Player : IAbilities {
         public int MaxAttrib => 18;
         public List<Item> Inventory { get; } = new List<Item>();
         
@@ -15,7 +15,7 @@ namespace The_Wizard_s_Castle.Models {
         public int lampBurn = 0;
         public int flares = 0;
         public string armor = "";
-        public string weapon = "";
+        public Weapon Weapon { get; set; } = null;
         public bool blind = false;
         public bool bookStuck = false;
         public bool forgetfulness = false;

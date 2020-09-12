@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using YWMenuNS;
-using The_Wizard_s_Castle.Models;
 
-namespace The_Wizard_s_Castle {
-    class RoomContentImpl : Item {
-        private static Item.EntryHandler Wrapper(string name, Item.EntryHandler onEntry) =>
-            (state) => {
-                Util.WriteLine($"\nHere you find '{name}'");
-                onEntry?.Invoke(state);
-            };
+namespace WizardCastle {
+    class RoomGold : Item, IHasOnEntry {
+        public RoomGold(): base("Gold", ItemType.Content) { }
 
-        public RoomContentImpl(string name, Item.EntryHandler onEntry = null) : base(name, ItemType.Content, Wrapper(name, onEntry)) { }
-
+        public void OnEntry(State state) {
+            var goldFound = Util.RandInt(1, 1001);
+            Util.WriteLine($"You've found {goldFound} Gold Pieces");
+            state.Player.Gold += goldFound;
+            state.CurrentCell.Clear();
+        }
     }
 
     /*

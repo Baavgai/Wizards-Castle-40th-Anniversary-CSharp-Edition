@@ -4,8 +4,16 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace The_Wizard_s_Castle {
+namespace WizardCastle {
     internal static partial class Util {
+
+        public static void Sleep() {
+            for (int i = 0; i < 30; i++) {
+                Util.Write(".");
+                System.Threading.Thread.Sleep(100);
+            }
+
+        }
 
         public static void WaitForKey(string msg = null) {
             if (!string.IsNullOrWhiteSpace(msg)) { WriteLine(msg); }

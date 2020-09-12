@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace The_Wizard_s_Castle.Models {
+namespace WizardCastle {
     class Mob {
         public string Name { get; }
         public int Dexterity { get; }

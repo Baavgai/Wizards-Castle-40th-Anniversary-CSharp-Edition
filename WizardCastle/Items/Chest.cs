@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using The_Wizard_s_Castle.Models;
 
-namespace The_Wizard_s_Castle {
-    class Chest : RoomContentImpl, IHasOpen {
+namespace WizardCastle {
+    class Chest : Item, IHasOpen, IHasOnEntry {
 
-        public Chest() : base("Chest") { }
+        public Chest() : base("Chest", ItemType.Content) { }
+
+        public void OnEntry(State state) => Util.WriteLine($"\nHere you find '{Name}'");
 
         public void Open(State state) {
             if (!state.Player.blind) {
@@ -24,7 +25,7 @@ namespace The_Wizard_s_Castle {
                 return $"there's {randomGold} Gold Pieces inside.";
             },
             s => {
-                Util.RandPick(new Action[] { s.GoEast, s.GoNorth, s.GoSouth, s.GoWest })();
+                Util.RandPick(Direction.AllDirections).Exec(s);
                 return "Gas! You stagger from the room!";
             },
             s => {
@@ -54,7 +55,7 @@ namespace The_Wizard_s_Castle {
                 };
             },
             s => {
-                var curse = Util.RandPick(Models.Curse.AllCurses);
+                var curse = Util.RandPick(Curse.AllCurses);
                 curse.Exec(s);
                 return $"a wizard jumps out and puts the curse of {curse.Name} on you and runs out of the room!";
             },

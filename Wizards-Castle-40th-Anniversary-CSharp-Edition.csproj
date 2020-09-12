@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\Action.cs" />
-    <Compile Remove="Models\MapCell.cs" />
-    <Compile Remove="Models\MapLevel.cs" />
-    <Compile Remove="Player.cs" />
+    <Compile Remove="WizardCastle\Items\ContentBase.cs" />
+    <Compile Remove="WizardCastle\Items\RoomItem.cs" />
+    <Compile Remove="WizardCastle\Items\RoomItemImpl.cs" />
+    <Compile Remove="WizardCastle\Util\Pool.cs" />
   </ItemGroup>
 
 </Project>

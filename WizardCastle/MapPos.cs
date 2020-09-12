@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using YWMenuNS;
 
-namespace The_Wizard_s_Castle.Models {
+namespace WizardCastle {
     class MapPos : IEquatable<MapPos> {
         public int Level { get; set; }
         public int Row { get; set; }

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using The_Wizard_s_Castle.Models;
 
-namespace The_Wizard_s_Castle {
-    class Book : RoomContentImpl, IHasOpen {
+namespace WizardCastle {
+    class Book : Item, IHasOpen, IHasOnEntry {
 
-        public Book() : base("Book") { }
+        public Book() : base("Book", ItemType.Content) { }
+
+        public void OnEntry(State state) => Util.WriteLine($"\nHere you find '{Name}'");
 
         public void Open(State state) {
             if (!state.Player.blind) {
@@ -17,6 +18,7 @@ namespace The_Wizard_s_Castle {
             }
             Util.WaitForKey();
         }
+
 
         private static readonly Func<State, string>[] AllHandlers = new Func<State, string>[] {
             s => "it's another volume of Zot's poetry. Yeech!",

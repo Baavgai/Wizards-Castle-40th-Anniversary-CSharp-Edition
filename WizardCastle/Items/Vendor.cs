@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace The_Wizard_s_Castle.Models {
+namespace WizardCastle {
     class Vendor : Mob {
         public bool mad = true;
         public int webbedTurns = 0;
