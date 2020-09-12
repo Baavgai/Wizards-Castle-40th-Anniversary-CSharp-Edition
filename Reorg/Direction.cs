@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Direction : IHasName {
+    class Direction : IHasName, IHasExec {
         public string Name { get; }
-        public Action<State> Exec { get; }
+        private readonly Action<State> exec;
         private Direction(string name, Action<State> exec) {
             Name = name;
-            Exec = exec;
+            this.exec = exec;
         }
+        public void Exec(State state) => exec(state);
+
         public override string ToString() => Name;
 
         public static Direction North = new Direction("North", state => {
@@ -17,6 +19,7 @@ namespace WizardCastle {
             } else {
                 state.Player.Location.Row -= 1;
             }
+            state.CurrentCell.Known = true;
         });
         public static Direction South = new Direction("South", state => {
             if (state.Player.Location.Row == state.Map.Rows - 1) {
@@ -24,6 +27,7 @@ namespace WizardCastle {
             } else {
                 state.Player.Location.Row += 1;
             }
+            state.CurrentCell.Known = true;
         });
         public static Direction East = new Direction("East", state => {
             if (state.Player.Location.Col == state.Map.Cols - 1) {
@@ -31,6 +35,7 @@ namespace WizardCastle {
             } else {
                 state.Player.Location.Col += 1;
             }
+            state.CurrentCell.Known = true;
         });
         public static Direction West = new Direction("West", state => {
             if (state.Player.Location.Col == 0) {
@@ -38,6 +43,7 @@ namespace WizardCastle {
             } else {
                 state.Player.Location.Col -= 1;
             }
+            state.CurrentCell.Known = true;
         });
 
         public static Direction[] AllDirections = new Direction[] {

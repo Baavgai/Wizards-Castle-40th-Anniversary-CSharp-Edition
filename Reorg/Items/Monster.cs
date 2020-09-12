@@ -78,21 +78,23 @@ namespace WizardCastle {
                         firstAttackRound = false;
                     }
                     if (state.Player.Strength > 0) {
-                        switch (Util.Menu("What would you like to do", PlayerChoices(state, firstAttackRound))) {
+                        switch (Util.Menu("What would you like to do", PlayerChoices(state, firstAttackRound)).Item2) {
                             case "Attack":
-                                PlayerAttack();
+                                PlayerAttack(state, ma);
                                 break;
                             case "Bribe":
-                                PlayerBribe();
+                                PlayerBribe(state);
                                 break;
                             case "Cast":
-                                PlayerCast();
+                                PlayerCast(state);
                                 break;
                             case "Retreat":
-                                PlayerRetreat();
+                                PlayerRetreat(state);
                                 break;
                         }
-                        if (monster.strength > 0 && monster.mad && player.location.SequenceEqual(monster.location)) { Battle.MonsterAttack(ref player, ref monster); }
+                        if (ma.Strength > 0 && mad) { 
+                            MonsterAttack(state);
+                        }
                     }
                     firstAttackRound = false;
                 }
@@ -121,8 +123,8 @@ namespace WizardCastle {
                 if (treasures.Count > 0) {
                     var treasure = Util.RandPick(treasures);
                     Util.WriteLine($"The {Name} says I want the {treasure.Name}. Will you give it to me?");
-                    var choice = Util.Menu($"Give the {Name} the {treasure}", new string[] { "Yes", "No" });
-                    if (choice == "Yes") {
+                    var choice = Util.Menu($"Give the {Name} the {treasure}", new string[] { "Yes", "No" }).Item1 == 'Y';
+                    if (choice) {
                         Util.WriteLine($"\nThe {Name} says, ok, just don't tell anyone.");
                         state.Player.Inventory.Remove(treasure);
                         Inventory.Add(treasure);
@@ -135,6 +137,7 @@ namespace WizardCastle {
             }
 
             void PlayerCast(State state) {
+                /*
                 string question = $"What spell do you want to cast";
                 Dictionary<char, string> choicesDict = new Dictionary<char, string>
                     {
@@ -166,6 +169,7 @@ namespace WizardCastle {
                         }
                         break;
                 }
+                */
             }
 
             private void PlayerRetreat(State state) {
@@ -173,7 +177,7 @@ namespace WizardCastle {
                     MonsterAttack(state);
                 }
                 if (state.Player.Strength > 0) {
-                    var choice = Util.Menu("Retreat which way", Direction.AllDirections);
+                    var choice = Util.Menu("Retreat which way", Direction.AllDirections).Item2;
                     choice.Exec(state);
                     Util.WriteLine($"\nYou retreat to the {choice.Name}!");
                     Util.WaitForKey();
@@ -212,16 +216,13 @@ namespace WizardCastle {
                     Util.WriteLine($"\nThe {Name} attacks!");
                     if (Util.RandInt(1, 11) > 5) {
                         Util.WriteLine("It hit you!");
-                        int damage = Util.RandInt(1, 6);
-                        if (state.Player.armor == "Plate") { damage -= 3; }
-                        if (state.Player.armor == "ChainMail") { damage -= 2; }
-                        if (state.Player.armor == "Leather") { damage -= 1; }
+                        int damage = Util.RandInt(1, 6) - state.Player.Armor.DamageAbsorb;
                         if (damage > 0) {
                             state.Player.Strength -= damage;
                         }
                         if (Util.RandInt(1, 11) > 9) {
-                            Util.WriteLine($"\nOh No! Your {state.Player.armor} armor is destroyed!");
-                            state.Player.armor = "";
+                            Util.WriteLine($"\nOh No! Your {state.Player.Armor.Name} armor is destroyed!");
+                            state.Player.Armor = null;
                         }
                     } else {
                         Util.WriteLine("It Missed!");
@@ -231,5 +232,4 @@ namespace WizardCastle {
         }
 
     }
-}
 }

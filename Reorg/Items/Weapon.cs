@@ -6,6 +6,8 @@ namespace WizardCastle {
         public interface IWeapon : IItem {
             public int BaseDamage { get; }
             public int Cost { get; }
+            public int IntialCost { get; }
+
             public int CalcDamage();
         }
 
@@ -21,6 +23,7 @@ namespace WizardCastle {
         private class WeaponImpl : Item, IWeapon {
             public int BaseDamage { get; }
             public int Cost { get; }
+            public int IntialCost => BaseDamage * 10;
             public WeaponImpl(string name, int cost, int baseDamage) : base(name, ItemType.Weapon) {
                 Cost = cost;
                 BaseDamage = baseDamage;

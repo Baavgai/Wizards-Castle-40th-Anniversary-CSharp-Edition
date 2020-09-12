@@ -32,7 +32,7 @@ namespace WizardCastle {
                 return "Gas! You stagger from the room!";
             },
             s => {
-                var rndDmg = Util.RandInt(2, 10) - s.Player.armor switch
+                var rndDmg = Util.RandInt(2, 10) - s.Player.Armor.Name switch
                 {
                     "Leather" => 2,
                     "ChainMail" => 3,
@@ -64,8 +64,8 @@ namespace WizardCastle {
             },
 
             s => {
-                var loc = s.RandLocation();
-                s.RevealMap(loc);
+                var loc = s.Map.RandPos();
+                Game.RevealMap(s, loc);
                 return $"you find a piece of a map revealing the area around {loc.Display}).";
             }
 

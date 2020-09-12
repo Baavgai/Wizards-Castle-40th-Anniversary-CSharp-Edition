@@ -5,7 +5,7 @@ using System.Linq;
 namespace WizardCastle {
     internal static partial class Game {
 
-        public static void StartupSplash() {
+        private static void StartupSplash() {
             Console.SetWindowPosition(0, 0);
             System.Console.WindowHeight = System.Console.LargestWindowHeight - 25;
             System.Console.WindowWidth = System.Console.LargestWindowWidth - 50;
@@ -54,24 +54,21 @@ namespace WizardCastle {
                 {'S', "Standard 8x8x8 Map"},
                 {'R', "Random Map"}
             }).Item1 == 'R';
-            System.Console.Clear();
+            Util.ClearScreen();
             return new Map(randomMap);
         }
 
-        private static Player GetPlayer() {
-            bool randomMap = Util.Menu("Would you like the standard 8x8x8 map or a random map", new Dictionary<char, string> {
-                {'S', "Standard 8x8x8 Map"},
-                {'R', "Random Map"}
-            }).Item1 == 'R';
-            System.Console.Clear();
-            return new Map(randomMap);
-        }
 
-        public static void Startup() {
+        public static State Startup() {
+            StartupSplash();
             Util.UserContintue();
             System.Console.Clear();
             ViewInstructions();
-
+            var m = GetMap();
+            var state = new State(m, InitPlayer());
+            Util.ClearScreen();
+            Util.WriteLine($"\tOk, {state.Player.Race}, you are now entering Zot's castle!\n");
+            return state;
         }
     }
 }

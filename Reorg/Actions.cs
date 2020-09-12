@@ -12,8 +12,8 @@ namespace WizardCastle {
         }
 
         private class GameAction : IAction, IEquatable<GameAction> {
-            private readonly Action<Models.State> action;
-            public GameAction(char cmd, string desc, Action<Models.State> action) {
+            private readonly Action<State> action;
+            public GameAction(char cmd, string desc, Action<State> action) {
                 Cmd = cmd;
                 Description = desc;
                 this.action = action;
@@ -21,7 +21,7 @@ namespace WizardCastle {
             public char Cmd { get; }
             public string Description { get; }
 
-            public void Exec(Models.State state) => action(state);
+            public void Exec(State state) => action(state);
             public bool Equals(IAction other) => other != null && other.Cmd == Cmd;
             public bool Equals(GameAction other) => other != null && other.Cmd == Cmd;
 
@@ -41,35 +41,29 @@ namespace WizardCastle {
         public static readonly IAction North = new GameAction('N',
             @"(N)ORTH moves you to the room north of your present position. WHEN YOU GO NORTH FROM THE ENTRANCE THE GAME ENDS (In all other cases the north edge wraps to the south).",
             state => {
-                state.GoNorth();
-                /*
-            if (player.location[0] == 0 && player.location[1] == 0 && player.location[2] == 3) {
-                    Program.PlayerExit(player);
-                    break;
+                if (state.CurrentCell == Items.Exit) {
+                    state.Done = true;
                 } else {
-                    player.North(knownMap);
-                    break;
-                }*/
+                    Direction.North.Exec(state);
+                }
             });
 
         public static readonly IAction South = new GameAction('S',
             @"(S)OUTH moves you to the room south of your present position (In all cases the south edge wraps to the north edge).",
-            state => state.GoSouth());
+            Direction.South.Exec);
 
         public static readonly IAction East = new GameAction('E',
             @"(E)AST moves you to the room east of your present position (In all cases the east edge wraps to the west edge).",
-            state => state.GoEast());
+            Direction.East.Exec);
 
         public static readonly IAction West = new GameAction('W',
             @"(W)EST moves you to the room west of your present position (In all cases the west edge wraps to the east edge).",
-            state => state.GoWest());
+            Direction.West.Exec);
 
         public static readonly IAction Open = new GameAction('O',
             @"(O)PEN causes you to open the book or chest in the room you are in. This command will only work if you are in a room with a chest or book.",
             (state) => {
-                var item = state.CurrentCell.Contents as IHasOpen;
-                // CurrentCell()
-                if (item != null) {
+                if (state.CurrentCell.Contents is IHasOpen item) {
                     item.Open(state);
                 } else {
                     Util.WaitForKey($"\n{Util.RandErrorMsg()}\n");

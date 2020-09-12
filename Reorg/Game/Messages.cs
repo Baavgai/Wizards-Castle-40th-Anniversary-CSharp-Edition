@@ -4,7 +4,7 @@ using System.Linq;
 namespace WizardCastle {
     internal static partial class Game {
         private static IEnumerable<string> ReplaceRandomMonster(IEnumerable<string> list) =>
-            list.Select(x => x.Replace("//RandomMonster", Util.RandPick(Monster.AllMonsters).Name));
+            list.Select(x => x.Replace("//RandomMonster", Util.RandPick(Items.AllMonsters).Name));
 
         private static readonly string[] errorMesssages = new string[] {
             "How very original, now try again.",
@@ -57,5 +57,26 @@ namespace WizardCastle {
 
         public static string RandGameMessages() =>
             Util.RandPick(GameMessages);
+
+        public static void ShowStatus(State state) {
+            Util.WriteLines(Lines());
+            IEnumerable<string> Lines() {
+                (var player, var map) = state;
+                yield return $"You are at {player.Location.DisplayFull}";
+                yield return $"You are a {player.Sex} {player.Race}";
+                yield return $"Dexterity={player.Dexterity} Intelligence={player.Intelligence} Strength={player.Strength}";
+                yield return $"Gold={player.Gold} Flares={player.flares} Armor={player.Armor?.Name ?? "None"} Weapon={player.Weapon?.Name ?? "None"}";
+                var treasures = player.Inventory.Where(x => x.ItemType == ItemType.Treasure);
+                if (treasures.Count() > 0) {
+                    yield return $"Treasures='{string.Join(",", treasures)}'";
+                }
+                var curses = player.Inventory.Where(x => x.ItemType == ItemType.Curse);
+                if (curses.Count() > 0) {
+                    yield return $"Cursed with='{string.Join(",", curses)}'";
+                }
+            }
+        }
+
+
     }
 }

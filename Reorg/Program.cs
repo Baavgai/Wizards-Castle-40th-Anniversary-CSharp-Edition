@@ -13,21 +13,9 @@ namespace WizardCastle {
         }
 
         static int Main() {
-            Game.Startup();
-            System.Console.Clear();
-            bool fallThrough;
-
-            
-            Player player = Player.CreatePlayer();
-            //*** Testing *** int[] locationOfZot = Map.FindOrbOfZot(theMap);
-            GameCollections.RuneStaffLocation = Map.FindMonster(theMap, GameCollections.Monsters[new Random().Next(0, GameCollections.Monsters.Count)]);
-            Console.Clear();
-            Console.WriteLine($"\tOk, {player.race}, you are now entering Zot's castle!\n");
-            //*** Testing *** player.strength = 999;
-            //*** Testing *** player.intelligence = 999;
-            //*** Testing *** player.flares = 999;
+            var state = Game.Startup();
             do {
-                Console.Clear();
+                Util.ClearScreen();
                 dynamicTemp = new string[] { "", "" };
                 player.turns += 1;
                 knownMap[player.location[0], player.location[1], player.location[2]] = theMap[player.location[0], player.location[1], player.location[2]];

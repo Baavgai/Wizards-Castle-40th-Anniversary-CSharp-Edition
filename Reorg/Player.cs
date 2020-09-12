@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using YWMenuNS;
 
 namespace WizardCastle {
     class Player : IAbilities {
@@ -11,10 +10,10 @@ namespace WizardCastle {
         private int dexterity = 0;
         private int intelligence = 0;
         private int strength = 0;
-        public int turns = 0;
+        // public int turns = 0;
         public int lampBurn = 0;
         public int flares = 0;
-        public string armor = "";
+        public Items.IArmor Armor { get; set; } = null;
         public Items.IWeapon Weapon { get; set; } = null;
         public bool blind = false;
         public bool bookStuck = false;
@@ -27,7 +26,7 @@ namespace WizardCastle {
 
         public string Race { get; set; }
         public string Sex { get; set; }
-        public string Gold { get; set; }
+        public int Gold { get; set; } = 60;
 
         public MapPos Location { get; set; }
 

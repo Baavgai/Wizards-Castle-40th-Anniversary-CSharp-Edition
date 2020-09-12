@@ -23,6 +23,7 @@ namespace WizardCastle {
         public override bool Equals(object obj) => this.Equals(obj as MapPos);
         public override string ToString() => $"({Level},{Row},{Col})";
         public string Display => $"({Level + 1}, {Row + 1}, {Col + 1})";
+        public string DisplayFull => $"Level {Level + 1} Row {Row + 1} Column {Col + 1}";
 
         public override int GetHashCode() => ToString().GetHashCode();
 

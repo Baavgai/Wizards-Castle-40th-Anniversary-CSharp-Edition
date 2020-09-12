@@ -83,14 +83,16 @@ namespace WizardCastle {
             Row = Util.RandInt(Rows),
             Col = Util.RandInt(Cols),
         };
-        public MapPos RandEmptyPos() {
+        private MapPos RandPos(Func<MapPos,bool> good) {
             var x = RandPos();
-            while(!this[x].IsEmpty) {
-                x = RandPos();
-            }
+            while (!good(x)) { x = RandPos(); }
             return x;
         }
-        
+
+
+        public MapPos RandEmptyPos() => RandPos(p => this[p].IsEmpty);
+        public MapPos RandKnownPos() => RandPos(p => this[p].Known);
+
 
         public MapPos FindGold() => null;
 
@@ -99,6 +101,7 @@ namespace WizardCastle {
 
 
         private void Populate() {
+            // GameCollections.RuneStaffLocation = Map.FindMonster(theMap, GameCollections.Monsters[new Random().Next(0, GameCollections.Monsters.Count)]);
             Traverse((_, p) => this[p] = new Cell());
             this[0, 0, 3].Contents = Items.Exit;
             foreach (var x in Items.AllTreasures) {
@@ -153,35 +156,5 @@ namespace WizardCastle {
                 }
             });
         }
-        }
     }
-
-    public static void DisplayLevel(string[,,] map, Player player) {
-        string roomValue;
-        for (int j = 0; j < map.GetLength(1); j++) {
-            for (int k = 0; k < map.GetLength(2); k++) {
-                if (map[player.location[0], j, k] == "Zot") {
-                    roomValue = "W";
-                } else if (GameCollections.Monsters.Contains(map[player.location[0], j, k])) {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    roomValue = "M";
-                } else {
-                    Console.ForegroundColor = ConsoleColor.White;
-                    roomValue = (map[player.location[0], j, k])[0].ToString();
-                }
-                if (player.location.SequenceEqual(new int[] { player.location[0], j, k })) {
-                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
-                    roomValue = "*";
-                    Console.Write(" {0} ", roomValue);
-                } else {
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.Write(" {0} ", roomValue);
-                }
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.BackgroundColor = ConsoleColor.Black;
-            }
-            Console.WriteLine();
-        }
-    }
-
 }

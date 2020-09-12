@@ -4,6 +4,15 @@ namespace WizardCastle {
 
     internal static partial class Items {
 
+        public static readonly IArmor Leather = new ArmorImpl("Leather", 1500, 1);
+        public static readonly IArmor ChainMail = new ArmorImpl("ChainMail", 2000, 2);
+        public static readonly IArmor Plate = new ArmorImpl("Plate", 2500, 3);
+
+        public static IArmor[] AllArmor = new IArmor[] {
+            Leather, ChainMail, Plate
+        };
+        // { 10, 20, 30 }
+
         public static readonly IHasOnEntry Gold = new RoomEntryImpl("Gold", ItemType.Content,
             state => {
                 var goldFound = Util.RandInt(1, 1001);
@@ -24,7 +33,7 @@ namespace WizardCastle {
             });
         public static readonly IHasOnEntry Warp = new RoomEntryImpl("Warp", ItemType.Content,
             state => {
-                state.Player.Location = state.RandLocation();
+                state.Player.Location = state.Map.RandPos();
                 Util.Sleep();
             });
 
