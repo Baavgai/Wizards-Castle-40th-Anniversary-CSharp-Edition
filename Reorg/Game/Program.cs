@@ -1,23 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
+using System;
 
 namespace WizardCastle {
     class Program {
-        private static Map GetMap() {
-            bool randomMap = Util.Menu("Would you like the standard 8x8x8 map or a random map", new Dictionary<char, string>            {
-                {'S', "Standard 8x8x8 Map"},
-                {'R', "Random Map"}
-            }).Item1 == 'R';
-            System.Console.Clear();
-            return new Map(randomMap);
-        }
-
         static int Main() {
-            Game.Startup();
+            // Set the WindowPosition, WindowHeight and WindowWidth
+            Console.SetWindowPosition(0, 0);
+            System.Console.WindowHeight = System.Console.LargestWindowHeight - 25;
+            System.Console.WindowWidth = System.Console.LargestWindowWidth - 50;
+            ShowStartingMessage();
+            Console.WriteLine("Press ENTER to continue.");
+            Console.ReadLine();
             System.Console.Clear();
+            Instructions.ViewInstructions();
+            System.Console.Clear();
+            dynamic dynamicTemp;
+            string[,,] theMap = Map.GetMap(gameMenu);
+            string[,,] knownMap = theMap.Clone() as string[,,];
             bool fallThrough;
-
-            
+            Map.BlankMap(knownMap);
             Player player = Player.CreatePlayer();
             //*** Testing *** int[] locationOfZot = Map.FindOrbOfZot(theMap);
             GameCollections.RuneStaffLocation = Map.FindMonster(theMap, GameCollections.Monsters[new Random().Next(0, GameCollections.Monsters.Count)]);

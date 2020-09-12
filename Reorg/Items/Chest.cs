@@ -2,23 +2,26 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Chest : Item, IHasOpen, IHasOnEntry {
+    internal static partial class Items {
+        public interface IChest : IHasOpen, IHasOnEntry { }
 
-        public Chest() : base("Chest", ItemType.Content) { }
+        private class ChestImpl : Item, IChest {
 
-        public void OnEntry(State state) => Util.WriteLine($"\nHere you find '{Name}'");
+            public ChestImpl() : base("Chest", ItemType.Content) { }
 
-        public void Open(State state) {
-            if (!state.Player.blind) {
-                state.CurrentCell.Clear();
-                Util.WriteLine($"\nYou open the chest and { Util.RandPick(AllHandlers)(state)}");
-            } else {
-                Util.WriteLine($"Sorry, {state.Player.Race}, it's not written in Braille!");
+            public void OnEntry(State state) => Util.WriteLine($"\nHere you find '{Name}'");
+
+            public void Open(State state) {
+                if (!state.Player.blind) {
+                    state.CurrentCell.Clear();
+                    Util.WriteLine($"\nYou open the chest and { Util.RandPick(AllHandlers)(state)}");
+                } else {
+                    Util.WriteLine($"Sorry, {state.Player.Race}, it's not written in Braille!");
+                }
+                Util.WaitForKey();
             }
-            Util.WaitForKey();
-        }
 
-        private static readonly Func<State, string>[] AllHandlers = new Func<State, string>[] {
+            private static readonly Func<State, string>[] AllHandlers = new Func<State, string>[] {
             s => {
                 int randomGold = Util.RandInt(2, 1001);
                 s.Player.Gold += randomGold;
@@ -67,5 +70,6 @@ namespace WizardCastle {
             }
 
         };
+        }
     }
 }

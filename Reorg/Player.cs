@@ -15,7 +15,7 @@ namespace WizardCastle {
         public int lampBurn = 0;
         public int flares = 0;
         public string armor = "";
-        public Weapon Weapon { get; set; } = null;
+        public Items.IWeapon Weapon { get; set; } = null;
         public bool blind = false;
         public bool bookStuck = false;
         public bool forgetfulness = false;

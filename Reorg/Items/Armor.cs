@@ -2,21 +2,30 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Armor : Item {
-        public int DamageAbsorb { get; }
-        public int Cost { get; }
-        private Armor(string name, int cost, int damageAbsorb) : base(name, ItemType.Armor) {
-            Cost = cost;
-            DamageAbsorb = damageAbsorb;
+    internal static partial class Items {
+        public interface IArmor : IItem {
+            public int DamageAbsorb { get; }
+            public int Cost { get; }
         }
-        // public readonly static Weapon Unarmed = new Weapon("Unarmed", 0, 0);
 
-        public static readonly Armor Plate = new Armor("Plate", 2500, 3);
+        public static readonly IArmor Leather = new ArmorImpl("Leather", 1500, 1);
+        public static readonly IArmor ChainMail = new ArmorImpl("ChainMail", 2000, 2);
+        public static readonly IArmor Plate = new ArmorImpl("Plate", 2500, 3);
 
-        public static Armor[] AllArmor = new Armor[] {
-            new Armor("Leather", 1500, 1),
-            new Armor("ChainMail", 2000, 2),
-            Plate
+        public static IArmor[] AllArmor = new IArmor[] {
+            Leather, ChainMail, Plate
         };
+
+
+        private class ArmorImpl : Item, IArmor {
+            public int DamageAbsorb { get; }
+            public int Cost { get; }
+            public ArmorImpl(string name, int cost, int damageAbsorb) : base(name, ItemType.Armor) {
+                Cost = cost;
+                DamageAbsorb = damageAbsorb;
+            }
+            // public readonly static Weapon Unarmed = new Weapon("Unarmed", 0, 0);
+
+        }
     }
 }

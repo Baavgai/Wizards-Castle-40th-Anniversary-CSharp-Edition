@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using YWMenuNS;
-using The_Wizard_s_Castle.Models;
 
 namespace WizardCastle {
     internal static class Actions {
-        public interface IAction : IEquatable<IAction> {
+        public interface IAction : IEquatable<IAction>, IHasExec {
             public char Cmd { get; }
             public string Description { get; }
-            public void Exec(Models.State state);
+            // public void Exec(State state);
         }
 
         private class GameAction : IAction, IEquatable<GameAction> {
@@ -81,6 +79,30 @@ namespace WizardCastle {
 }
 
 /*
+ * 
+ *         public static Dictionary<char, string> availableActions = new Dictionary<char, string>
+        {
+            {'A', "Attack monster or vendor"},
+            {'B', "Bribe monster or vendor"},
+            {'D', "Down stairs"},
+            {'E', "East"},
+            {'F', "Light a flare"},
+            {'G', "Gaze into crystal orb"},
+            {'L', "Shine lamp into adjacent room"},
+            {'M', "Show map"},
+            {'N', "North" },
+            {'O', "Open book or chest"},
+            {'P', "Drink from pool"},
+            {'Q', "Quit the game"},
+            {'R', "Retreat from battle"},
+            {'S', "South"},
+            {'T', "Use the Runestaff to teleport"},
+            {'U', "Up stairs"},
+            {'V', "View Instructions"},
+            {'W', "West"},
+            {'Z', "Trade with Vendor" }
+        };
+
              "•	(M)AP causes a map of the level you are currently on to be printed.",
             "•	(O)PEN causes you to open the book or chest in the room you are in. This command will only work if you are in a room with a chest or book.",
             "•	(P) POOL drink causes you to take a drink from a magic pool. You may repeat this command as often as you wish, but you must be in a room with a magic pool.",

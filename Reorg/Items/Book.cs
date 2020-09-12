@@ -3,27 +3,30 @@ using System.Collections.Generic;
 
 
 namespace WizardCastle {
-    class Book : Item, IHasOpen, IHasOnEntry {
+    internal static partial class Items {
+        public interface IBook : IHasOpen, IHasOnEntry { }
 
-        public Book() : base("Book", ItemType.Content) { }
+        private class BookImpl : Item, IBook {
 
-        public void OnEntry(State state) => Util.WriteLine($"\nHere you find '{Name}'");
+            public BookImpl() : base("Book", ItemType.Content) { }
 
-        public void Open(State state) {
-            if (!state.Player.blind) {
-                state.CurrentCell.Clear();
-                Util.WriteLine($"\nYou open the book and {Util.RandPick(AllHandlers)(state)}");
-            } else {
-                Util.WriteLine($"Sorry, {state.Player.Race}, it's not written in Braille!");
+            public void OnEntry(State state) => Game.DefaultItemMessage(this);
+
+            public void Open(State state) {
+                if (!state.Player.blind) {
+                    state.CurrentCell.Clear();
+                    Util.WriteLine($"\nYou open the book and {Util.RandPick(AllHandlers)(state)}");
+                } else {
+                    Util.WriteLine($"Sorry, {state.Player.Race}, it's not written in Braille!");
+                }
+                Util.WaitForKey();
             }
-            Util.WaitForKey();
-        }
 
 
-        private static readonly Func<State, string>[] AllHandlers = new Func<State, string>[] {
+            private static readonly Func<State, string>[] AllHandlers = new Func<State, string>[] {
             s => "it's another volume of Zot's poetry. Yeech!",
             s => $"it's an old copy of play {Util.RandRace()}.",
-            s => $"it's a {Util.RandPick(GameCollections.Monsters)} cook book.",
+            s => $"it's a {Util.RandPick(Monster.AllMonsters)} cook book.",
             s => $"it's a self-improvement book on how to be a better {Util.RandRace()}.",
             s => {
                 s.Player.Dexterity = s.Player.MaxAttrib;
@@ -44,9 +47,10 @@ namespace WizardCastle {
             },
             s => {
                 s.Player.bookStuck = true;
-                return $"it sticks to your hands. Now you can't grab your {s.Player.weapon}!";
+                return $"it sticks to your hands. Now you can't grab your {s.Player.Weapon?.Name}!";
             }
         };
 
+        }
     }
 }
