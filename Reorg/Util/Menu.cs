@@ -29,7 +29,7 @@ namespace WizardCastle {
                     }
                 } else if (!lookup.ContainsKey(keyChar)) {
                     WriteLine();
-                    WriteLine(Util.RandErrorMsg());
+                    WriteLine(Game.RandErrorMsg());
                     ShowPrompt();
                 } else {
                     return new Tuple<char, T>(keyChar, lookup[keyChar]);

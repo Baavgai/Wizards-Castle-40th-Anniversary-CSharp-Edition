@@ -11,8 +11,10 @@
     <Compile Remove="Game\GameCollections.cs" />
     <Compile Remove="Game\Program.cs" />
     <Compile Remove="Items\ContentBase.cs" />
+    <Compile Remove="Items\Curse.cs" />
     <Compile Remove="Items\RoomItem.cs" />
     <Compile Remove="Items\RoomItemImpl.cs" />
+    <Compile Remove="Util\Pool.cs" />
   </ItemGroup>
 
 </Project>

@@ -12,7 +12,7 @@ namespace WizardCastle {
             public void OnEntry(State state) => Util.WriteLine($"\nHere you find '{Name}'");
 
             public void Open(State state) {
-                if (!state.Player.blind) {
+                if (!state.Player.IsBlind) {
                     state.CurrentCell.Clear();
                     Util.WriteLine($"\nYou open the chest and { Util.RandPick(AllHandlers)(state)}");
                 } else {
@@ -58,14 +58,14 @@ namespace WizardCastle {
                 };
             },
             s => {
-                var curse = Util.RandPick(Curse.AllCurses);
+                var curse = Util.RandPick(new Curse[] { Curse.Forgetfulness, Curse.Leech, Curse.Lethargy });
                 curse.Exec(s);
                 return $"a wizard jumps out and puts the curse of {curse.Name} on you and runs out of the room!";
             },
 
             s => {
-                var loc = s.Map.RandPos();
-                Game.RevealMap(s, loc);
+                var loc = Game.RandMapPos(s);
+                Game.RevealMapArea(s, loc);
                 return $"you find a piece of a map revealing the area around {loc.Display}).";
             }
 

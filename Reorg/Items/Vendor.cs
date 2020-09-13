@@ -11,7 +11,7 @@ namespace WizardCastle {
         public Vendor(string race) : base("Vendor", RndAttr(), RndAttr(), RndAttr()) {
             Race = race;
         }
-        private static int RndAttr() => Util.RandInt(1, Player.MaxAttrib + 1);
+        private static int RndAttr() => Util.RandInt(Game.MaxAttrib) + 1;
 
 
         /*

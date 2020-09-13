@@ -4,8 +4,16 @@ using System.Linq;
 
 namespace WizardCastle {
     class Player : IAbilities {
-        public int MaxAttrib => 18;
-        public List<IItem> Inventory { get; } = new List<IItem>();
+        
+        private readonly List<IItem> inventory = new List<IItem>();
+        public IItem[] Inventory => inventory.ToArray();
+        public void Add(IItem item) {
+            inventory.Add(item);
+        }
+        public void Remove(IItem item) {
+            inventory.Remove(item);
+        }
+        // public List<IItem> Inventory { get; } = new List<IItem>();
 
         private int dexterity = 0;
         private int intelligence = 0;
@@ -25,7 +33,7 @@ namespace WizardCastle {
         // public bool runeStaff = false;
 
         public bool HasItem(IItem item) => Inventory.Any(x => x == item);
-        public bool IsBlind => HasItem(Items.CurseBlind);
+        public bool IsBlind => HasItem(Curse.Blind);
 
         public string Race { get; set; }
         public string Sex { get; set; }
@@ -36,7 +44,7 @@ namespace WizardCastle {
 
 
         private int MaxCap(int attr) =>
-            attr > MaxAttrib ? MaxAttrib : attr;
+            attr > Game.MaxAttrib ? Game.MaxAttrib : attr;
 
         public int Dexterity {
             get => dexterity;

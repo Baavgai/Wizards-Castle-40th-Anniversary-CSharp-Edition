@@ -11,8 +11,8 @@ namespace WizardCastle {
 
         public static readonly ITreasure[] AllTreasures = new ITreasure[] {
             new TreasureImpl("The Blue Flame", state => {
-                if (state.Player.HasItem(Items.CurseBookStuck)) {
-                    state.Player.Inventory.Remove(Items.CurseBookStuck);
+                if (state.Player.HasItem(Curse.BookStuck)) {
+                    state.Player.Remove(Curse.BookStuck);
                     Util.WriteLine("The Blue Flame burns the book off your hands!", bgColor: ConsoleColor.DarkGray);
                     Util.WaitForKey();
                 }
@@ -38,7 +38,7 @@ namespace WizardCastle {
             public void OnEntry(State state) {
                 // Game.DefaultItemMessage(this);
                 Util.WriteLine($"You've found the {Name}, it's yours!");
-                state.Player.Inventory.Add(this);
+                state.Player.Add(this);
                 state.CurrentCell.Clear();
             }
 

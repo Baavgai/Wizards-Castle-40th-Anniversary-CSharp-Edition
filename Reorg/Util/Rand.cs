@@ -13,9 +13,5 @@ namespace WizardCastle {
 
         public static T RandPick<T>(IEnumerable<T> xs) => xs.Skip(Rand.Next(xs.Count())).First();
 
-        public static string RandRace() => RandPick(Models.Race.AllRaces).RaceName;
-
-        public static string RandErrorMsg() => RandPick(GameCollections.ErrorMesssages);
-
     }
 }

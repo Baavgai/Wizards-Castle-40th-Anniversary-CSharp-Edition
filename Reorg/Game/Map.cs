@@ -73,5 +73,18 @@ namespace WizardCastle {
 
         public static MapPos RandEmptyMapPos(State state) => RandEmptyMapPos(state.Map);
 
+        public static IEnumerable<MapPos> SearchMap(Map map, Func<Map.Cell, MapPos, bool> pred) =>
+            map.AllPos().Where(p => pred(map[p], p));
+
+        public static IEnumerable<MapPos> SearchMap(State state, Func<Map.Cell, MapPos, bool> pred) =>
+            SearchMap(state.Map, pred);
+
+        public static IEnumerable<MapPos> SearchMap(Map map, IItem item) =>
+            SearchMap(map, (x,_) => x.Contents == item);
+
+        public static IEnumerable<MapPos> SearchMap(State state, IItem item) =>
+            SearchMap(state.Map, item);
+
+
     }
 }

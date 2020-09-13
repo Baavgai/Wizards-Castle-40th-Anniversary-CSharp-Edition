@@ -27,7 +27,7 @@ namespace WizardCastle {
             new MonsterFactoryImpl("Troll", strength: 3),
             new MonsterFactoryImpl("Wolf", strength: 1)
         };
-        private static Func<IMonster, string>[] MadMessages = new Func<IMonster, string>[] {
+        private static readonly Func<IMonster, string>[] MadMessages = new Func<IMonster, string>[] {
                 m => $"The {m.Name} sees you, snarls and lunges towards you!",
                 m => $"The {m.Name} looks angrily at you moves in your direction!",
                 m => $"The {m.Name} stops what it's doing and focuses its attention on you!",
@@ -94,7 +94,7 @@ namespace WizardCastle {
                 bool firstAttackRound = true;
                 while (mad && ma.Strength > 0 && state.Player.Strength > 0) {
                     Util.WriteLine($"\nYou are facing a {Name}!");
-                    if ((((Util.RandInt(101) + ma.Dexterity) > 75) || state.Player.lethargy) && firstAttackRound) {
+                    if ((((Util.RandInt(101) + ma.Dexterity) > 75) || state.Player.HasItem(Curse.Lethargy)) && firstAttackRound) {
                         MonsterAttack(state);
                         firstAttackRound = false;
                     }
@@ -147,7 +147,7 @@ namespace WizardCastle {
                     var choice = Util.Menu($"Give the {Name} the {treasure}", new string[] { "Yes", "No" }).Item1 == 'Y';
                     if (choice) {
                         Util.WriteLine($"\nThe {Name} says, ok, just don't tell anyone.");
-                        state.Player.Inventory.Remove(treasure);
+                        state.Player.Remove(treasure);
                         Inventory.Add(treasure);
                         mad = false;
                     }
@@ -206,7 +206,7 @@ namespace WizardCastle {
             }
 
             void PlayerAttack(State state, Abilities ma) {
-                if (state.Player.bookStuck) {
+                if (state.Player.HasItem(Curse.BookStuck)) {
                     Util.WriteLine($"\nYou can't beat the {Name} to death with a book.");
                 } else if (state.Player.Weapon == null) {
                     Util.WriteLine($"\nStupid {state.Player.Race}! You have no weapon and pounding on the {Name} won't do any good.");

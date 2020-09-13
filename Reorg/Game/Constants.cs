@@ -2,6 +2,7 @@
 
 namespace WizardCastle {
     internal static partial class Game {
-        public static int ExitCode = 999;
+        public const int ExitCode = 999;
+        public const int MaxAttrib = 18;
     }
 }

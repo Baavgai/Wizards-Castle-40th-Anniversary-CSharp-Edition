@@ -33,7 +33,7 @@ namespace WizardCastle {
             });
         public static readonly IHasOnEntry Warp = new RoomEntryImpl("Warp", ItemType.Content,
             state => {
-                state.Player.Location = state.Map.RandPos();
+                state.Player.Location = Game.RandMapPos(state);
                 Util.Sleep();
             });
 

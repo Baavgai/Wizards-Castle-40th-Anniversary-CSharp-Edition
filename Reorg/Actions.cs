@@ -37,7 +37,7 @@ namespace WizardCastle {
                 if (isAvailable(state)) {
                     action(state);
                 } else {
-                    Util.WaitForKey($"\n{Util.RandErrorMsg()}\n");
+                    Util.WaitForKey($"\n{Game.RandErrorMsg()}\n");
                 }
             }
             public bool IsAvailable(State state) => isAvailable(state);
@@ -55,7 +55,7 @@ namespace WizardCastle {
                 if (state.CurrentCell.Contents is IHasOpen item) {
                     item.Open(state);
                 } else {
-                    Util.WaitForKey($"\n{Util.RandErrorMsg()}\n");
+                    Util.WaitForKey($"\n{Game.RandErrorMsg()}\n");
                 }
             }, s => s.CurrentCell.Contents is IHasOpen
             ),
