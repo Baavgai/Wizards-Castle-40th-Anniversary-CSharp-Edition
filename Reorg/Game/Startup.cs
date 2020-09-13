@@ -37,7 +37,7 @@ namespace WizardCastle {
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write("Modified: 2020-09-07 by Daniel Kill\n\n");
 
-            Console.Write("C# modifed version written by ");
+            Console.Write("\n\n\tC# modifed version written by ");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("Baavgai");
             Console.BackgroundColor = ConsoleColor.Black;
@@ -50,20 +50,25 @@ namespace WizardCastle {
         }
 
         private static Map GetMap() {
+            /*
             bool randomMap = Util.Menu("Would you like the standard 8x8x8 map or a random map", new Dictionary<char, string> {
                 {'S', "Standard 8x8x8 Map"},
                 {'R', "Random Map"}
             }).Item1 == 'R';
             Util.ClearScreen();
             return new Map(randomMap);
+            */
+            return new Map(false);
         }
 
 
         public static State Startup() {
+            /*
             StartupSplash();
             Util.UserContintue();
             System.Console.Clear();
             ViewInstructions();
+            */
             var m = GetMap();
             var state = new State(m, InitPlayer());
             Util.ClearScreen();

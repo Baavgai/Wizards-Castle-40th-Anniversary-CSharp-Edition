@@ -13,10 +13,24 @@ namespace WizardCastle {
         public MapPos(int level = 0, int row = 0, int col = 0) => (Level, Row, Col) = (level, row, col);
 
         public void Deconstruct(out int level, out int row, out int col) => (level, row, col) = (Level, Row, Col);
-        public bool Equals(MapPos x) => x != null && x.Level == Level && x.Row == Row && x.Col == Col;
+        public bool Equals(MapPos x) => x != null && Equals(this, x);
 
-        public static bool operator ==(MapPos a, MapPos b) =>
-            (a == null && b == null) || ((a == null || b == null) ? false : a.Equals(b));
+        // neither of these will be null
+        private static bool Equals(MapPos a, MapPos b) =>
+            a.Level == b.Level && a.Row == b.Row && a.Col == b.Col;
+
+        public static bool operator ==(MapPos a, MapPos b) { 
+            // a == null ? b == null : (b == null ? false : Equals(a, b));
+            // Check for null on left side.
+            if (Object.ReferenceEquals(a, null)) {
+                if (Object.ReferenceEquals(b, null)) {
+                    return true;
+                }
+                return false;
+            }
+            // Equals handles case of null on right side.
+            return !Object.ReferenceEquals(b, null) && Equals(a,b);
+        }
 
         public static bool operator !=(MapPos a, MapPos b) => !(a == b);
 
