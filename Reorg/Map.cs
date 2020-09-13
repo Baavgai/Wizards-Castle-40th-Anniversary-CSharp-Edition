@@ -24,7 +24,7 @@ namespace WizardCastle {
                 Levels = Rows = Cols = 8;
             }
             state = new Cell[Levels, Rows, Cols];
-            Populate();
+            Traverse((_, p) => this[p] = new Cell());
         }
 
         public int Levels { get; private set; }
@@ -32,16 +32,49 @@ namespace WizardCastle {
         public int Cols { get; private set; }
 
         public Cell this[MapPos p] {
-            get => state[p.Level, p.Row, p.Col];
-            set => state[p.Level, p.Row, p.Col] = value;
+            get => ValidPos(p) ? state[p.Level, p.Row, p.Col] : new Cell();
+            set {
+                if (ValidPos(p)) {
+                    state[p.Level, p.Row, p.Col] = value;
+                }
+            }
         }
 
         public Cell this[int level, int row, int col] {
-            get => state[level, row, col];
-            set => state[level, row, col] = value;
+            get => this[new MapPos(level, row, col)];
+            set => this[new MapPos(level, row, col)] = value;
+        }
+        public IEnumerable<MapPos> AllPos() {
+            var p = new MapPos();
+            for (p.Level = 0; p.Level < Levels; p.Level++) {
+                for (p.Row = 0; p.Row < Rows; p.Row++) {
+                    for (p.Col = 0; p.Col < Cols; p.Col++) {
+                        yield return p;
+                    }
+                }
+            }
         }
 
-        public void TraverseLevel(int level, Action<Map, MapPos> action) {
+        public bool ValidPos(MapPos p) =>
+            p.Level >= 0 && p.Level < Levels && p.Row >= 0 && p.Row < Rows && p.Col >= 0 && p.Col < Cols;
+
+        public void Traverse(Action<Map, MapPos> action, IEnumerable<MapPos> pos) {
+            foreach (var p in pos) {
+                action(this, p);
+            }
+        }
+
+        public void Traverse(Action<Map, MapPos> action, int level) =>
+            Traverse(action, AllPos().Where(x => x.Level == level));
+
+        public void Traverse(Action<Map, MapPos> action) =>
+            Traverse(action, AllPos());
+
+    }
+}
+
+/*
+ *         public void Traverse(Action<Map, MapPos> action, int level) {
             var p = new MapPos() { Level = level };
             for (p.Row = 0; p.Row < Rows; p.Row++) {
                 for (p.Col = 0; p.Col < Cols; p.Col++) {
@@ -51,110 +84,9 @@ namespace WizardCastle {
         }
 
         public void Traverse(Action<Map, MapPos> action) {
-            var p = new MapPos();
-            for (p.Level = 0; p.Level < Levels; p.Level++) {
-                for (p.Row = 0; p.Row < Rows; p.Row++) {
-                    for (p.Col = 0; p.Col < Cols; p.Col++) {
-                        action(this, p);
-                    }
-                }
+            for (int level = 0; level < Levels; level++) {
+                Traverse(action, level);
             }
         }
 
-        public void DisplayMap() {
-            Util.WriteLine($"Levels = {Levels}");
-            Util.WriteLine($"Rows = {Rows}");
-            Util.WriteLine($"Columns = {Cols}");
-            // Console.WriteLine("Press ENTER to continue.");            Console.ReadLine();
-            // System.Console.Clear();
-            for (int i = 0; i < Levels; i++) {
-                for (int j = 0; j < Rows; j++) {
-                    for (int k = 0; k < Cols; k++) {
-                        Util.Write($" {state[i, j, k]} ");
-                    }
-                    Util.WriteLine();
-                }
-                Util.WriteLine();
-            }
-        }
-
-        public MapPos RandPos() => new MapPos() {
-            Level = Util.RandInt(Levels),
-            Row = Util.RandInt(Rows),
-            Col = Util.RandInt(Cols),
-        };
-        private MapPos RandPos(Func<MapPos,bool> good) {
-            var x = RandPos();
-            while (!good(x)) { x = RandPos(); }
-            return x;
-        }
-
-
-        public MapPos RandEmptyPos() => RandPos(p => this[p].IsEmpty);
-        public MapPos RandKnownPos() => RandPos(p => this[p].Known);
-
-
-        public MapPos FindGold() => null;
-
-        // public void Clear() => Traverse((_, p) => this[p].Clear());
-
-
-
-        private void Populate() {
-            // GameCollections.RuneStaffLocation = Map.FindMonster(theMap, GameCollections.Monsters[new Random().Next(0, GameCollections.Monsters.Count)]);
-            Traverse((_, p) => this[p] = new Cell());
-            this[0, 0, 3].Contents = Items.Exit;
-            foreach (var x in Items.AllTreasures) {
-                this[RandEmptyPos()].Contents = x;
-            }
-            Traverse((map, p) => {
-                int chance = Util.RandInt(101);
-                if (map[p].IsEmpty) {
-                    if (chance < 6) {
-                        // 0-5: DownStairs, Sinkole or Warp
-                        if (p.Level < map.Levels - 1) {
-                            switch (Util.RandInt(3)) {
-                                case 0:
-                                    map[p].Contents = Items.DownStairs;
-                                    map[p.Level + 1, p.Row, p.Col].Contents = Items.UpStairs;
-                                    break;
-                                case 1:
-                                    map[p].Contents = Items.SinkHole;
-                                    break;
-                                case 2:
-                                    map[p].Contents = Items.Warp;
-                                    break;
-                            }
-                        } else {
-                            map[p].Contents = Items.Warp;
-                        }
-                    } else if (chance < 11) {
-                        //6-10: Book
-                        map[p].Contents = Items.Book;
-                    } else if (chance < 16) {
-                        //11-15: Chest
-                        map[p].Contents = Items.Chest;
-                    } else if (chance < 21) {
-                        //16-20: Orb
-                        // map[p] = GameCollections.RoomContents.Find(item => item == "Orb");
-                    } else if (chance < 26) {
-                        //21-25: Pool
-                        // map[p] = GameCollections.RoomContents.Find(item => item == "Pool");
-                    } else if (chance < 31) {
-                        //26-30: Flares
-                        map[p].Contents = Items.Flares;
-                    } else if (chance < 36) {
-                        //31-35: Gold
-                        map[p].Contents = Items.Gold;
-                    } else if (chance < 46) {
-                        //36-45: Vendor
-                        // map[p] = GameCollections.RoomContents.Find(item => item == "Vendor");
-                    } else if (chance < 61) {
-                        //46-60: Monster 
-                        map[p].Contents = Util.RandPick(Items.AllMonsters);
-                    }
-                }
-            });
-        }
-    }
-}
+*/

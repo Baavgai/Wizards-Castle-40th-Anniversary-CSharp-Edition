@@ -70,5 +70,15 @@ namespace WizardCastle {
             Util.WriteLine($"\tOk, {state.Player.Race}, you are now entering Zot's castle!\n");
             return state;
         }
+
+        public static void GoodBye() {
+            Console.Clear();
+            Console.WriteLine("\t\tThank you for playing Wizard's Castle!");
+            Util.ClearScreen();
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n\nPress ENTER to Exit.");
+            Console.ReadLine();
+        }
+
     }
 }

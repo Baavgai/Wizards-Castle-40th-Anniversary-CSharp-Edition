@@ -3,25 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace WizardCastle {
-    internal static partial class Items {
+    // monster must provide an instance of itself, so it can have an inventory, fight, etc.
+    static class Monster {
+        public interface IMonster : IItem, IHasOnEntry {
+            public List<IItem> Inventory { get; }
 
-        public static IHasOnEntry[] AllMonsters = new IHasOnEntry[] {
-            new Monster("Balrog", strength: 5),
-            new Monster("Bear", strength: 2),
-            new Monster("Chimera", strength: 4),
-            new Monster("Dragon", strength: 8, weaponBreakChance: true),
-            new Monster("Gargoyle", strength: 3, weaponBreakChance: true),
-            new Monster("Goblin", strength: 1),
-            new Monster("Kobold", strength: 1),
-            new Monster("Minotaur", strength: 4),
-            new Monster("Ogre", strength: 4),
-            new Monster("Orc", strength: 3),
-            new Monster("Troll", strength: 3),
-            new Monster("Wolf", strength: 1)
+        }
+        public interface IMonsterFactory : IHasName {
+            IMonster CreateMonster();
+        }
+
+        public static IMonsterFactory[] AllMonsters = new IMonsterFactory[] {
+            new MonsterFactoryImpl("Balrog", strength: 5),
+            new MonsterFactoryImpl("Bear", strength: 2),
+            new MonsterFactoryImpl("Chimera", strength: 4),
+            new MonsterFactoryImpl("Dragon", strength: 8, weaponBreakChance: true),
+            new MonsterFactoryImpl("Gargoyle", strength: 3, weaponBreakChance: true),
+            new MonsterFactoryImpl("Goblin", strength: 1),
+            new MonsterFactoryImpl("Kobold", strength: 1),
+            new MonsterFactoryImpl("Minotaur", strength: 4),
+            new MonsterFactoryImpl("Ogre", strength: 4),
+            new MonsterFactoryImpl("Orc", strength: 3),
+            new MonsterFactoryImpl("Troll", strength: 3),
+            new MonsterFactoryImpl("Wolf", strength: 1)
         };
-
-        private class Monster : Item, IHasOnEntry {
-            private static Func<Monster, string>[] MadMessages = new Func<Monster, string>[] {
+        private static Func<IMonster, string>[] MadMessages = new Func<IMonster, string>[] {
                 m => $"The {m.Name} sees you, snarls and lunges towards you!",
                 m => $"The {m.Name} looks angrily at you moves in your direction!",
                 m => $"The {m.Name} stops what it's doing and focuses its attention on you!",
@@ -32,19 +38,34 @@ namespace WizardCastle {
                 m => $"The {m.Name} says, welcome to your death pitiful!"
         };
 
+        private class MonsterFactoryImpl : IMonsterFactory {
+            private readonly bool weaponBreakChance;
+            private readonly Abilities mods;
+            public MonsterFactoryImpl(string name, int dexterity = 0, int intelligence = 0, int strength = 0, bool weaponBreakChance = false) {
+                Name = name;
+                mods = new Abilities() {
+                    Strength = strength, Dexterity = dexterity, Intelligence = intelligence
+                };
+                this.weaponBreakChance = weaponBreakChance;
+            }
+            public string Name { get; }
+            public IMonster CreateMonster() => new MonsterImpl(Name, mods, weaponBreakChance);
+
+        }
+
+        private class MonsterImpl : Item, IMonster {
+
 
             public bool mad = true;
             public int webbedTurns = 0;
             public bool runeStaff = false;
 
             private Abilities Mods { get; }
-            public List<Item> Inventory { get; } = new List<Item>();
+            public List<IItem> Inventory { get; } = new List<IItem>();
             private readonly bool weaponBreakChance;
 
-            public Monster(string name, int dexterity = 0, int intelligence = 0, int strength = 0, bool weaponBreakChance = false) : base(name, ItemType.Monster) {
-                Mods = new Abilities() {
-                    Strength = strength, Dexterity = dexterity, Intelligence = intelligence
-                };
+            public MonsterImpl(string name, Abilities mods, bool weaponBreakChance) : base(name, ItemType.Monster) {
+                Mods = mods;
                 this.weaponBreakChance = weaponBreakChance;
             }
 

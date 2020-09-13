@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace WizardCastle {
     internal static partial class Items {
-        public interface ITreasure : IHasOnEntry, IHasExec { }
+        public interface ITreasure : IItem, IHasOnEntry, IHasExec { }
 
         public static readonly ITreasure[] AllTreasures = new ITreasure[] {
             new TreasureImpl("The Blue Flame", state => {
@@ -22,6 +22,7 @@ namespace WizardCastle {
             new TreasureImpl("The Pale Pearl"),
             new TreasureImpl("The Ruby Red"),
             new TreasureImpl("The Silmaril"),
+            new TreasureImpl("Rune Staff"),
     };
 
 

@@ -5,8 +5,8 @@ using System.Linq;
 namespace WizardCastle {
     class Player : IAbilities {
         public int MaxAttrib => 18;
-        public List<Item> Inventory { get; } = new List<Item>();
-        
+        public List<IItem> Inventory { get; } = new List<IItem>();
+
         private int dexterity = 0;
         private int intelligence = 0;
         private int strength = 0;
