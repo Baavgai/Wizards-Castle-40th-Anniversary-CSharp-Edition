@@ -7,10 +7,12 @@ namespace WizardCastle {
     internal static partial class Items {
         public interface ITreasure : IItem, IHasOnEntry, IHasExec { }
 
+        public static readonly ITreasure RuneStaff = new TreasureImpl("Rune Staff");
+
         public static readonly ITreasure[] AllTreasures = new ITreasure[] {
             new TreasureImpl("The Blue Flame", state => {
-                if (state.Player.bookStuck) {
-                    state.Player.bookStuck = false;
+                if (state.Player.HasItem(Items.CurseBookStuck)) {
+                    state.Player.Inventory.Remove(Items.CurseBookStuck);
                     Util.WriteLine("The Blue Flame burns the book off your hands!", bgColor: ConsoleColor.DarkGray);
                     Util.WaitForKey();
                 }
@@ -22,7 +24,7 @@ namespace WizardCastle {
             new TreasureImpl("The Pale Pearl"),
             new TreasureImpl("The Ruby Red"),
             new TreasureImpl("The Silmaril"),
-            new TreasureImpl("Rune Staff"),
+            RuneStaff
     };
 
 

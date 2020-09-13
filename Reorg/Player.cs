@@ -15,20 +15,24 @@ namespace WizardCastle {
         public int flares = 0;
         public Items.IArmor Armor { get; set; } = null;
         public Items.IWeapon Weapon { get; set; } = null;
-        public bool blind = false;
-        public bool bookStuck = false;
-        public bool forgetfulness = false;
-        public bool leech = false;
-        public bool lethargy = false;
-        public bool lamp = false;
-        public bool orbOfZot = false;
-        public bool runeStaff = false;
+        // public bool blind = false;
+        // public bool bookStuck = false;
+        // public bool forgetfulness = false;
+        // public bool leech = false;
+        // public bool lethargy = false;
+        // public bool lamp = false;
+        // public bool orbOfZot = false;
+        // public bool runeStaff = false;
+
+        public bool HasItem(IItem item) => Inventory.Any(x => x == item);
+        public bool IsBlind => HasItem(Items.CurseBlind);
 
         public string Race { get; set; }
         public string Sex { get; set; }
         public int Gold { get; set; } = 60;
 
         public MapPos Location { get; set; }
+        public int Turn { get; set; } = 0;
 
 
         private int MaxCap(int attr) =>

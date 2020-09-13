@@ -34,7 +34,18 @@ namespace WizardCastle {
                 Col = a.Col + b.Col
             };
 
+        // Example: For Level 3, Row 5, Column 2: 3,5,2)
+        public static MapPos Parse(string s) {
+            var xs = s.Split(',');
+            if (xs.Length == 3 && xs.All(x => int.TryParse(x, out int n))) {
+                var ys = xs.Select(int.Parse).ToArray();
+                return new MapPos(ys[0], ys[1], ys[2]);
+            }
+            return null;
+        }
 
+
+        
         // public static readonly MapPos Void = new MapPos(-1, -1, -1);
         // public static readonly MapPos PlayerInventory = new MapPos(-2, -1, -1);
     }

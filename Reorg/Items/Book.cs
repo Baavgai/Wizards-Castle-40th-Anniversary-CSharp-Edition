@@ -13,7 +13,7 @@ namespace WizardCastle {
             public void OnEntry(State state) => Game.DefaultItemMessage(this);
 
             public void Open(State state) {
-                if (!state.Player.blind) {
+                if (!state.Player.IsBlind) {
                     state.CurrentCell.Clear();
                     Util.WriteLine($"\nYou open the book and {Util.RandPick(AllHandlers)(state)}");
                 } else {
@@ -26,7 +26,7 @@ namespace WizardCastle {
             private static readonly Func<State, string>[] AllHandlers = new Func<State, string>[] {
             s => "it's another volume of Zot's poetry. Yeech!",
             s => $"it's an old copy of play {Util.RandRace()}.",
-            s => $"it's a {Util.RandPick(Items.AllMonsters)} cook book.",
+            s => $"it's a {Util.RandPick(Monster.AllMonsters)} cook book.",
             s => $"it's a self-improvement book on how to be a better {Util.RandRace()}.",
             s => {
                 s.Player.Dexterity = s.Player.MaxAttrib;

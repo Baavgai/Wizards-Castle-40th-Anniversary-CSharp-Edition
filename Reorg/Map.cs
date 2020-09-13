@@ -56,7 +56,7 @@ namespace WizardCastle {
         }
 
         public bool ValidPos(MapPos p) =>
-            p.Level >= 0 && p.Level < Levels && p.Row >= 0 && p.Row < Rows && p.Col >= 0 && p.Col < Cols;
+            p != null && p.Level >= 0 && p.Level < Levels && p.Row >= 0 && p.Row < Rows && p.Col >= 0 && p.Col < Cols;
 
         public void Traverse(Action<Map, MapPos> action, IEnumerable<MapPos> pos) {
             foreach (var p in pos) {

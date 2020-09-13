@@ -78,7 +78,7 @@ namespace WizardCastle {
             }).Item1 == 'Y';
                 if (choice) {
                     player.Gold -= cost;
-                    player.lamp = true;
+                    // player.lamp = true;
                 }
                 Util.ClearScreen();
             }
