@@ -8,7 +8,7 @@ namespace WizardCastle {
     internal static partial class Game {
 
         public static void InitMap(Map map) {
-            map[0, 0, 3].Contents = Items.Exit;
+            map[StartingLocation].Contents = Items.Exit;
             // foreach (var x in Items.AllTreasures) {                map[RandEmptyMapPos(map)].Contents = x;            }
             map.Traverse((_, p) => {
                 int chance = Util.RandInt(101);

@@ -38,6 +38,8 @@ namespace WizardCastle {
             state.Map.Traverse((map, p) => {
                 if (p == state.Player.Location) {
                     Util.Write(" * ", bgColor: ConsoleColor.DarkMagenta);
+                } else if (!map[p].Known) {
+                    Util.Write(" X ", ConsoleColor.White);
                 } else {
                     var content = map[p].Contents;
                     // if (map[player.location[0], j, k] == "Zot") {                    roomValue = "W";
@@ -48,8 +50,8 @@ namespace WizardCastle {
                     } else {
                         Util.Write($" {content.Name[0]} ");
                     }
-                    if (p.Col == map.Cols - 1) { Util.WriteLine(); }
                 }
+                if (p.Col == map.Cols - 1) { Util.WriteLine(); }
             }, state.Player.Location.Level);
 
 

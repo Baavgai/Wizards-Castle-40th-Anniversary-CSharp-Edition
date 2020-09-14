@@ -33,9 +33,9 @@ namespace WizardCastle {
         private static void AddPlayerArmor(Player player) {
             Util.WriteLine();
             // var items = new List<Tuple<A>>
-            var items = Items.AllArmor
-                .Select(x => new Tuple<Items.IArmor, string>(x, $"{x.Name}, {x.IntialCost} Gold Pieces"))
-                .Append(new Tuple<Items.IArmor, string>(null, "None, 0 Gold Pieces"))
+            var items = Armor.All
+                .Select(x => new Tuple<Armor, string>(x, $"{x.Name}, {x.IntialCost} Gold Pieces"))
+                .Append(new Tuple<Armor, string>(null, "None, 0 Gold Pieces"))
                 .ToList();
             var choice = Util.Menu($"You have {player.Gold} Gold Pieces to buy items, what type of Armor do you want to purchase", items, (x, i) => $"{i}"[0]).Item2.Item1;
             if (choice == null) {
@@ -51,10 +51,9 @@ namespace WizardCastle {
 
         private static void AddPlayerWeapon(Player player) {
             Util.WriteLine();
-            // var items = new List<Tuple<A>>
-            var items = Items.AllWeapons
-                .Select(x => new Tuple<Items.IWeapon, string>(x, $"{x.Name}, {x.IntialCost} Gold Pieces"))
-                .Append(new Tuple<Items.IWeapon, string>(null, "None, 0 Gold Pieces"))
+            var items = Weapon.All
+                .Select(x => new Tuple<Weapon, string>(x, $"{x.Name}, {x.IntialCost} Gold Pieces"))
+                .Append(new Tuple<Weapon, string>(null, "None, 0 Gold Pieces"))
                 .ToList();
             var choice = Util.Menu($"You have {player.Gold} Gold Pieces to buy items, what type of Weapon do you want to purchase", items, (x, i) => $"{i}"[0]).Item2.Item1;
             if (choice == null) {
@@ -93,7 +92,7 @@ namespace WizardCastle {
                 } else if (n > player.Gold) {
                     Util.WriteLine($"\n\tSorry, {player.Race}, you * DON'T * have that many Gold Pieces left.");
                 } else {
-                    player.flares += n;
+                    player.Flares += n;
                     player.Gold -= n;
                 }
             }
@@ -103,7 +102,7 @@ namespace WizardCastle {
 
 
         private static Player InitPlayer() {
-            var race = Util.Menu("Please choose your race", Race.AllRaces, (_, i) => $"{i}"[0]).Item2;
+            var race = Util.Menu("Please choose your race", Race.All, (_, i) => $"{i}"[0]).Item2;
             Util.ClearScreen();
             var sex = Util.Menu("Please choose your sex", new string[] { "FeMale", "Male" }).Item2;
             Util.ClearScreen();

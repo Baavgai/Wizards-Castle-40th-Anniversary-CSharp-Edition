@@ -25,10 +25,33 @@ namespace WizardCastle {
             WriteLine(s);
         }
 
-        public static void UserContintue(string msg = null) {
-            WriteLine(msg ?? "Press ENTER to continue.");
-            Console.ReadLine();
+        public static char ReadChar() => Char.ToUpper(Console.ReadKey(true).KeyChar);
+
+        public static int ReadDigit(string msg = null) {
+            if (!string.IsNullOrWhiteSpace(msg)) { WriteLine(msg); }
+            int? n = null;
+            while (n == null) {
+                var x = ReadChar();
+                var value = x - '0';
+                if (value >= 0 && value < 10) {
+                    n = value;
+                }
+            }
+            return n.Value;
         }
+
+        public static void WaitForKey(string msg = null) {
+            if (!string.IsNullOrWhiteSpace(msg)) { WriteLine(msg); }
+            WriteLine("\nPress ENTER to continue");
+            ConsoleKeyInfo keyPressed;
+            string regExPattern = @"[0-9a-zA-Z\?]";
+            Regex regEx = new Regex(regExPattern);
+            do {
+                keyPressed = Console.ReadKey(true);
+            } while ((!(regEx.IsMatch(keyPressed.KeyChar.ToString()))) && keyPressed.KeyChar != (char)13);
+        }
+
+
 
         public static void ClearScreen() => System.Console.Clear();
 
@@ -40,13 +63,38 @@ namespace WizardCastle {
                     Console.WriteLine(item);
                 } else {
                     counter = 0;
-                    UserContintue();
+                    WaitForKey();
                     ClearScreen();
                     Console.WriteLine(item);
                 }
                 counter += Convert.ToInt32(Math.Ceiling(Convert.ToDouble(item.Length) / Convert.ToDouble(Console.WindowWidth)));
             }
-            UserContintue();
+            WaitForKey();
         }
     }
 }
+
+/*
+ * 
+ *         public static void WaitForKey(string msg = null) {
+            WriteLine(msg ?? "Press any key to continue.");
+            ReadChar();
+        }
+
+ *         public static void UserContintue(string msg = null) {
+            WriteLine(msg ?? "Press ENTER to continue.");
+            Console.ReadLine();
+        }
+
+        public static void WaitForKey(string msg = null) {
+            if (!string.IsNullOrWhiteSpace(msg)) { WriteLine(msg); }
+            WriteLine("\nPress ENTER to continue");
+            ConsoleKeyInfo keyPressed;
+            string regExPattern = @"[0-9a-zA-Z\?]";
+            Regex regEx = new Regex(regExPattern);
+            do {
+                keyPressed = Console.ReadKey(true);
+            } while ((!(regEx.IsMatch(keyPressed.KeyChar.ToString()))) && keyPressed.KeyChar != (char)13);
+        }
+
+ * */

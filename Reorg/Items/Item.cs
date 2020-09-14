@@ -5,6 +5,26 @@ using System.Linq;
 
 namespace WizardCastle {
     
+    abstract class Item : IItem {
+        public Item(string name, ItemType itemType) {
+            this.Name = name;
+            this.ItemType = itemType;
+        }
+        public ItemType ItemType { get; }
+        public string Name { get; }
+        
+        public override string ToString() => Name;
+    }
+}
+
+/*
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+
+namespace WizardCastle {
+    
     abstract class Item : IEquatable<Item>, IItem {
         public Item(string name, ItemType itemType) {
             this.Name = name;
@@ -26,3 +46,5 @@ namespace WizardCastle {
         public override int GetHashCode() => $"~{ItemType}~{Name}".GetHashCode();
     }
 }
+
+*/

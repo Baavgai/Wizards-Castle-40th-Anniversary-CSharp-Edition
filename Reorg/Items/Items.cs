@@ -4,14 +4,6 @@ namespace WizardCastle {
 
     internal static partial class Items {
 
-        public static readonly IArmor Leather = new ArmorImpl("Leather", 1500, 1);
-        public static readonly IArmor ChainMail = new ArmorImpl("ChainMail", 2000, 2);
-        public static readonly IArmor Plate = new ArmorImpl("Plate", 2500, 3);
-
-        public static IArmor[] AllArmor = new IArmor[] {
-            Leather, ChainMail, Plate
-        };
-        // { 10, 20, 30 }
 
         public static readonly IHasOnEntry Gold = new RoomEntryImpl("Gold", ItemType.Content,
             state => {
@@ -41,7 +33,7 @@ namespace WizardCastle {
         state => {
             int flaresFound = Util.RandInt(1, 11);
             Util.WriteLine($"You've found {flaresFound} flares");
-            state.Player.flares += flaresFound;
+            state.Player.Flares += flaresFound;
             state.CurrentCell.Clear();
         });
 

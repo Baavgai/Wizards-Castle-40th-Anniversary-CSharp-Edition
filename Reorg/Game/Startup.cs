@@ -37,16 +37,10 @@ namespace WizardCastle {
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write("Modified: 2020-09-07 by Daniel Kill\n\n");
 
-            Console.Write("\n\n\tC# modifed version written by ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("Baavgai");
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.Write("\n\t");
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Util.Write("\n\n\tC# modifed version written by ", ConsoleColor.DarkYellow);
+            Util.Write("Baavgai", ConsoleColor.Red);
             var lastModified = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).LastWriteTime;
-
-            Console.Write($"Modified: {lastModified:yyyy-MM-dd} by Baavgai\n\n");
-
+            Util.Write($"\n\tModified: {lastModified:yyyy-MM-dd} by Baavgai\n\n", ConsoleColor.Gray);
         }
 
         private static Map GetMap() {
@@ -63,12 +57,10 @@ namespace WizardCastle {
 
 
         public static State Startup() {
-            /*
             StartupSplash();
-            Util.UserContintue();
-            System.Console.Clear();
+            Util.WaitForKey();
+            Util.ClearScreen();
             ViewInstructions();
-            */
             var m = GetMap();
             var state = new State(m, InitPlayer());
             Util.ClearScreen();

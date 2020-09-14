@@ -11,7 +11,7 @@ namespace WizardCastle {
             public int CalcDamage();
         }
 
-        public static IWeapon[] AllWeapons = new IWeapon[] {
+        public readonly static IWeapon[] AllWeapons = new IWeapon[] {
             Dagger, Mace, Sword
         };
 

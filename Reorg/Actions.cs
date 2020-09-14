@@ -42,6 +42,8 @@ namespace WizardCastle {
             }
             public bool IsAvailable(State state) => isAvailable(state);
 
+            public override string ToString() => Name;
+
         }
 
         public static readonly IAction[] AllActions = new IAction[] {
@@ -101,14 +103,15 @@ namespace WizardCastle {
 
             new GameAction('F', "Light a flare", "(F)LARE causes one of your flares to be lit, revealing the contents of all the rooms around your current position.",
                 state => {
-                    if (! state.Player.IsBlind) {
-                        Game.RevealMapArea(state, state.Player.Location);
-                        state.Player.flares -= 1;
-                        Game.DisplayLevel(state);
-                    } else {
+                    if (state.Player.IsBlind) {
                         Util.WriteLine("Lighting a flare won't do you any good since you are BLIND!");
+                    } else {
+                        Game.RevealMapArea(state, state.Player.Location);
+                        state.Player.Flares -= 1;
+                        Game.DisplayLevel(state);
+                        Util.WaitForKey("The flare pierces the darkness.");
                     }
-                }),
+                }, s => s.Player.Flares>0),
 
             new GameAction('L', "Shine lamp into adjacent room", "(L)AMP will shine into any one of the rooms north, south, east, or west of your current position, revealing that room's contents."),
 

@@ -72,21 +72,3 @@ namespace WizardCastle {
 
     }
 }
-
-/*
- *         public void Traverse(Action<Map, MapPos> action, int level) {
-            var p = new MapPos() { Level = level };
-            for (p.Row = 0; p.Row < Rows; p.Row++) {
-                for (p.Col = 0; p.Col < Cols; p.Col++) {
-                    action(this, p);
-                }
-            }
-        }
-
-        public void Traverse(Action<Map, MapPos> action) {
-            for (int level = 0; level < Levels; level++) {
-                Traverse(action, level);
-            }
-        }
-
-*/
