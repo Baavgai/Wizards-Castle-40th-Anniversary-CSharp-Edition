@@ -11,10 +11,10 @@ namespace WizardCastle {
 
     class Content : Item, IContent {
         private readonly static List<IContent> all = new List<IContent>();
-        public static IContent Book = all.Find(x => x is Book);
-        public static IContent Chest = all.Find(x => x is Chest);
-        public static IContent Orb = all.Find(x => x is Orb);
-        public static IContent Pool = all.Find(x => x is Pool);
+        public static IContent Book = all.Register(WizardCastle.Book.Instance);
+        public static IContent Chest = all.Register(WizardCastle.Chest.Instance);
+        public static IContent Orb = all.Register(WizardCastle.Orb.Instance);
+        public static IContent Pool = all.Register(WizardCastle.Pool.Instance);
 
         public static readonly IContent Gold = all.Register(new Content("Gold",
             state => {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Mob : IAbilities {
+    class Mob : IItem, IAbilities {
         public string Name { get; }
         public int Dexterity { get; }
         public int Intelligence { get; }

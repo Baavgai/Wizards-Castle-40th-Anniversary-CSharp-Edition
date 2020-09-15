@@ -2,9 +2,8 @@
 
 namespace WizardCastle {
     class Orb : Item, IContent {
-        static Orb() {
-            Content.Register(new Orb());
-        }
+        private static Lazy<Orb> instance = new Lazy<Orb>(() => new Orb());
+        public static Orb Instance => instance.Value;
 
         private Orb() : base("Orb") { }
 

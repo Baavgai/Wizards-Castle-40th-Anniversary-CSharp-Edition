@@ -61,7 +61,7 @@ namespace WizardCastle {
             Util.WaitForKey();
             Util.ClearScreen();
             ViewInstructions();
-            var m = GetMap();
+            var m = InitMap(GetMap());
             var state = new State(m, InitPlayer());
             Util.ClearScreen();
             Util.WriteLine($"\tOk, {state.Player.Race}, you are now entering Zot's castle!\n");

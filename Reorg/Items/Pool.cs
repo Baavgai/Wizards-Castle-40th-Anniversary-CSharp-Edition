@@ -2,9 +2,8 @@
 
 namespace WizardCastle {
     class Pool : Item, IContent {
-        static Pool() {
-            Content.Register(new Pool());
-        }
+        private static Lazy<Pool> instance = new Lazy<Pool>(() => new Pool());
+        public static Pool Instance => instance.Value;
 
         private Pool() : base("Pool") { }
 

@@ -6,36 +6,26 @@ using System.Diagnostics;
 namespace WizardCastle {
     class Program {
 
-        private static State InitTestState() {
-            var ab = new Abilities() + Race.Elf;
-            return new State(new Map(false), new Player() {
-                Race = Race.Elf.Name,
-                Sex = "Female",
-                Dexterity = ab.Dexterity, Intelligence = ab.Intelligence, Strength = ab.Strength
-            });
-        }
-
         private static void GameLoop(State state) {
             while (!state.Done) {
                 state.Player.Turn += 1;
                 var availActions = Actions.AllActions.Where(x => x.IsAvailable(state)).ToList();
                 var playerAction = Util.Menu("Your action", availActions, (x, _) => x.Cmd).Item2;
                 playerAction.Exec(state);
+
                 // CheckCurses(ref player, ref knownMap);
                 // CheckIfDead(player, ref fallThrough);
             }
         }
 
         static int Main() {
-            var state = InitTestState();
-            Actions.AllActions.First(x => x.Cmd == 'F').Exec(state);
-            Game.DisplayLevel(state);
+            // var state = Game.CreateTestState();
+            // Actions.AllActions.First(x => x.Cmd == 'F').Exec(state);
+            // Game.DisplayLevel(state);
 
-            foreach(var x in Content.All) {
-                Util.WriteLine(x.ToString());
-            }
-            // var state = Game.Startup();
-            // Game.GoodBye();
+            // foreach(var x in Content.All) {                Util.WriteLine(x.ToString());            }
+            GameLoop(Game.Startup());
+            Game.GoodBye();
             return 0;
         }
     }

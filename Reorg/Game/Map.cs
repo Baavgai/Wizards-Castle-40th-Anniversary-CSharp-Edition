@@ -30,11 +30,11 @@ namespace WizardCastle {
             }
 
         }
-            
 
 
 
-        public static void DisplayLevel(State state) =>
+
+        public static void DisplayLevel(State state) {
             state.Map.Traverse((map, p) => {
                 if (p == state.Player.Location) {
                     Util.Write(" * ", bgColor: ConsoleColor.DarkMagenta);
@@ -51,8 +51,11 @@ namespace WizardCastle {
                         Util.Write($" {content.Name[0]} ");
                     }
                 }
+                Util.ResetColors();
                 if (p.Col == map.Cols - 1) { Util.WriteLine(); }
             }, state.Player.Location.Level);
+            
+        }
 
 
 

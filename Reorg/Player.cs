@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace WizardCastle {
     class Player : IAbilities {
-        
         private readonly List<IItem> inventory = new List<IItem>();
         public IItem[] Inventory => inventory.ToArray();
         public void Add(IItem item) {
@@ -13,24 +12,15 @@ namespace WizardCastle {
         public void Remove(IItem item) {
             inventory.Remove(item);
         }
-        // public List<IItem> Inventory { get; } = new List<IItem>();
 
         private int dexterity = 0;
         private int intelligence = 0;
         private int strength = 0;
-        // public int turns = 0;
+
         public int lampBurn = 0;
         public int Flares { get; set; } = 2;
         public Armor Armor { get; set; } = null;
         public Weapon Weapon { get; set; } = null;
-        // public bool blind = false;
-        // public bool bookStuck = false;
-        // public bool forgetfulness = false;
-        // public bool leech = false;
-        // public bool lethargy = false;
-        // public bool lamp = false;
-        // public bool orbOfZot = false;
-        // public bool runeStaff = false;
 
         public bool HasItem(IItem item) => Inventory.Any(x => x == item);
         public bool IsBlind => HasItem(Curse.Blind);

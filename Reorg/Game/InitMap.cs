@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace WizardCastle {
     internal static partial class Game {
 
-        public static void InitMap(Map map) {
+        public static Map InitMap(Map map) {
             map[StartingLocation].Contents = Content.Exit;
             // foreach (var x in Items.AllTreasures) {                map[RandEmptyMapPos(map)].Contents = x;            }
             map.Traverse((_, p) => {
@@ -51,7 +51,7 @@ namespace WizardCastle {
                         map[p].Contents = Content.Gold;
                     } else if (chance < 46) {
                         //36-45: Vendor
-                        // map[p] = GameCollections.RoomContents.Find(item => item == "Vendor");
+                        map[p].Contents = VendorFactory.Create();
                     } else if (chance < 61) {
                         //46-60: Monster 
                         map[p].Contents = Util.RandPick(MonsterFactory.AllMonsters).Create();
@@ -61,19 +61,17 @@ namespace WizardCastle {
 
             // give all treasures to monsters
             var richMonsters = map.AllPos()
-                .Where(p => map[p].Contents is IMonster)
+                .Where(p => map[p].Contents != null && map[p].Contents is IMonster)
+                .Select(p => map[p].Contents)
                 .OrderBy(_ => Util.RandInt(1000))
                 .Take(Treasure.All.Length)
-                .Select(p => map[p].Contents as IMonster)
+                .Cast<IMonster>()
                 .ToList();
-            for(int i=0; i< Treasure.All.Length; i++) {
+            for (int i = 0; i < Treasure.All.Length; i++) {
                 richMonsters[i].Inventory.Add(Treasure.All[i]);
             }
-            //             foreach (var x in Items.AllTreasures) { map[RandEmptyMapPos(map)].Contents = x; }
 
-
-
-            // GameCollections.RuneStaffLocation = Map.FindMonster(theMap, GameCollections.Monsters[new Random().Next(0, GameCollections.Monsters.Count)]);
+            return map;
 
         }
     }

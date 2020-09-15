@@ -8,7 +8,7 @@ namespace WizardCastle {
     class Map {
         public class Cell {
             public IContent Contents { get; set; }
-            public bool Known { get; set; }
+            public bool Known { get; set; } = false;
 
             public void Clear() => Contents = null;
             public bool IsEmpty => Contents == null;

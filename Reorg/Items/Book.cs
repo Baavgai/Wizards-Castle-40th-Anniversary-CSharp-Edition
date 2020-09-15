@@ -5,9 +5,8 @@ using System.Collections.Generic;
 namespace WizardCastle {
 
     class Book : Item, IHasOpen, IContent {
-        static Book() {
-            Content.Register(new Book());
-        }
+        private static Lazy<Book> instance = new Lazy<Book>(() => new Book());
+        public static Book Instance => instance.Value;
 
         private Book() : base("Book") { }
 
