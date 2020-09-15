@@ -2,36 +2,23 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    internal static partial class Items {
-        public interface IWeapon : IItem {
-            public int BaseDamage { get; }
-            public int Cost { get; }
-            public int IntialCost { get; }
+    class Weapon : Item {
+        private readonly static List<Weapon> all = new List<Weapon>();
+        public readonly static Weapon Dagger = all.Register(new Weapon("Dagger", 1500, 1));
+        public readonly static Weapon Mace = all.Register(new Weapon("Mace", 2000, 2));
+        public readonly static Weapon Sword = all.Register(new Weapon("Sword", 2500, 3));
+        public static Weapon[] All => all.ToArray();
 
-            public int CalcDamage();
+        public int BaseDamage { get; }
+        public int Cost { get; }
+        public int IntialCost => BaseDamage * 10;
+        private Weapon(string name, int cost, int baseDamage) : base(name) {
+            Cost = cost;
+            BaseDamage = baseDamage;
         }
-
-        public readonly static IWeapon[] AllWeapons = new IWeapon[] {
-            Dagger, Mace, Sword
-        };
+        public int CalcDamage() => Util.RandInt(1, 6) + BaseDamage;
 
 
-        public readonly static IWeapon Dagger = new WeaponImpl("Dagger", 1500, 1);
-        public readonly static IWeapon Mace = new WeaponImpl("Mace", 2000, 2);
-        public readonly static IWeapon Sword = new WeaponImpl("Sword", 2500, 3);
-
-        private class WeaponImpl : Item, IWeapon {
-            public int BaseDamage { get; }
-            public int Cost { get; }
-            public int IntialCost => BaseDamage * 10;
-            public WeaponImpl(string name, int cost, int baseDamage) : base(name, ItemType.Weapon) {
-                Cost = cost;
-                BaseDamage = baseDamage;
-            }
-            public int CalcDamage() => Util.RandInt(1, 6) + BaseDamage;
-
-
-        }
     }
 }
 

@@ -71,19 +71,19 @@ namespace WizardCastle {
                 s => {
                     s.Player.Location += new MapPos(level: -1);
                 },
-                s => s.CurrentCell.Contents == Items.UpStairs && s.Player.Location.Level>0
+                s => s.CurrentCell.Contents == Content.UpStairs && s.Player.Location.Level>0
                 ),
 
             new GameAction('D', "Down stairs", "(D)OWN causes you to descend stairs going down (you must be in a room with stairs going down).",
                 s => {
                     s.Player.Location += new MapPos(level: 1);
                 },
-                s => s.CurrentCell.Contents == Items.DownStairs && s.Player.Location.Level<s.Map.Levels-1
+                s => s.CurrentCell.Contents == Content.DownStairs && s.Player.Location.Level<s.Map.Levels-1
                 ),
 
             new GameAction('N', "North", @"(N)ORTH moves you to the room north of your present position. WHEN YOU GO NORTH FROM THE ENTRANCE THE GAME ENDS (In all other cases the north edge wraps to the south).",
             state => {
-                if (state.CurrentCell == Items.Exit) {
+                if (state.CurrentCell == Content.Exit) {
                     state.Done = true;
                 } else {
                     Direction.North.Exec(state);
@@ -132,7 +132,7 @@ namespace WizardCastle {
 
         private static void Teleport(State state) {
             var (player, _) = state;
-            if (player.HasItem(Items.RuneStaff)) {
+            if (player.HasItem(Treasure.RuneStaff)) {
                 MapPos location = null;
                 while (location == null) {
                     Util.ClearScreen();

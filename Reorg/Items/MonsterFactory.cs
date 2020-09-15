@@ -4,16 +4,12 @@ using System.Linq;
 
 namespace WizardCastle {
     // monster must provide an instance of itself, so it can have an inventory, fight, etc.
-    static class Monster {
-        public interface IMonster : IItem, IHasOnEntry {
-            public List<IItem> Inventory { get; }
+    interface IMonster : IContent {
+        public List<IItem> Inventory { get; }
+    }
 
-        }
-        public interface IMonsterFactory : IHasName {
-            IMonster CreateMonster();
-        }
-
-        public static IMonsterFactory[] AllMonsters = new IMonsterFactory[] {
+    static class MonsterFactory {
+        public static IContentFactory[] AllMonsters = new IContentFactory[] {
             new MonsterFactoryImpl("Balrog", strength: 5),
             new MonsterFactoryImpl("Bear", strength: 2),
             new MonsterFactoryImpl("Chimera", strength: 4),
@@ -38,7 +34,7 @@ namespace WizardCastle {
                 m => $"The {m.Name} says, welcome to your death pitiful!"
         };
 
-        private class MonsterFactoryImpl : IMonsterFactory {
+        private class MonsterFactoryImpl : IContentFactory {
             private readonly bool weaponBreakChance;
             private readonly Abilities mods;
             public MonsterFactoryImpl(string name, int dexterity = 0, int intelligence = 0, int strength = 0, bool weaponBreakChance = false) {
@@ -49,7 +45,7 @@ namespace WizardCastle {
                 this.weaponBreakChance = weaponBreakChance;
             }
             public string Name { get; }
-            public IMonster CreateMonster() => new MonsterImpl(Name, mods, weaponBreakChance);
+            public IContent Create() => new MonsterImpl(Name, mods, weaponBreakChance);
 
         }
 
@@ -64,7 +60,7 @@ namespace WizardCastle {
             public List<IItem> Inventory { get; } = new List<IItem>();
             private readonly bool weaponBreakChance;
 
-            public MonsterImpl(string name, Abilities mods, bool weaponBreakChance) : base(name, ItemType.Monster) {
+            public MonsterImpl(string name, Abilities mods, bool weaponBreakChance) : base(name) {
                 Mods = mods;
                 this.weaponBreakChance = weaponBreakChance;
             }
@@ -140,7 +136,7 @@ namespace WizardCastle {
             }
 
             private void PlayerBribe(State state) {
-                var treasures = state.Player.Inventory.Where(x => x.ItemType == ItemType.Treasure).ToList();
+                var treasures = state.Player.Inventory.Where(x => x is Treasure).ToList();
                 if (treasures.Count > 0) {
                     var treasure = Util.RandPick(treasures);
                     Util.WriteLine($"The {Name} says I want the {treasure.Name}. Will you give it to me?");

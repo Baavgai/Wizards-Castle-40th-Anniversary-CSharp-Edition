@@ -1,0 +1,73 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace WizardCastle {
+
+    interface IContent : IItem, IHasOnEntry { }
+    interface IContentFactory {
+        string Name { get; }
+        IContent Create();
+    }
+
+    class Content : Item, IContent {
+        private readonly static List<IContent> all = new List<IContent>();
+        public static IContent Book = all.Find(x => x is Book);
+        public static IContent Chest = all.Find(x => x is Chest);
+        public static IContent Orb = all.Find(x => x is Orb);
+        public static IContent Pool = all.Find(x => x is Pool);
+
+        public static readonly IContent Gold = all.Register(new Content("Gold",
+            state => {
+                var goldFound = Util.RandInt(1, 1001);
+                Util.WriteLine($"You've found {goldFound} Gold Pieces");
+                state.Player.Gold += goldFound;
+                state.CurrentCell.Clear();
+            }));
+        public static readonly IContent DownStairs = all.Register(new Content("DownStairs"));
+        public static readonly IContent UpStairs = all.Register(new Content("UpStairs"));
+        public static readonly IContent Exit = all.Register(new Content("Entrance/Exit"));
+        public static readonly IContent SinkHole = all.Register(new Content("SinkHole",
+            state => {
+                state.Player.Location.Level += 1;
+                Util.Sleep();
+            }));
+        public static readonly IContent Warp = all.Register(new Content("Warp", 
+            state => {
+                state.Player.Location = Game.RandMapPos(state);
+                Util.Sleep();
+            }));
+
+        public static readonly IContent Flares = all.Register(new Content("Flares", 
+        state => {
+            int flaresFound = Util.RandInt(1, 11);
+            Util.WriteLine($"You've found {flaresFound} flares");
+            state.Player.Flares += flaresFound;
+            state.CurrentCell.Clear();
+        }));
+
+
+        public static IContent[] All => all.ToArray();
+
+        public static void Register(IContent item) {
+            all.Add(item);
+        }
+
+
+
+
+
+        private readonly Action<State> onEntry;
+        public Content(string name, Action<State> onEntry = null) : base(name) {
+            this.onEntry = onEntry;
+        }
+        public void OnEntry(State state) {
+            if (onEntry != null) {
+                onEntry(state);
+            } else {
+                Game.DefaultItemMessage(this);
+            }
+        }
+
+
+    }
+}

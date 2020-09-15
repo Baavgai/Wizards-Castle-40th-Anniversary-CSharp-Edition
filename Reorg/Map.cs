@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace WizardCastle {
     class Map {
         public class Cell {
-            public IHasOnEntry Contents { get; set; }
+            public IContent Contents { get; set; }
             public bool Known { get; set; }
 
             public void Clear() => Contents = null;

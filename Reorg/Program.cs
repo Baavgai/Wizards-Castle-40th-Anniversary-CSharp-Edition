@@ -30,6 +30,10 @@ namespace WizardCastle {
             var state = InitTestState();
             Actions.AllActions.First(x => x.Cmd == 'F').Exec(state);
             Game.DisplayLevel(state);
+
+            foreach(var x in Content.All) {
+                Util.WriteLine(x.ToString());
+            }
             // var state = Game.Startup();
             // Game.GoodBye();
             return 0;

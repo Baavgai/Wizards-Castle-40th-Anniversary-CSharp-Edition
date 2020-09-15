@@ -45,7 +45,7 @@ namespace WizardCastle {
                     // if (map[player.location[0], j, k] == "Zot") {                    roomValue = "W";
                     if (content == null) {
                         Util.Write(" - ", ConsoleColor.White);
-                    } else if (content.ItemType == ItemType.Monster) {
+                    } else if (content is IMonster) {
                         Util.Write(" M ", ConsoleColor.Red);
                     } else {
                         Util.Write($" {content.Name[0]} ");

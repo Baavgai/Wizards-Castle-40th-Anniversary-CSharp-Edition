@@ -4,7 +4,7 @@ using System.Linq;
 namespace WizardCastle {
     internal static partial class Game {
         private static IEnumerable<string> ReplaceRandomMonster(IEnumerable<string> list) =>
-            list.Select(x => x.Replace("//RandomMonster", Util.RandPick(Monster.AllMonsters).Name));
+            list.Select(x => x.Replace("//RandomMonster", Util.RandPick(MonsterFactory.AllMonsters).Name));
 
         private static readonly string[] errorMesssages = new string[] {
             "How very original, now try again.",

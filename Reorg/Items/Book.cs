@@ -3,30 +3,31 @@ using System.Collections.Generic;
 
 
 namespace WizardCastle {
-    internal static partial class Items {
-        public interface IBook : IHasOpen, IHasOnEntry { }
 
-        private class BookImpl : Item, IBook {
+    class Book : Item, IHasOpen, IContent {
+        static Book() {
+            Content.Register(new Book());
+        }
 
-            public BookImpl() : base("Book", ItemType.Content) { }
+        private Book() : base("Book") { }
 
-            public void OnEntry(State state) => Game.DefaultItemMessage(this);
+        public void OnEntry(State state) => Game.DefaultItemMessage(this);
 
-            public void Open(State state) {
-                if (!state.Player.IsBlind) {
-                    state.CurrentCell.Clear();
-                    Util.WriteLine($"\nYou open the book and {Util.RandPick(AllHandlers)(state)}");
-                } else {
-                    Util.WriteLine($"Sorry, {state.Player.Race}, it's not written in Braille!");
-                }
-                Util.WaitForKey();
+        public void Open(State state) {
+            if (!state.Player.IsBlind) {
+                state.CurrentCell.Clear();
+                Util.WriteLine($"\nYou open the book and {Util.RandPick(AllHandlers)(state)}");
+            } else {
+                Util.WriteLine($"Sorry, {state.Player.Race}, it's not written in Braille!");
             }
+            Util.WaitForKey();
+        }
 
 
-            private static readonly Func<State, string>[] AllHandlers = new Func<State, string>[] {
+        private static readonly Func<State, string>[] AllHandlers = new Func<State, string>[] {
             s => "it's another volume of Zot's poetry. Yeech!",
             s => $"it's an old copy of play {Game.RandRace()}.",
-            s => $"it's a {Util.RandPick(Monster.AllMonsters)} cook book.",
+            s => $"it's a {Util.RandPick(MonsterFactory.AllMonsters)} cook book.",
             s => $"it's a self-improvement book on how to be a better {Game.RandRace()}.",
             s => {
                 s.Player.Dexterity = Game.MaxAttrib;
@@ -41,7 +42,7 @@ namespace WizardCastle {
                 return "it's a manual of strength!";
             },
             s => {
-                var loc = Util.RandPick(Game.SearchMap(s, Items.Gold));
+                var loc = Util.RandPick(Game.SearchMap(s, Content.Gold));
                 return $"it's a treasure map leading to a pile of gold at ({loc.Display}).";
             },
             s => {
@@ -54,6 +55,6 @@ namespace WizardCastle {
             }
         };
 
-        }
     }
 }
+

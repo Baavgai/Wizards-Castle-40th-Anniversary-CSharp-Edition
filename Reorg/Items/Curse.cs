@@ -2,38 +2,36 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    internal static partial class Items {
-
-        public interface ICurse : IItem, IHasExec { }
-
-        public static readonly ICurse CurseBlind = new CurseImpl("Blind");
-        public static readonly ICurse CurseBookStuck = new CurseImpl("Book-Stuck-To-Hands");
-        public static readonly ICurse CurseForgetfulness = new CurseImpl("Forgetfulness", s => {
+    // public interface ICurse : IItem, IHasExec { }
+    class Curse : Item, IHasExec {
+        private readonly static List<Curse> all = new List<Curse>();
+        public static readonly Curse Blind = all.Register(new Curse("Blind"));
+        public static readonly Curse BookStuck = all.Register(new Curse("Book-Stuck-To-Hands"));
+        public static readonly Curse Forgetfulness = all.Register(new Curse("Forgetfulness", s => {
             Util.WriteLine("You forget something.");
-            Game.HideMap(s, s.Map.RandPos());
-        });
-        public static readonly ICurse CurseLeech = new CurseImpl("Leech", s => {
+            Game.HideMapCell(s, Game.RandMapPos(s));
+        }));
+        public static readonly Curse Leech = all.Register(new Curse("Leech", s => {
             var x = Util.RandInt(3);
-            if (x>0) {
+            if (x > 0) {
                 s.Player.Strength -= x;
                 Util.WriteLine("Curse of the leech makes you weaker.");
             }
-        });
-        public static readonly ICurse CurseLethargy = new CurseImpl("Lethargy");
+        }));
+        public static readonly Curse Lethargy = all.Register(new Curse("Lethargy"));
 
-        public static readonly ICurse[] AllCurses = new ICurse[] {
-            CurseBlind, CurseBookStuck, CurseForgetfulness, CurseLeech, CurseLethargy
-        };
-        
-
-
-        private class CurseImpl : Item, ICurse {
-            private readonly Action<State> exec;
-            public CurseImpl(string name, Action<State> exec = null) : base(name, ItemType.Curse) {
-                this.exec = exec;
-            }
-            public void Exec(State state) => exec?.Invoke(state);
+        public static Curse[] All => all.ToArray();
+        private readonly Action<State> exec;
+        private Curse(string name, Action<State> exec = null) : base(name) {
+            this.exec = exec;
         }
+        public void Exec(State state) => exec?.Invoke(state);
+
+
+        // public static readonly Curse[] All = new Curse[] {            Blind, eBookStuck, CurseForgetfulness, CurseLeech, CurseLethargy        };
+
+
+
     }
 }
 

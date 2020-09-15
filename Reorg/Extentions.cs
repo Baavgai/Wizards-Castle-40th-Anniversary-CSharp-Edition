@@ -7,5 +7,8 @@ namespace WizardCastle {
             xs.Add(x);
             return x;
         }
+        public static void Register<T>(this List<T> xs, List<T> ys) {
+            xs.AddRange(ys);
+        }
     }
 }

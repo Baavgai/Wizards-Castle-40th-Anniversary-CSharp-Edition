@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Direction : IHasName, IHasExec {
+    class Direction : IItem, IHasExec {
         public string Name { get; }
         private readonly Action<State> exec;
         private Direction(string name, Action<State> exec) {
