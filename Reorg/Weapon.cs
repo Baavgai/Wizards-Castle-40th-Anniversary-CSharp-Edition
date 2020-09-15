@@ -3,11 +3,10 @@ using System.Collections.Generic;
 
 namespace WizardCastle {
     class Weapon : Item {
-        public readonly static Weapon Dagger = new Weapon("Dagger", 1500, 1);
-        public readonly static Weapon Mace = new Weapon("Mace", 2000, 2);
-        public readonly static Weapon Sword = new Weapon("Sword", 2500, 3);
-
         private readonly static List<Weapon> all = new List<Weapon>();
+        public readonly static Weapon Dagger = all.Register(new Weapon("Dagger", 1500, 1));
+        public readonly static Weapon Mace = all.Register(new Weapon("Mace", 2000, 2));
+        public readonly static Weapon Sword = all.Register(new Weapon("Sword", 2500, 3));
         public static Weapon[] All => all.ToArray();
 
         public int BaseDamage { get; }
@@ -16,7 +15,6 @@ namespace WizardCastle {
         private Weapon(string name, int cost, int baseDamage) : base(name, ItemType.Weapon) {
             Cost = cost;
             BaseDamage = baseDamage;
-            all.Add(this);
         }
         public int CalcDamage() => Util.RandInt(1, 6) + BaseDamage;
 

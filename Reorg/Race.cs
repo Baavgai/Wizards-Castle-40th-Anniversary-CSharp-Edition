@@ -3,23 +3,18 @@ using System.Collections.Generic;
 
 namespace WizardCastle {
     class Race : Mob {
-
-        public static readonly Race Dwarf = Register(new Race("Dwarf", dexterity: 6, intelligence: 8, strength: 10));
-        public static readonly Race Elf = Register(new Race("Elf", dexterity: 10, intelligence: 8, strength: 6));
-        public static readonly Race Hobbit = Register(new Race("Hobbit", dexterity: 12, intelligence: 8, strength: 4, extraPoints: 4));
-        public static readonly Race HomoSap = Register(new Race("Homo-Sapien", dexterity: 8, intelligence: 8, strength: 8));
-
         private readonly static List<Race> all = new List<Race>();
+        public static readonly Race Dwarf = all.Register(new Race("Dwarf", dexterity: 6, intelligence: 8, strength: 10));
+        public static readonly Race Elf = all.Register(new Race("Elf", dexterity: 10, intelligence: 8, strength: 6));
+        public static readonly Race Hobbit = all.Register(new Race("Hobbit", dexterity: 12, intelligence: 8, strength: 4, extraPoints: 4));
+        public static readonly Race HomoSap = all.Register(new Race("Homo-Sapien", dexterity: 8, intelligence: 8, strength: 8));
+
         public static Race[] All => all.ToArray();
-        private static Race Register(Race race) { all.Add(race); return race; }
 
         public int ExtraPoints { get; }
         private Race(string name, int dexterity, int intelligence, int strength, int extraPoints = 8) : base(name, dexterity, intelligence, strength) {
             ExtraPoints = extraPoints;
-            // Register(this);
-            
         }
-
     }
 }
 
