@@ -17,7 +17,7 @@ namespace WizardCastle {
 
         public static Tuple<char, T> Menu<T>(string question, IDictionary<char, T> choices, bool showChoices = false) {
             var lookup = new Dictionary<char, T>(choices.Select(x => new KeyValuePair<char, T>(Char.ToUpper(x.Key), x.Value)));
-            if (showChoices) { ShowPrompt(); } else { ShowFullChoices(); }
+            if (showChoices) { ShowFullChoices(); } else { ShowPrompt(); }
             
             while (true) {
                 var keyChar = ReadChar();
@@ -37,6 +37,7 @@ namespace WizardCastle {
                 foreach (var item in lookup) {
                     WriteLine($"[{item.Key}] - {item.Value}");
                 }
+                Write($"{question}: ");
             }
             void ShowPrompt() {
                 WriteLine();

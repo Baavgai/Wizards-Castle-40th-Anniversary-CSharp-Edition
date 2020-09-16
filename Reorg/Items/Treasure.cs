@@ -6,37 +6,57 @@ using System.Linq;
 namespace WizardCastle {
     class Treasure : Item, IHasOnEntry, IHasExec {
         private readonly static List<Treasure> all = new List<Treasure>();
-        public static readonly Treasure BlueFlame = all.Register(new Treasure("The Blue Flame", state => {
-            if (state.Player.HasItem(Curse.BookStuck)) {
-                state.Player.Remove(Curse.BookStuck);
-                Util.WriteLine("The Blue Flame burns the book off your hands!", bgColor: ConsoleColor.DarkGray);
-                Util.WaitForKey();
-            }
-        }));
-
-        public static readonly Treasure RuneStaff = all.Register(new Treasure("Rune Staff"));
-
-        static Treasure() {
-            all.Register(new List<Treasure>() {
-                new Treasure("The Green Gem"),
-                new Treasure("The Norn Stone"),
-                new Treasure("The Opal Eye"),
-                new Treasure("The Palantir"),
-                new Treasure("The Pale Pearl"),
-                new Treasure("The Ruby Red"),
-                new Treasure("The Silmaril")
-            });
-        }
-
         public static Treasure[] All => all.ToArray();
+        public static readonly Treasure BlueFlame = all.Register(new Treasure("The Blue Flame",
+            "dissolves books stuck to your hands",
+            BasicCurseRemoval(Curse.BookStuck, "The Blue Flame burns the book off your hands!")));
 
+        public static readonly Treasure RuneStaff = all.Register(new Treasure("Rune Staff",
+            "gives te power of teleporation", _ => { }));
+
+        public static readonly Treasure GreenGem = all.Register(new Treasure("The Green Gem",
+            "wards off the curse of Forgetfulness",
+            BasicCurseRemoval(Curse.Forgetfulness, "The Green Gem cures your forgetfulness!")));
+
+        public static readonly Treasure NornStone = all.Register(new Treasure("The Norn Stone"));
+
+        public static readonly Treasure OpalEye = all.Register(new Treasure("The Opal Eye",
+            "cures blindness",
+            BasicCurseRemoval(Curse.Blind, "The Opal Eye cures your blindness!")));
+
+        public static readonly Treasure Palantir = all.Register(new Treasure("The Palantir"));
+
+        public static readonly Treasure PalePearl = all.Register(new Treasure("The Pale Pearl",
+            "wards off the curse of the Leech",
+            BasicCurseRemoval(Curse.Leech, "The Pale Pearl heals the curse of the Leech!")));
+
+        public static readonly Treasure RedRuby = all.Register(new Treasure("The Ruby Red",
+            "wards off the curse of Lethargy",
+            BasicCurseRemoval(Curse.Lethargy, "The Ruby Red cures your Lethargy!")));
+
+        public static readonly Treasure Silmaril = all.Register(new Treasure("The Silmaril"));
+
+        private static Action<State> BasicCurseRemoval(Curse curse, string message) =>
+            state => {
+                if (state.Player.HasItem(curse)) {
+                    state.Player.Remove(curse);
+                    Util.WriteLine(message, bgColor: ConsoleColor.DarkGray);
+                }
+            };
 
 
 
         private readonly Action<State> update;
-        private Treasure(string name, Action<State> update = null) : base(name) {
+        
+        private Treasure(string name) : base(name) {
+            Description = "has no special power";
+        }
+
+        private Treasure(string name, string desc, Action<State> update) : base(name) {
+            Description = desc;
             this.update = update;
         }
+        public string Description { get; }
 
         public void OnEntry(State state) {
             // Game.DefaultItemMessage(this);
@@ -46,72 +66,6 @@ namespace WizardCastle {
         }
 
         public void Exec(State state) => update?.Invoke(state);
-
-        /*
-         *             "•	The Ruby Red - wards off the curse of Lethargy.",
-            "•	The Norn Stone - has no special power.",
-            "•	The Pale Pearl - wards off the curse of the Leech.",
-            "•	The Opal Eye - cures blindness.",
-            "•	The Green Gem - wards off the curse of Forgetfulness.",
-            "•	The Blue Flame - dissolves books stuck to your hands.",
-            "•	The Palantir - has no special power.",
-            "•	The Silmaril - has no special power.",
-
-         *         static void CheckCurses(ref Player player, ref string[,,] knownMap)
-        {
-            if (player.treasures.Contains("The Ruby Red") && player.lethargy == true)
-            {
-                player.lethargy = false;
-                Console.BackgroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine("The Ruby Red cures your Lethargy!");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Util.WaitForKey();
-            }
-            if (player.treasures.Contains("The Pale Pearl") && player.leech == true)
-            {
-                player.leech = false;
-                Console.BackgroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine("The Pale Pearl heals the curse of the Leech!");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Util.WaitForKey();
-            }
-            if (player.leech == true)
-            {
-                player.DecStrength(new Random().Next(0, 3));
-            }
-            if (player.treasures.Contains("The Green Gem") && player.forgetfulness == true)
-            {
-                player.forgetfulness = false;
-                Console.BackgroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine("The Green Gem cures your forgetfulness!");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Util.WaitForKey();
-            }
-            if (player.forgetfulness == true)
-            {
-                int[] forgetRoom = Map.ForgetMapRoom(knownMap);
-                knownMap[forgetRoom[0], forgetRoom[1], forgetRoom[2]] = "X";
-            }
-            if (player.treasures.Contains("The Opal Eye") && player.blind == true)
-            {
-                player.blind = false;
-                Console.BackgroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine("The Opal Eye cures your blindness!");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Util.WaitForKey();
-            }
-            if (player.treasures.Contains("The Blue Flame") && player.bookStuck == true)
-            {
-                player.bookStuck = false;
-                Console.BackgroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine("The Blue Flame burns the book off your hands!");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Util.WaitForKey();
-            }
-        }
-
-        */
-
 
     }
 }

@@ -45,6 +45,7 @@ namespace WizardCastle {
                 this.weaponBreakChance = weaponBreakChance;
             }
             public string Name { get; }
+            public override string ToString() => Name;
             public IContent Create() => new MonsterImpl(Name, mods, weaponBreakChance);
 
         }
@@ -67,7 +68,7 @@ namespace WizardCastle {
 
 
             public void OnEntry(State state) {
-                Util.WriteLine($"\nHere you find '{Name}'");
+                Game.DefaultItemMessage(this);
                 if (mad) {
                     Util.WriteLine($"\n{Util.RandPick(MadMessages)(this)}\n");
                     BattleSequence(state);

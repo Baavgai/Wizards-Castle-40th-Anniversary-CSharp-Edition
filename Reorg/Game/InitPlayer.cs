@@ -104,13 +104,13 @@ namespace WizardCastle {
         private static Player InitPlayer() {
             var race = Util.Menu("Please choose your race", Race.All, (_, i) => $"{i}"[0]).Item2;
             Util.ClearScreen();
-            var sex = Util.Menu("Please choose your sex", new string[] { "FeMale", "Male" }).Item2;
+            var gender = Util.Menu("Please choose your gender", Gender.All).Item2;
             Util.ClearScreen();
 
             var ab = GetPlayerExtraPoints(race) + race;
             Player player = new Player() {
-                Race = race.Name,
-                Sex = sex,
+                Race = race,
+                Gender = gender,
                 Dexterity = ab.Dexterity, Intelligence = ab.Intelligence, Strength = ab.Strength
             };
             AddPlayerArmor(player);

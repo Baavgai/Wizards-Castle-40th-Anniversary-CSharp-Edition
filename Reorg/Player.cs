@@ -21,12 +21,12 @@ namespace WizardCastle {
         public int Flares { get; set; } = 2;
         public Armor Armor { get; set; } = null;
         public Weapon Weapon { get; set; } = null;
+        public Gender Gender { get; set; } = null;
+        public Race Race { get; set; }
 
         public bool HasItem(IItem item) => Inventory.Any(x => x == item);
         public bool IsBlind => HasItem(Curse.Blind);
 
-        public string Race { get; set; }
-        public string Sex { get; set; }
         public int Gold { get; set; } = 60;
 
         public MapPos Location { get; set; } = Game.StartingLocation;

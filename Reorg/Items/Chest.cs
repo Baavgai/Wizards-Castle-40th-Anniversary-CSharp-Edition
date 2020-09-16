@@ -9,7 +9,7 @@ namespace WizardCastle {
 
         private Chest() : base("Chest") { }
 
-        public void OnEntry(State state) => Util.WriteLine($"\nHere you find '{Name}'");
+        public void OnEntry(State state) => Game.DefaultItemMessage(this);
 
         public void Open(State state) {
             if (!state.Player.IsBlind) {

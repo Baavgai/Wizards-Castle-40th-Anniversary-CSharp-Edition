@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Actions - Copy.cs" />
     <Compile Remove="Game.cs" />
     <Compile Remove="Game\GameCollections.cs" />
     <Compile Remove="Game\Program.cs" />

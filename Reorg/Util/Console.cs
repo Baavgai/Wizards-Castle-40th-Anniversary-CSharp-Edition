@@ -9,6 +9,8 @@ namespace WizardCastle {
         public const ConsoleColor DefaultForegroundColor = ConsoleColor.White;
         public const ConsoleColor DefaultBackgroundColor = ConsoleColor.Black;
 
+        public static string ReadLine() => Console.ReadLine();
+
         public static void ResetColors() {
             Console.ForegroundColor = DefaultForegroundColor;
             Console.BackgroundColor = DefaultBackgroundColor;

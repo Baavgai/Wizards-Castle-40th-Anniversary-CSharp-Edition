@@ -9,10 +9,10 @@ namespace WizardCastle {
         private static void GameLoop(State state) {
             while (!state.Done) {
                 state.Player.Turn += 1;
-                var availActions = Actions.AllActions.Where(x => x.IsAvailable(state)).ToList();
+                state.CurrentCell.Contents?.OnEntry(state);
+                var availActions = GameAction.All.Where(x => x.IsAvailable(state)).ToList();
                 var playerAction = Util.Menu("Your action", availActions, (x, _) => x.Cmd).Item2;
                 playerAction.Exec(state);
-
                 // CheckCurses(ref player, ref knownMap);
                 // CheckIfDead(player, ref fallThrough);
             }
@@ -24,7 +24,8 @@ namespace WizardCastle {
             // Game.DisplayLevel(state);
 
             // foreach(var x in Content.All) {                Util.WriteLine(x.ToString());            }
-            GameLoop(Game.Startup());
+            // GameLoop(Game.Startup());
+            GameLoop(Game.CreateTestState());
             Game.GoodBye();
             return 0;
         }
