@@ -6,7 +6,10 @@ namespace WizardCastle {
     internal static partial class Game {
 
         public static void ShowStatus(State state) {
-            Util.WriteLines(Lines());
+            // Util.WriteLines(Lines());
+            foreach(var line in Lines()) {
+                Util.WriteLine(line);
+            }
             IEnumerable<string> Lines() {
                 (var player, var map) = state;
                 yield return $"You are at {player.Location.DisplayFull}";
@@ -21,6 +24,7 @@ namespace WizardCastle {
                 if (curses.Count() > 0) {
                     yield return $"Cursed with='{string.Join(",", curses)}'";
                 }
+                yield return "";
             }
         }
 

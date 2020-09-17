@@ -14,7 +14,7 @@ namespace WizardCastle {
             "Show map", "(M)AP causes a map of the level you are currently on to be printed.",
             state => {
                 Game.DisplayLevel(state);
-                Util.WaitForKey();
+                // Util.WaitForKey();
             });
 
         public static readonly GameAction Open = Create('O', "Open book or chest", @"(O)PEN causes you to open the book or chest in the room you are in. This command will only work if you are in a room with a chest or book.",
@@ -22,7 +22,7 @@ namespace WizardCastle {
             if (state.CurrentCell.Contents is IHasOpen item) {
                 item.Open(state);
             } else {
-                Util.WaitForKey($"\n{Game.RandErrorMsg()}\n");
+                Util.WriteLine($"\n{Game.RandErrorMsg()}\n");
             }
         }, s => s.CurrentCell.Contents is IHasOpen
             );
@@ -36,11 +36,11 @@ namespace WizardCastle {
                 if (player.HasItem(Treasure.RuneStaff)) {
                     MapPos location = null;
                     while (location == null) {
-                        Util.ClearScreen();
+                        // Util.ClearScreen();
                         Util.Write("\nTeleport where (Example: For Level 3, Row 5, Column 2 type: 3,5,2): ");
                         location = MapPos.Parse(Util.ReadLine());
                         if (!state.Map.ValidPos(location)) {
-                            Util.WaitForKey("* Invalid * Coordinates");
+                            Util.WriteLine("* Invalid * Coordinates");
                             location = null;
                         }
                     }
@@ -94,7 +94,7 @@ namespace WizardCastle {
                         Game.RevealMapArea(state, state.Player.Location);
                         state.Player.Flares -= 1;
                         Game.DisplayLevel(state);
-                        Util.WaitForKey("The flare pierces the darkness.");
+                        Util.WriteLine("The flare pierces the darkness.");
                     }
                 }, s => s.Player.Flares > 0);
 
@@ -116,7 +116,7 @@ namespace WizardCastle {
 
 
         public static readonly GameAction ViewInstructions = Create('V', "View Instructions",
-            action: _ => Game.ViewInstructions(false));
+            action: _ => Game.ShowInstructions());
 
         public static readonly GameAction Trade = Create('Z', "Trade with Vendor"
             );
@@ -149,7 +149,8 @@ namespace WizardCastle {
             if (isAvailable(state)) {
                 action(state);
             } else {
-                Util.WaitForKey($"\n{Game.RandErrorMsg()}\n");
+                // Util.WaitForKey($"\n{Game.RandErrorMsg()}\n");
+                Util.WriteLine($"\n{Game.RandErrorMsg()}\n");
             }
         }
         public bool IsAvailable(State state) => isAvailable(state);

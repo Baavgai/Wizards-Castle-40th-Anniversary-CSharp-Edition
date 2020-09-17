@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace WizardCastle {
     internal static partial class Util {
-        public static readonly Random Rand = new Random();
+        private static readonly Random Rand = new Random();
 
         public static int RandInt(int maxValue) => Rand.Next(maxValue);
         public static int RandInt(int minValue, int maxValue) => Rand.Next(minValue, maxValue);

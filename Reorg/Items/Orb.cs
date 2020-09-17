@@ -13,8 +13,7 @@ namespace WizardCastle {
 
         public void Gaze(State state) {
             var effect = Util.RandPick(Effects.Value);
-            Util.WriteLine($"\nYou drink from the pool and {effect(state)}");
-
+            Util.WriteLine($"\nYou gaze into the Orb and see {effect(state)}");
         }
 
         private static readonly Lazy<List<Func<State, string>>> Effects = new Lazy<List<Func<State, string>>>(() =>

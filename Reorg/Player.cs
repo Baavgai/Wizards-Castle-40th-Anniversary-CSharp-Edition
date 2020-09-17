@@ -27,6 +27,8 @@ namespace WizardCastle {
         public bool HasItem(IItem item) => Inventory.Any(x => x == item);
         public bool IsBlind => HasItem(Curse.Blind);
 
+        public GameAction LastAction { get; set; }
+
         public int Gold { get; set; } = 60;
 
         public MapPos Location { get; set; } = Game.StartingLocation;

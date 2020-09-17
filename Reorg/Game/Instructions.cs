@@ -132,15 +132,8 @@ namespace WizardCastle {
             "*** END OF INSTRUCTIONS ***"
         };
 
-        public static void ViewInstructions(bool prompt = true) {
-            var show = !prompt || Util.Menu("Would you like to view the instructions", new Dictionary<char, string> {
-                {'Y', "View the Instructions"},
-                {'N', "Start the Game"}
-            }).Item1 == 'Y';
-            if (show) {
-                Util.WriteLines(InstructionLines);
-            }
-        }
+        public static void ShowInstructions() => Util.WriteLines(InstructionLines);
+
 
     }
 }

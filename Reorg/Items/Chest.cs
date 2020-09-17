@@ -18,7 +18,7 @@ namespace WizardCastle {
             } else {
                 Util.WriteLine($"Sorry, {state.Player.Race}, it's not written in Braille!");
             }
-            Util.WaitForKey();
+            // Util.WaitForKey();
         }
 
         private static readonly Func<State, string>[] AllHandlers = new Func<State, string>[] {

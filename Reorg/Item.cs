@@ -16,16 +16,3 @@ namespace WizardCastle {
 
     }
 }
-
-/*
- *     // enum ItemType { Treasure, Monster, Curse, Content, UniqueItem, StackItem, Weapon, Armor }
-
-    interface IHasName {
-        public string Name { get; }
-    }
-
-    interface IItem : IHasName, IHasItemType {
-
-    }
-
- * */

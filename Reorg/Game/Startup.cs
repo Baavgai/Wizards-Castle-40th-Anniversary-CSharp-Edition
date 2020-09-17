@@ -27,6 +27,7 @@ namespace WizardCastle {
             Console.Write("\n\t");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write("Last Revised - 04/12/80  11:10 PM");
+
             Console.Write("\n\n\t");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.Write("C# version written by ");
@@ -34,8 +35,7 @@ namespace WizardCastle {
             Console.Write("Daniel Kill");
             Console.BackgroundColor = ConsoleColor.Black;
             Console.Write("\n\t");
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write("Modified: 2020-09-07 by Daniel Kill\n\n");
+            Util.WriteLine("Modified: 2020-09-07 by Daniel Kill", ConsoleColor.Gray);
 
             Util.Write("\n\n\tC# modifed version written by ", ConsoleColor.DarkYellow);
             Util.Write("Baavgai", ConsoleColor.Red);
@@ -43,39 +43,62 @@ namespace WizardCastle {
             Util.Write($"\n\tModified: {lastModified:yyyy-MM-dd} by Baavgai\n\n", ConsoleColor.Gray);
         }
 
-        private static Map GetMap() {
-            /*
-            bool randomMap = Util.Menu("Would you like the standard 8x8x8 map or a random map", new Dictionary<char, string> {
-                {'S', "Standard 8x8x8 Map"},
-                {'R', "Random Map"}
-            }).Item1 == 'R';
-            Util.ClearScreen();
-            return new Map(randomMap);
-            */
-            return new Map(false);
-        }
-
 
         public static State Startup() {
             StartupSplash();
             Util.WaitForKey();
             Util.ClearScreen();
-            ViewInstructions();
-            var m = InitMap(GetMap());
-            var state = new State(m, InitPlayer());
+
+            if (Util.Menu("Would you like to view the instructions", new Dictionary<char, string> {
+                {'Y', "View the Instructions"},                {'N', "Start the Game"}
+            }, showChoices: true).Item1 == 'Y') {
+                ShowInstructions();
+            }
+
+            var map = new Map(Util.Menu("Would you like the standard 8x8x8 map or a random map",
+                new string[] { "Standard 8x8x8 Map", "Random Map" }, showChoices: true).Item1 == 'R');
             Util.ClearScreen();
+
+            var state = new State(map, InitPlayer());
+            Util.ClearScreen();
+
             Util.WriteLine($"\tOk, {state.Player.Race}, you are now entering Zot's castle!\n");
             return state;
         }
 
         public static void GoodBye() {
-            Console.Clear();
-            Console.WriteLine("\t\tThank you for playing Wizard's Castle!");
             Util.ClearScreen();
+            Console.WriteLine("\t\tThank you for playing Wizard's Castle!");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("\n\nPress ENTER to Exit.");
-            Console.ReadLine();
+            Util.WaitForKey();
         }
+
+        public static void PlayerExit(State state) {
+            (var player, _) = state;
+            Util.ClearScreen();
+            Util.WriteLine("**** YOU EXITED THE CASTLE! ****");
+            Util.WriteLine($"\n\tYou were in the castle for {player.Turn}.");
+            Util.WriteLine("\n\tWhen you exited, you had:");
+            if (player.HasItem(Zot.Instance)) {
+                Util.Write("\n\t");
+                Util.WriteLine("*** Congratulations, you made it out alive with the Orb Of Zot ***", bgColor: ConsoleColor.DarkMagenta);
+                Util.ResetColors();
+            } else {
+                Util.WriteLine("\n\tYour miserable life");
+            }
+            Util.WriteLine($"\nYou were a {player.Gender} {player.Race}.");
+            Util.WriteLine($"\nYou wore {player.Armor?.ToString() ?? "no" } armor.");
+            Util.WriteLine($"\nYou had a {player.Weapon?.ToString() ?? "weaponless hand" }.");
+            Util.WriteLine($"\nYou had {player.Gold} Gold Pieces and {player.Flares} flares.");
+            // if (player.Lamp == true) {                Console.WriteLine("\nYou had a lamp.");            }
+            if (player.HasItem(Treasure.RuneStaff)) {
+                Util.WriteLine("\nYou had the RuneStaff.");
+            }
+            // if (player.treasures.Count > 0) {                Console.WriteLine($"\nYou also had the following treasures: {string.Join(", ", player.treasures)}");            }
+            // GameCollections.ExitCode = 0;
+            // SharedMethods.WaitForKey();
+        }
+
 
     }
 }

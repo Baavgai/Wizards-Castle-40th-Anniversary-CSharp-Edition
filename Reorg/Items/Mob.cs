@@ -1,18 +1,16 @@
 ﻿using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Mob : IItem, IAbilities {
+    class Mob : Abilities, IItem {
         public string Name { get; }
-        public int Dexterity { get; }
-        public int Intelligence { get; }
-        public int Strength { get; }
         public override string ToString() => Name;
 
-        public Mob(string name, int dexterity, int intelligence, int strength) { 
+        public Mob(string name, int dexterity, int intelligence, int strength) : base(dexterity, intelligence, strength) { 
             Name = name;
             Dexterity = dexterity;
             Intelligence = intelligence;
             Strength = strength;
         }
+        public Mob(string name) { Name = name; }
     }
 }

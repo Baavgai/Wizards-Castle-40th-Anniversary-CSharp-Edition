@@ -4,8 +4,9 @@ using System.Linq;
 
 namespace WizardCastle {
     // monster must provide an instance of itself, so it can have an inventory, fight, etc.
-    interface IMonster : IContent {
-        public List<IItem> Inventory { get; }
+    interface IMonster : IContent, IAbilitiesMutable {
+        int WebbedTurns { get; set; }
+        List<IItem> Inventory { get; }
     }
 
     static class MonsterFactory {
@@ -50,12 +51,9 @@ namespace WizardCastle {
 
         }
 
-        private class MonsterImpl : Item, IMonster {
-
-
-            public bool mad = true;
-            public int webbedTurns = 0;
-            public bool runeStaff = false;
+        private class MonsterImpl : Mob, IMonster, IAbilitiesMutable {
+            public bool Mad { get; set; } = true;
+            public int WebbedTurns { get; set; } = 0;
 
             private Abilities Mods { get; }
             public List<IItem> Inventory { get; } = new List<IItem>();
@@ -66,14 +64,21 @@ namespace WizardCastle {
                 this.weaponBreakChance = weaponBreakChance;
             }
 
+            private void ResetStats(State state) {
+                var ma = Mods + state.Player;
+                Dexterity = ma.Dexterity;
+                Intelligence = ma.Intelligence;
+                Strength = ma.Strength;
+            }
 
             public void OnEntry(State state) {
+                ResetStats(state);
                 Game.DefaultItemMessage(this);
-                if (mad) {
+                if (Mad) {
                     Util.WriteLine($"\n{Util.RandPick(MadMessages)(this)}\n");
                     BattleSequence(state);
                 } else {
-                    Console.WriteLine($"\nThe {Name} doesn't seem to notice you.\n");
+                    Util.WriteLine($"\nThe {Name} doesn't seem to notice you.\n");
                 }
                 // if (monster.strength < 1) {                theMap[player.location[0], player.location[1], player.location[2]] = "-";            }
                 // if (!player.location.SequenceEqual(monster.location)) {                return true;            }
@@ -87,18 +92,17 @@ namespace WizardCastle {
             }
 
             private void BattleSequence(State state) {
-                var ma = Mods + state.Player;
                 bool firstAttackRound = true;
-                while (mad && ma.Strength > 0 && state.Player.Strength > 0) {
+                while (Mad && Strength > 0 && state.Player.Strength > 0) {
                     Util.WriteLine($"\nYou are facing a {Name}!");
-                    if ((((Util.RandInt(101) + ma.Dexterity) > 75) || state.Player.HasItem(Curse.Lethargy)) && firstAttackRound) {
+                    if ((((Util.RandInt(101) + Dexterity) > 75) || state.Player.HasItem(Curse.Lethargy)) && firstAttackRound) {
                         MonsterAttack(state);
                         firstAttackRound = false;
                     }
                     if (state.Player.Strength > 0) {
                         switch (Util.Menu("What would you like to do", PlayerChoices(state, firstAttackRound)).Item2) {
                             case "Attack":
-                                PlayerAttack(state, ma);
+                                PlayerAttack(state);
                                 break;
                             case "Bribe":
                                 PlayerBribe(state);
@@ -110,27 +114,24 @@ namespace WizardCastle {
                                 PlayerRetreat(state);
                                 break;
                         }
-                        if (ma.Strength > 0 && mad) { 
+                        if (Strength > 0 && Mad) { 
                             MonsterAttack(state);
                         }
                     }
                     firstAttackRound = false;
                 }
-                if (ma.Strength < 1) {
+                if (Strength < 1) {
                     var gold = Util.RandInt(1, 1001);
                     Util.WriteLine($"\nYou killed the evil {Name}");
                     Util.WriteLine($"You get his hoard of {gold} Gold Pieces");
                     state.Player.Gold += gold;
-                    /*
-                    if (monster.runeStaff) {
-                        Console.WriteLine("You've found the RuneStaff!");
-                        player.runeStaff = true;
+                    foreach(var item in Inventory) {
+                        Util.WriteLine($"You've recoverd the {item}");
+                        if (item == Treasure.RuneStaff) {
+                            Util.WriteLine("You've found the RuneStaff!");
+                        }
+                        state.Player.Add(item);
                     }
-                    if (monster.treasures.Count > 0) {
-                        Console.WriteLine($"You've recoverd the {monster.treasures[0]}");
-                        player.treasures.Add(monster.treasures[0]);
-                    }
-                    */
                     state.CurrentCell.Clear();
                     Util.WriteLine();
                 }
@@ -146,48 +147,17 @@ namespace WizardCastle {
                         Util.WriteLine($"\nThe {Name} says, ok, just don't tell anyone.");
                         state.Player.Remove(treasure);
                         Inventory.Add(treasure);
-                        mad = false;
+                        Mad = false;
                     }
                 }
-                if (mad) {
+                if (Mad) {
                     Util.WriteLine($"\nThe {Name} says, all I want is your life!");
                 }
             }
 
             void PlayerCast(State state) {
-                /*
-                string question = $"What spell do you want to cast";
-                Dictionary<char, string> choicesDict = new Dictionary<char, string>
-                    {
-                    { 'W', "Web" },
-                    { 'F', "Fireball" },
-                    { 'D', "Deathspell" }
-                };
-                string[] choice = battleMenu.Menu(question, choicesDict, GameCollections.ErrorMesssages);
-                switch (choice[0]) {
-                    case "W":
-                        Console.WriteLine($"\nYou've caught the {monster.race} in a web, now it can't attack");
-                        monster.webbedTurns = rand.Next(1, 11);
-                        player.strength -= 1;
-                        break;
-                    case "F":
-                        Console.WriteLine($"\nYou blast the {monster.race} with a fireball.");
-                        monster.strength -= rand.Next(1, 11);
-                        player.intelligence -= 1;
-                        player.strength -= 1;
-                        break;
-                    case "D":
-                        if ((player.intelligence > monster.intelligence) && (rand.Next(1, 9) < 7)) {
-                            Console.WriteLine($"\nDEATH! The {monster.race} is dead.");
-                            monster.strength = 0;
-                        } else {
-                            Console.WriteLine($"\nDEATH! The STUPID {player.race}'s death.");
-                            player.strength = 0;
-                            Util.WaitForKey();
-                        }
-                        break;
-                }
-                */
+                var choice = Util.Menu("What spell do you want to cast", Spell.All).Item2;
+                choice.Cast(state, this);
             }
 
             private void PlayerRetreat(State state) {
@@ -198,11 +168,11 @@ namespace WizardCastle {
                     var choice = Util.Menu("Retreat which way", Direction.AllDirections).Item2;
                     choice.Exec(state);
                     Util.WriteLine($"\nYou retreat to the {choice.Name}!");
-                    Util.WaitForKey();
+                    // Util.WaitForKey();
                 }
             }
 
-            void PlayerAttack(State state, Abilities ma) {
+            void PlayerAttack(State state) {
                 if (state.Player.HasItem(Curse.BookStuck)) {
                     Util.WriteLine($"\nYou can't beat the {Name} to death with a book.");
                 } else if (state.Player.Weapon == null) {
@@ -212,7 +182,7 @@ namespace WizardCastle {
                     if (Util.RandInt(1, 11) > 5) {
                         Util.WriteLine("You hit it!");
                         int damage = state.Player.Weapon.CalcDamage();
-                        ma.Strength -= damage;
+                        Strength -= damage;
                         if (weaponBreakChance && Util.RandInt(1, 11) > 9) {
                             Util.WriteLine($"Oh No! Your {state.Player.Weapon.Name} just broke!");
                             state.Player.Weapon = null;
@@ -224,10 +194,10 @@ namespace WizardCastle {
             }
 
             private void MonsterAttack(State state) {
-                if (webbedTurns > 0) {
+                if (WebbedTurns > 0) {
                     Util.WriteLine($"\nThe {Name} is caught in a web and can't attack.");
-                    webbedTurns -= 1;
-                    if (webbedTurns == 0) {
+                    WebbedTurns -= 1;
+                    if (WebbedTurns == 0) {
                         Util.WriteLine($"\nThe web breaks!");
                     }
                 } else {

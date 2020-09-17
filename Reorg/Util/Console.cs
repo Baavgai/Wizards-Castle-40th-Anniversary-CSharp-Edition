@@ -9,7 +9,6 @@ namespace WizardCastle {
         public const ConsoleColor DefaultForegroundColor = ConsoleColor.White;
         public const ConsoleColor DefaultBackgroundColor = ConsoleColor.Black;
 
-        public static string ReadLine() => Console.ReadLine();
 
         public static void ResetColors() {
             Console.ForegroundColor = DefaultForegroundColor;
@@ -31,7 +30,24 @@ namespace WizardCastle {
             WriteLine(s);
         }
 
-        public static char ReadChar() => Char.ToUpper(Console.ReadKey(true).KeyChar);
+        public static string ReadLine() => Console.ReadLine();
+
+        // public static char ReadCharDefaultTranslate(ConsoleKeyInfo ki) => Char.ToUpper(ki.KeyChar);
+        public static char ReadCharDefaultTranslate(ConsoleKeyInfo ki) {
+            // System.Diagnostics.Debug.WriteLine(ki.Key == ConsoleKey.);
+            if (ki.Key == ConsoleKey.UpArrow) { return 'N'; }
+            if (ki.Key == ConsoleKey.DownArrow) { return 'S'; }
+            if (ki.Key == ConsoleKey.LeftArrow) { return 'W'; }
+            if (ki.Key == ConsoleKey.RightArrow) { return 'E'; }
+            return Char.ToUpper(ki.KeyChar);
+        }
+
+        public static char ReadChar(Func<ConsoleKeyInfo, char> translate) =>
+            translate(Console.ReadKey(true));
+
+        public static char ReadChar() => ReadChar(ReadCharDefaultTranslate);
+            // Char.ToUpper(Console.ReadKey(true).KeyChar);
+
 
         public static int ReadDigit(string msg = null) {
             if (!string.IsNullOrWhiteSpace(msg)) { WriteLine(msg); }
@@ -59,7 +75,10 @@ namespace WizardCastle {
 
 
 
-        public static void ClearScreen() => System.Console.Clear();
+        public static void ClearScreen() {
+            ResetColors();
+            System.Console.Clear();
+        }
 
         public static void WriteLines(IEnumerable<string> lines, bool clear = true) {
             int counter = 0;
