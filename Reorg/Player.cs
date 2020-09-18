@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace WizardCastle {
-    class Player : IAbilities {
+    class Player : IAbilitiesMutable {
         private readonly List<IItem> inventory = new List<IItem>();
         public IItem[] Inventory => inventory.ToArray();
         public void Add(IItem item) {
@@ -26,6 +26,8 @@ namespace WizardCastle {
 
         public bool HasItem(IItem item) => Inventory.Any(x => x == item);
         public bool IsBlind => HasItem(Curse.Blind);
+        public bool HasLamp => HasItem(VendorItem.Lamp))
+        
 
         public GameAction LastAction { get; set; }
 

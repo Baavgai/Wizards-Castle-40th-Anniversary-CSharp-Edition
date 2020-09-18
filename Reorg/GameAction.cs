@@ -98,7 +98,25 @@ namespace WizardCastle {
                     }
                 }, s => s.Player.Flares > 0);
 
-        public static readonly GameAction Lamp = Create('L', "Shine lamp into adjacent room", "(L)AMP will shine into any one of the rooms north, south, east, or west of your current position, revealing that room's contents."
+        public static readonly GameAction Lamp = Create('L', "Shine lamp into adjacent room", "(L)AMP will shine into any one of the rooms north, south, east, or west of your current position, revealing that room's contents.",
+            state => {
+                if (state.Player.IsBlind) {
+                    Util.WriteLine($"You're BLIND and can't see anything, silly {state.Player.Race}.");
+                } else {
+                    var choice = Util.Menu("Shine lamp which direction", Direction.AllDirections);
+                    Game.RevealMapCell()
+                        Map.RevealRoom(choice[1], player.location, theMap, ref knownMap);
+                        Map.DisplayLevel(knownMap, player);
+                    } else {
+                        Console.WriteLine($"You're BLIND and can't see anything, silly {player.race}.");
+                        SharedMethods.WaitForKey();
+                    }
+                } else {
+                    Console.WriteLine("\n{0}\n", ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages)[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
+                }
+                SharedMethods.WaitForKey();
+
+            }, s => s.Player.HasLamp
             );
 
         public static readonly GameAction Quit = Create('Q', "Quit the game", "(Q)UIT allows you to end the game while still in the castle. If you quit, you will lose the game.",

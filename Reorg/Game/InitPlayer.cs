@@ -8,78 +8,80 @@ namespace WizardCastle {
         private static Abilities GetPlayerExtraPoints(Race race) {
             var result = new Abilities();
             var extraPoints = race.ExtraPoints;
-            int attr = 0;
+            int i = 0;
             while (extraPoints > 0) {
-                var aName = attr == 0 ? "Dexterity" : (attr == 1 ? "Intelligence" : "Strength");
-                Util.Write($"\nYou have {extraPoints} points left, how many to add to {aName}: ");
+                var ability = AbilityItem.All[(i++ % 3)];
+                Util.Write($"\nYou have {extraPoints} points left, how many to add to {ability.Name}: ");
                 var amt = Util.ReadDigit();
                 if (amt > extraPoints) {
                     Util.WriteLine($"\n\tSorry, {race.Name}, you * DON'T * have that many points left to distribute");
                 } else {
                     extraPoints -= amt;
-                    if (attr == 0) {
-                        result.Dexterity += amt;
-                    } else if (attr == 1) {
-                        result.Intelligence += amt;
-                    } else {
-                        result.Strength += amt;
-                    }
-                    attr = (attr + 1) % 3;
+                    ability.ApplyAmount(result, amt);
                 }
             }
             return result;
         }
 
-        private static void AddPlayerArmor(Player player) {
-            Util.WriteLine();
-            // var items = new List<Tuple<A>>
-            var items = Armor.All
-                .Select(x => new Tuple<Armor, string>(x, $"{x.Name}, {x.IntialCost} Gold Pieces"))
-                .Append(new Tuple<Armor, string>(null, "None, 0 Gold Pieces"))
-                .ToList();
-            var choice = Util.Menu($"You have {player.Gold} Gold Pieces to buy items, what type of Armor do you want to purchase", items, (x, i) => $"{i}"[0]).Item2.Item1;
+        public static T PurchaseMenu<T>(Player player, string itemType, IEnumerable<T> items, Func<T, int> getCost) where T : class, IItem =>
+            Util.Menu($"You have {player.Gold} Gold Pieces to buy items, what type of {itemType} do you want to purchase",
+                items
+                .Select(x => {
+                    var cost = getCost(x);
+                    return new Tuple<T, string>(x, $"{x.Name}, {cost} Gold Pieces");
+                })
+                .Append(new Tuple<T, string>(null, "None, 0 Gold Pieces")),
+                (x, i) => $"{i}"[0]).Item2.Item1;
+
+        public static T PurchaseMenu<T>(Player player, string itemType, IEnumerable<T> items, bool vendor) where T : VendorItem =>
+            PurchaseMenu(player, itemType, items, x => x.Cost(vendor));
+
+        
+
+        public static void AddPlayerArmor(Player player, bool vendor = true) {
+            var choice = PurchaseMenu(player, "Armor", Armor.All, vendor);
             if (choice == null) {
 
-            } else if (choice.IntialCost > player.Gold) {
+            } else if (choice.Cost(vendor) > player.Gold) {
                 Util.WriteLine($"\n\tSorry, {player.Race}, you don't have that much gold left.");
             } else {
                 player.Armor = choice;
-                player.Gold -= choice.IntialCost;
+                player.Gold -= choice.Cost(vendor);
             }
-            Util.ClearScreen();
+            // Util.ClearScreen();
         }
 
-        private static void AddPlayerWeapon(Player player) {
+        public static void AddPlayerWeapon(Player player, bool vendor = true) {
             Util.WriteLine();
             var items = Weapon.All
-                .Select(x => new Tuple<Weapon, string>(x, $"{x.Name}, {x.IntialCost} Gold Pieces"))
+                .Select(x => new Tuple<Weapon, string>(x, $"{x.Name}, {x.Cost(vendor)} Gold Pieces"))
                 .Append(new Tuple<Weapon, string>(null, "None, 0 Gold Pieces"))
                 .ToList();
             var choice = Util.Menu($"You have {player.Gold} Gold Pieces to buy items, what type of Weapon do you want to purchase", items, (x, i) => $"{i}"[0]).Item2.Item1;
             if (choice == null) {
 
-            } else if (choice.IntialCost > player.Gold) {
+            } else if (choice.Cost(vendor) > player.Gold) {
                 Util.WriteLine($"\n\tSorry, {player.Race}, you don't have that much gold left.");
             } else {
                 player.Weapon = choice;
-                player.Gold -= choice.IntialCost;
+                player.Gold -= choice.Cost(vendor);
             }
-            Util.ClearScreen();
+            // Util.ClearScreen();
         }
 
-        private static void AddPlayerLamp(Player player) {
-            const int cost = 20;
-            if (player.Gold >= cost) {
+        public static void AddPlayerLamp(Player player, bool vendor = true) {
+            var item = VendorItem.Lamp;
+            if (player.Gold >= item.Cost(vendor)) {
                 var choice = Util.Menu("Would you like to purchase a lamp", new Dictionary<char, string>
                 {
-                {'Y', $"Purchase lamp ({cost} Gold Pieces)"},
+                {'Y', $"Purchase lamp ({item.Cost(vendor)} Gold Pieces)"},
                 {'N', "Don't purchase"}
             }).Item1 == 'Y';
                 if (choice) {
-                    player.Gold -= cost;
+                    player.Gold -= item.Cost(vendor);
                     // player.lamp = true;
                 }
-                Util.ClearScreen();
+                // Util.ClearScreen();
             }
         }
 
@@ -113,9 +115,9 @@ namespace WizardCastle {
                 Gender = gender,
                 Dexterity = ab.Dexterity, Intelligence = ab.Intelligence, Strength = ab.Strength
             };
-            AddPlayerArmor(player);
-            AddPlayerWeapon(player);
-            AddPlayerLamp(player);
+            AddPlayerArmor(player, false);
+            AddPlayerWeapon(player, false);
+            AddPlayerLamp(player, false);
             AddPlayerFlares(player);
             return player;
         }
@@ -123,3 +125,40 @@ namespace WizardCastle {
 
     }
 }
+/*
+ *         public static T PurchaseMenu<T>(Player player, string itemType, IEnumerable<T> items, Func<T, int> getCost) where T : class, IItem {
+            var menuItems = items
+                .Select(x => {
+                    var cost = getCost(x);
+                    return new Tuple<T, string>(x, $"{x.Name}, {cost} Gold Pieces");
+                })
+                .Append(new Tuple<T, string>(null, "None, 0 Gold Pieces"))
+                .ToList();
+            return Util.Menu($"You have {player.Gold} Gold Pieces to buy items, what type of {itemType} do you want to purchase",
+                menuItems, 
+                (x, i) => $"{i}"[0]).Item2.Item1;
+
+        }
+
+        public static void AddPlayerArmor(Player player, bool vendor = true) {
+            Util.WriteLine();
+            // var items = new List<Tuple<A>>
+            var items = Armor.All
+                .Select(x => {
+                    return new Tuple<Armor, string>(x, $"{x.Name}, {x.Cost(vendor)} Gold Pieces");
+                    })
+                .Append(new Tuple<Armor, string>(null, "None, 0 Gold Pieces"))
+                .ToList();
+            var choice = Util.Menu($"You have {player.Gold} Gold Pieces to buy items, what type of Armor do you want to purchase", items, (x, i) => $"{i}"[0]).Item2.Item1;
+            if (choice == null) {
+
+            } else if (choice.Cost(vendor) > player.Gold) {
+                Util.WriteLine($"\n\tSorry, {player.Race}, you don't have that much gold left.");
+            } else {
+                player.Armor = choice;
+                player.Gold -= choice.Cost(vendor);
+            }
+            // Util.ClearScreen();
+        }
+
+*/

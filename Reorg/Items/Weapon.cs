@@ -10,10 +10,11 @@ namespace WizardCastle {
         public static Weapon[] All => all.ToArray();
 
         public int BaseDamage { get; }
-        public int Cost { get; }
-        public int IntialCost => BaseDamage * 10;
-        private Weapon(string name, int cost, int baseDamage) : base(name) {
-            Cost = cost;
+        public int Cost(bool vendor = true) => vendor ? vendorCost : InitalCost;
+        private readonly int vendorCost;
+        private int InitalCost => BaseDamage * 10;
+        private Weapon(string name, int vendorCost, int baseDamage) : base(name) {
+            this.vendorCost = vendorCost;
             BaseDamage = baseDamage;
         }
         public int CalcDamage() => Util.RandInt(1, 6) + BaseDamage;

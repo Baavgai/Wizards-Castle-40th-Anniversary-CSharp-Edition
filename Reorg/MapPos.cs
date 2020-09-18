@@ -11,6 +11,7 @@ namespace WizardCastle {
         public int Col { get; set; }
         // public MapPos() => (Level, Row, Col) = (0, 0, 0);
         public MapPos(int level = 0, int row = 0, int col = 0) => (Level, Row, Col) = (level, row, col);
+        public MapPos(MapPos pos) : this(pos.Level, pos.Row, pos.Col) { }
 
         public void Deconstruct(out int level, out int row, out int col) => (level, row, col) = (Level, Row, Col);
         public bool Equals(MapPos x) => x != null && Equals(this, x);
