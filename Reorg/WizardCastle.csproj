@@ -11,7 +11,6 @@
     <Compile Remove="Game.cs" />
     <Compile Remove="Game\GameCollections.cs" />
     <Compile Remove="Game\Program.cs" />
-    <Compile Remove="Inventory.cs" />
     <Compile Remove="Items\ContentBase.cs" />
     <Compile Remove="Items\RoomEntryImpl.cs" />
     <Compile Remove="Items\RoomItem.cs" />

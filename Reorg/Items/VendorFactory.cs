@@ -3,25 +3,48 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace WizardCastle {
-    interface IVendor : IContent, IAbilities {
-
+    interface IVendor : IItem, IContent, IAbilitiesMutable, ICanAttack {
+        public bool Mad { get; }
     }
 
     static class VendorFactory {
 
         public static IContent Create() => new Vendor();
-        
+
         private static int RndAttr() => Util.RandInt(Game.MaxAttrib) + 1;
 
         private class Vendor : Mob, IVendor {
-            public bool mad = true;
-            public List<IItem> Inventory { get; } = new List<IItem>();
             public Race Race { get; }
+            // private static readonly Abilities Mods => new Abilities();
+
+            protected override Abilities Mods => new Abilities();
+
             public Vendor() : base("Vendor", RndAttr(), RndAttr(), RndAttr()) {
                 Race = Util.RandPick(WizardCastle.Race.All);
             }
 
-            public void OnEntry(State state) => Game.DefaultItemMessage(this);
+            public override void OnEntry(State state) {
+                if (Mad) {
+                    Util.WriteLine($"\n{Util.RandPick(MadMessages.Value)(this)}\n");
+                    Battle(state);
+                } else {
+                    Game.DefaultItemMessage(this);
+                }
+
+            }
+
+            public override void InitiateAttack(State state) {
+                // GameCollections.AllVendorMad = true;
+                var allVendors = state.Map
+                    .Search((cell, pos) => !cell.IsEmpty && cell.Contents is Vendor)
+                    .Select(x => x.cell.Contents)
+                    .Cast<Vendor>();
+                foreach (var x in allVendors) {
+                    x.Mad = true;
+                }
+                Util.WriteLine($"\n{Util.RandPick(MadMessages.Value)(this)}\n");
+                Battle(state);
+            }
 
             public void Trade(State state) {
                 var (player, _) = state;
@@ -51,7 +74,7 @@ namespace WizardCastle {
                     if ((player.Gold > Weapon.Dagger.Cost()) && (player.Weapon != Weapon.Sword)) {
                         Game.AddPlayerWeapon(state.Player);
                     }
-                    if ((player.Gold > VendorItem.Lamp.Cost()) && (!player.HasItem(VendorItem.Lamp))) {
+                    if ((player.Gold > Misc.Lamp.Cost()) && (!player.HasItem(Misc.Lamp))) {
                         Game.AddPlayerLamp(state.Player);
                     }
                     if (player.Gold > 999) {
@@ -73,31 +96,10 @@ namespace WizardCastle {
                     }
                 }
             }
+
+            protected override bool CheckWeaponBreak() => throw new NotImplementedException();
         }
 
     }
-
-
-
-
-
-
-    /*
-     * static class MonsterFactory {
-    public static string VendorMadMessage(Vendor vendor) {
-        List<string> messageList = new List<string>
-        {
-            $"The {vendor.race} sees you, snarls and lunges towards you!",
-            $"The {vendor.race} looks angrily at you moves in your direction!",
-            $"The {vendor.race} stops what it's doing and focuses its attention on you!",
-            $"The {vendor.race} looks at you agitatedly!",
-            $"The {vendor.race} says, you've come seeking treasure and instead have found death!",
-            $"The {vendor.race} growls and prepares for battle!",
-            $"The {vendor.race} says, you will be a small meal for a me!",
-            $"The {vendor.race} says, welcome to your death pitiful!"
-        };
-        return messageList[new Random().Next(0, messageList.Count)];
-    }
-    */
 }
-}
+

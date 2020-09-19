@@ -29,12 +29,12 @@ namespace WizardCastle {
 
         public static Spell[] All => all.ToArray();
 
-        private readonly Action<State, IMonster> cast;
+        private readonly Action<State, Mob> cast;
 
-        private Spell(string name, Action<State, IMonster> cast) : base(name) {
+        private Spell(string name, Action<State, Mob> cast) : base(name) {
             this.cast = cast;
         }
-        public void Cast(State state, IMonster mob) => cast(state, mob);
+        public void Cast(State state, Mob mob) => cast(state, mob);
 
 
     }

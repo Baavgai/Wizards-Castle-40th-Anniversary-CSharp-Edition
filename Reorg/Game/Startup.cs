@@ -77,7 +77,7 @@ namespace WizardCastle {
             (var player, _) = state;
             Util.ClearScreen();
             Util.WriteLine("**** YOU EXITED THE CASTLE! ****");
-            Util.WriteLine($"\n\tYou were in the castle for {player.Turn}.");
+            Util.WriteLine($"\n\tYou were in the castle for {state.Turn}.");
             Util.WriteLine("\n\tWhen you exited, you had:");
             if (player.HasItem(Zot.Instance)) {
                 Util.Write("\n\t");

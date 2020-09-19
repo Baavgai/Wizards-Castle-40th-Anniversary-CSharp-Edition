@@ -28,7 +28,7 @@ namespace WizardCastle {
                 return $"there's {randomGold} Gold Pieces inside.";
             },
             s => {
-                Util.RandPick(Direction.AllDirections).Exec(s);
+                Util.RandPick(Direction.All).Exec(s);
                 return "Gas! You stagger from the room!";
             },
             s => {

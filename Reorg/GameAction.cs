@@ -83,7 +83,9 @@ namespace WizardCastle {
         public static readonly GameAction West = Create('W', "West", @"(W)EST moves you to the room west of your present position (In all cases the west edge wraps to the east edge).",
             Direction.West.Exec);
 
-        public static readonly GameAction Gaze = Create('G', "Gaze into crystal orb", "(G)AZE causes you to gaze into a crystal orb and see things."
+        public static readonly GameAction Gaze = Create('G', "Gaze into crystal orb", "(G)AZE causes you to gaze into a crystal orb and see things.",
+            state => (state.CurrentCell.Contents as Orb).Gaze(state),
+            s => s.CurrentCell.Contents is Orb
             );
 
         public static readonly GameAction Flare = Create('F', "Light a flare", "(F)LARE causes one of your flares to be lit, revealing the contents of all the rooms around your current position.",
@@ -103,19 +105,9 @@ namespace WizardCastle {
                 if (state.Player.IsBlind) {
                     Util.WriteLine($"You're BLIND and can't see anything, silly {state.Player.Race}.");
                 } else {
-                    var choice = Util.Menu("Shine lamp which direction", Direction.AllDirections);
-                    Game.RevealMapCell()
-                        Map.RevealRoom(choice[1], player.location, theMap, ref knownMap);
-                        Map.DisplayLevel(knownMap, player);
-                    } else {
-                        Console.WriteLine($"You're BLIND and can't see anything, silly {player.race}.");
-                        SharedMethods.WaitForKey();
-                    }
-                } else {
-                    Console.WriteLine("\n{0}\n", ManipulateListObjects.ReplaceRandomMonster(GameCollections.ErrorMesssages)[new Random().Next(0, GameCollections.ErrorMesssages.Count)]);
+                    var choice = Util.Menu("Shine lamp which direction", Direction.All).Item2;
+                    Game.RevealMapCell(state, choice.Translate(state.Map, state.Player.Location));
                 }
-                SharedMethods.WaitForKey();
-
             }, s => s.Player.HasLamp
             );
 
@@ -123,21 +115,18 @@ namespace WizardCastle {
                 s => s.Done = true);
 
 
-        public static readonly GameAction Attack = Create('A', "Attack monster or vendor", "(A)TTACK monster or vendor."
+        public static readonly GameAction Attack = Create('A', "Attack monster or vendor", "(A)TTACK monster or vendor.",
+            state => (state.CurrentCell.Contents as Mob).InitiateAttack(state),
+            s => s.CurrentCell.Contents is Mob
             );
 
-        public static readonly GameAction Retreat = Create('R', "Retreat from battle", "(R)ETREAT from battle."
-            );
+        // won't happen from main menu
+        // public static readonly GameAction Retreat = Create('R', "Retreat from battle", "(R)ETREAT from battle.");
+        // public static readonly GameAction Bribe = Create('B', "Bribe monster or vendor", "(B)RIBE a monster or a angry vendor.");
 
-        public static readonly GameAction Bribe = Create('B', "Bribe monster or vendor", "(B)RIBE a monster or a angry vendor."
-            );
+        public static readonly GameAction ViewInstructions = Create('V', "View Instructions", action: _ => Game.ShowInstructions());
 
-
-        public static readonly GameAction ViewInstructions = Create('V', "View Instructions",
-            action: _ => Game.ShowInstructions());
-
-        public static readonly GameAction Trade = Create('Z', "Trade with Vendor"
-            );
+        // public static readonly GameAction Trade = Create('Z', "Trade with Vendor");
 
 
 

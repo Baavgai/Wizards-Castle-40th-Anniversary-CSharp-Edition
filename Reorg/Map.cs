@@ -54,6 +54,8 @@ namespace WizardCastle {
                 }
             }
         }
+        public IEnumerable<(Cell cell, MapPos pos)> AllCellPos() =>
+            AllPos().Select(p => (this[p], p));
 
         public bool ValidPos(MapPos p) =>
             p != null && p.Level >= 0 && p.Level < Levels && p.Row >= 0 && p.Row < Rows && p.Col >= 0 && p.Col < Cols;
@@ -69,6 +71,27 @@ namespace WizardCastle {
 
         public void Traverse(Action<Map, MapPos> action) =>
             Traverse(action, AllPos());
+
+
+        public MapPos RandPos() => new MapPos() {
+            Level = Util.RandInt(Levels),
+            Row = Util.RandInt(Rows),
+            Col = Util.RandInt(Cols),
+        };
+
+        public MapPos RandPos(Func<MapPos, bool> good) {
+            var x = RandPos();
+            while (!good(x)) { x = RandPos(); }
+            return x;
+        }
+        public MapPos RandEmptyPos() => RandPos(p => this[p].IsEmpty);
+
+        public IEnumerable<(Cell cell, MapPos pos)> Search(Func<Map.Cell, MapPos, bool> pred) =>
+           AllCellPos().Where(x => pred(x.cell, x.pos));
+
+
+        public IEnumerable<(Cell cell, MapPos pos)> Search(IItem item) =>
+            Search((cell, _) => cell.Contents == item);
 
     }
 }
