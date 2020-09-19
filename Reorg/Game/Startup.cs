@@ -91,7 +91,7 @@ namespace WizardCastle {
             Util.WriteLine($"\nYou had a {player.Weapon?.ToString() ?? "weaponless hand" }.");
             Util.WriteLine($"\nYou had {player.Gold} Gold Pieces and {player.Flares} flares.");
             // if (player.Lamp == true) {                Console.WriteLine("\nYou had a lamp.");            }
-            if (player.HasItem(Treasure.RuneStaff)) {
+            if (player.HasItem(RuneStaff.Instance)) {
                 Util.WriteLine("\nYou had the RuneStaff.");
             }
             // if (player.treasures.Count > 0) {                Console.WriteLine($"\nYou also had the following treasures: {string.Join(", ", player.treasures)}");            }

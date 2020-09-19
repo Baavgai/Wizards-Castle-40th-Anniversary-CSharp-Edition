@@ -10,9 +10,9 @@ namespace WizardCastle {
         public int WebbedTurns { get; set; } = 0;
         public bool Mad { get; protected set; } = true;
 
-        public List<IItem> Inventory { get; } = new List<IItem>();
+        public List<IInventoryItem> Inventory { get; } = new List<IInventoryItem>();
 
-        protected List<IItem> inventory = new List<IItem>();
+        protected List<IInventoryItem> inventory = new List<IInventoryItem>();
 
         public Mob(string name, int dexterity, int intelligence, int strength) : base(dexterity, intelligence, strength) {
             Name = name;
@@ -41,11 +41,11 @@ namespace WizardCastle {
             });
 
 
-        protected virtual IEnumerable<SimplGameAction> PlayerChoices(State state, bool firstAttackRound) {
-            yield return new SimplGameAction("Attack", Attack);
-            yield return new SimplGameAction("Retreat", Retreat);
-            if (firstAttackRound) { yield return new SimplGameAction("Bribe", Bribe); }
-            if (state.Player.Intelligence > 14) { yield return new SimplGameAction("Cast", Cast); }
+        protected virtual IEnumerable<GameAction> PlayerChoices(State state, bool firstAttackRound) {
+            yield return new GameAction("Attack", Attack);
+            yield return new GameAction("Retreat", Retreat);
+            if (firstAttackRound) { yield return new GameAction("Bribe", Bribe); }
+            if (state.Player.Intelligence > 14) { yield return new GameAction("Cast", Cast); }
         }
 
         protected virtual void OnDeath(State state) {
@@ -54,11 +54,7 @@ namespace WizardCastle {
             Util.WriteLine($"You get his hoard of {gold} Gold Pieces");
             state.Player.Gold += gold;
             foreach (var item in inventory) {
-                Util.WriteLine($"You've recoverd the {item}");
-                if (item == Treasure.RuneStaff) {
-                    Util.WriteLine("You've found the RuneStaff!");
-                }
-                state.Player.Add(item);
+                item.OnFound(state);
             }
             state.CurrentCell.Clear();
         }
@@ -69,7 +65,6 @@ namespace WizardCastle {
             Intelligence = ma.Intelligence;
             Strength = ma.Strength;
         }
-
 
         public virtual void InitiateAttack(State state) {
             Mad = true;
@@ -180,8 +175,5 @@ namespace WizardCastle {
             }
         }
 
-
     }
-
 }
-

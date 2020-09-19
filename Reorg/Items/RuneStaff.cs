@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class RuneStaff : Item, IHasExec {
+    class RuneStaff : Item, IHasExec, IInventoryItem {
         public static readonly RuneStaff Instance = new RuneStaff();
         // public static readonly Treasure RuneStaff = all.Register(new Treasure("Rune Staff",    "gives te power of teleporation", _ => { }));
 
@@ -23,5 +23,11 @@ namespace WizardCastle {
             Util.WriteLine($"\n\tTeleporting to: {location}");
             Util.Sleep();
         }
-    }
+
+        public void OnFound(State state) {
+            Game.DefaultOnFoundMessage(this);
+            Util.WriteLine("You've found the RuneStaff!");
+            state.Player.Add(this);
+        }
+}
 }

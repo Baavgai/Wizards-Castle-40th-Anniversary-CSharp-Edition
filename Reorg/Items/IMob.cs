@@ -2,7 +2,7 @@
 
 namespace WizardCastle {
     interface IMob : IAbilitiesMutable, IContent {
-        List<IItem> Inventory { get; }
+        List<IInventoryItem> Inventory { get; }
         bool IsDead { get; }
         bool Mad { get; }
         int WebbedTurns { get; set; }

@@ -64,10 +64,11 @@ namespace WizardCastle {
                 .Where(p => map[p].Contents != null && map[p].Contents is IMonster)
                 .Select(p => map[p].Contents)
                 .OrderBy(_ => Util.RandInt(1000))
-                .Take(Treasure.All.Length)
+                .Take(Treasure.All.Length + 1)
                 .Cast<IMonster>()
                 .ToList();
-            for (int i = 0; i < Treasure.All.Length; i++) {
+            richMonsters[0].Inventory.Add(RuneStaff.Instance);
+            for (int i = 1; i < richMonsters.Count; i++) {
                 richMonsters[i].Inventory.Add(Treasure.All[i]);
             }
 

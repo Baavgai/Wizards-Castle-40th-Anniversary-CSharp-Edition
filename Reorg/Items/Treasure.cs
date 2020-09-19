@@ -4,7 +4,7 @@ using System.Linq;
 
 
 namespace WizardCastle {
-    class Treasure : Item, IHasOnEntry, IHasExec {
+    class Treasure : Item, IHasOnEntry, IHasExec, IInventoryItem {
         private readonly static List<Treasure> all = new List<Treasure>();
         public static Treasure[] All => all.ToArray();
         public static readonly Treasure BlueFlame = all.Register(new Treasure("The Blue Flame",
@@ -54,6 +54,10 @@ namespace WizardCastle {
             this.update = update;
         }
         public string Description { get; }
+        public void OnFound(State state) => Game.DefaultOnFound(state, this);
+            
+        
+
 
         public void OnEntry(State state) {
             // Game.DefaultItemMessage(this);

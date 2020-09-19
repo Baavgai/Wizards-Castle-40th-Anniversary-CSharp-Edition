@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WizardCastle {
     // public interface ICurse : IItem, IHasExec { }
-    class Curse : Item, IHasExec {
+    class Curse : Item, IHasExec, IInventoryItem {
         private readonly static List<Curse> all = new List<Curse>();
         public static readonly Curse Blind = all.Register(new Curse("Blind"));
         public static readonly Curse BookStuck = all.Register(new Curse("Book-Stuck-To-Hands"));
@@ -26,5 +26,9 @@ namespace WizardCastle {
             this.exec = exec;
         }
         public void Exec(State state) => exec?.Invoke(state);
+        public void OnFound(State state) {
+            Util.WriteLine($"You are cursed with {Name}!");
+            state.Player.Add(this);
+        }
     }
 }

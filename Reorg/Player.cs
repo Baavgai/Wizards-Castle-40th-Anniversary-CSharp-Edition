@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace WizardCastle {
     class Player : IAbilitiesMutable {
-        private readonly List<IItem> inventory = new List<IItem>();
-        public IItem[] Inventory => inventory.ToArray();
-        public void Add(IItem item) => inventory.Add(item);
-        public void Remove(IItem item) => inventory.Remove(item);
-        public bool HasItem(IItem item) => Inventory.Any(x => x == item);
+        private readonly List<IInventoryItem> inventory = new List<IInventoryItem>();
+        public IInventoryItem[] Inventory => inventory.ToArray();
+        public void Add(IInventoryItem item) => inventory.Add(item);
+        public void Remove(IInventoryItem item) => inventory.Remove(item);
+        public bool HasItem(IInventoryItem item) => Inventory.Any(x => x == item);
 
         public string Name => "Player";
 
@@ -50,8 +50,5 @@ namespace WizardCastle {
             get => strength;
             set { strength = MaxCap(strength + value); }
         }
-
-
-
     }
 }

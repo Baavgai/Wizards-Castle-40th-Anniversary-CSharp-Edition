@@ -105,6 +105,7 @@ namespace WizardCastle {
             this.action = action;
             this.isAvailable = s => isAvailable == null ? true : isAvailable(s);
         }
+        public GameAction(string name, Action<State> action, Func<State, bool> isAvailable = null) : this(name[0], name, action, isAvailable) { }
         public char Cmd { get; }
         public string Name { get; }
         public void Exec(State state) {

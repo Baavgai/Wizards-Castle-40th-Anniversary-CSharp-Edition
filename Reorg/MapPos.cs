@@ -9,7 +9,6 @@ namespace WizardCastle {
         public int Level { get; set; }
         public int Row { get; set; }
         public int Col { get; set; }
-        // public MapPos() => (Level, Row, Col) = (0, 0, 0);
         public MapPos(int level = 0, int row = 0, int col = 0) => (Level, Row, Col) = (level, row, col);
         public MapPos(MapPos pos) : this(pos.Level, pos.Row, pos.Col) { }
 
@@ -58,10 +57,5 @@ namespace WizardCastle {
             }
             return null;
         }
-
-
-        
-        // public static readonly MapPos Void = new MapPos(-1, -1, -1);
-        // public static readonly MapPos PlayerInventory = new MapPos(-2, -1, -1);
     }
 }

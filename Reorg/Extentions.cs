@@ -8,10 +8,6 @@ namespace WizardCastle {
             xs.Add(x);
             return x;
         }
-        public static void Register<T>(this List<T> xs, List<T> ys) {
-            xs.AddRange(ys);
-        }
-        // public static bool HasItem(this List<object> xs, object item) => xs.Any(x => x == item);
-        // public static bool HasItem(this List<IItem> xs, IItem item) => xs.Any(x => x == item);
+        // public static void Register<T>(this List<T> xs, List<T> ys) {            xs.AddRange(ys);        }
     }
 }

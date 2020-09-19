@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Lamp : VendorItem, IHasExec {
+    class Lamp : VendorItem, IHasExec, IInventoryItem {
         public static readonly Lamp Instance = new Lamp();
 
         private Lamp() : base("Lamp", 20, 1000) { }
@@ -14,6 +14,7 @@ namespace WizardCastle {
                 Game.RevealMapCell(state, choice.Translate(state.Map, state.Player.Location));
             }
         }
+        public void OnFound(State state) => Game.DefaultOnFound(state, this);
 
     }
 }
