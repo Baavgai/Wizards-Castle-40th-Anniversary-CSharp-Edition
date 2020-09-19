@@ -70,7 +70,7 @@ namespace WizardCastle {
         }
 
         public static void AddPlayerLamp(Player player, bool vendor = true) {
-            var item = Misc.Lamp;
+            var item = Lamp.Instance;
             if (player.Gold >= item.Cost(vendor)) {
                 var choice = Util.Menu("Would you like to purchase a lamp", new Dictionary<char, string>
                 {

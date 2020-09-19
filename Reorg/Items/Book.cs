@@ -26,7 +26,7 @@ namespace WizardCastle {
         private static readonly Func<State, string>[] AllHandlers = new Func<State, string>[] {
             s => "it's another volume of Zot's poetry. Yeech!",
             s => $"it's an old copy of play {Game.RandRace()}.",
-            s => $"it's a {Util.RandPick(MonsterFactory.AllMonsters)} cook book.",
+            s => $"it's a {Util.RandPick(MonsterFactory.All)} cook book.",
             s => $"it's a self-improvement book on how to be a better {Game.RandRace()}.",
             s => {
                 s.Player.Dexterity = Game.MaxAttrib;

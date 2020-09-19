@@ -11,9 +11,6 @@ namespace WizardCastle {
             "dissolves books stuck to your hands",
             BasicCurseRemoval(Curse.BookStuck, "The Blue Flame burns the book off your hands!")));
 
-        public static readonly Treasure RuneStaff = all.Register(new Treasure("Rune Staff",
-            "gives te power of teleporation", _ => { }));
-
         public static readonly Treasure GreenGem = all.Register(new Treasure("The Green Gem",
             "wards off the curse of Forgetfulness",
             BasicCurseRemoval(Curse.Forgetfulness, "The Green Gem cures your forgetfulness!")));

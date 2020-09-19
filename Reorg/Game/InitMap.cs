@@ -54,7 +54,7 @@ namespace WizardCastle {
                         map[p].Contents = VendorFactory.Create();
                     } else if (chance < 61) {
                         //46-60: Monster 
-                        map[p].Contents = Util.RandPick(MonsterFactory.AllMonsters).Create();
+                        map[p].Contents = Util.RandPick(MonsterFactory.All).Create();
                     }
                 }
             });

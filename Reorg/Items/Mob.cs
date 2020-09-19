@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace WizardCastle {
     // interface IMob : IAbilitiesMutable, IItem {    }
-     
-    abstract class Mob : Abilities, IAbilitiesMutable, IItem, IContent {
+
+    abstract class Mob : Abilities, IMob {
         public string Name { get; }
         public int WebbedTurns { get; set; } = 0;
         public bool Mad { get; protected set; } = true;
@@ -180,7 +180,7 @@ namespace WizardCastle {
             }
         }
 
-        
+
     }
 
 }

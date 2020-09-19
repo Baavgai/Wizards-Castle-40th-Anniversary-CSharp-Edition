@@ -9,7 +9,7 @@ namespace WizardCastle {
 
         private static void GameLoop(State state) {
             while (!state.Done) {
-                state.Player.Turn += 1;
+                state.Turn += 1;
                 Game.ShowStatus(state);
                 Game.DisplayLevel(state);
                 state.CurrentCell.Contents?.OnEntry(state);

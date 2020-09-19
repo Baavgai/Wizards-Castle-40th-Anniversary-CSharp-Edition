@@ -24,9 +24,9 @@ namespace WizardCastle {
                 _ => "yourself playing The Wizard's Castle.",
                 _ => "your life drifting before your eyes.",
                 _ => $"yourself in {Util.RandPick(new string[] { "fencing", "religion", "language", "alchemy" })} class.",
-                _ => $"a {Util.RandPick(MonsterFactory.AllMonsters)} gazing back at you.",
-                _ => $"a {Util.RandPick(MonsterFactory.AllMonsters)} eating the flesh from your corpse.",
-                _ => $"a {Util.RandPick(MonsterFactory.AllMonsters)} using your leg-bone as a tooth-pick.",
+                _ => $"a {Util.RandPick(MonsterFactory.All)} gazing back at you.",
+                _ => $"a {Util.RandPick(MonsterFactory.All)} eating the flesh from your corpse.",
+                _ => $"a {Util.RandPick(MonsterFactory.All)} using your leg-bone as a tooth-pick.",
                 s => $"yourself drinking from a pool and becomine a {Util.RandPick(Race.All.Where(x => x != s.Player.Race))}.",
         });
     }

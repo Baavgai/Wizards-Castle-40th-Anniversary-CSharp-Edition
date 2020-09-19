@@ -4,9 +4,10 @@ using System.Linq;
 
 namespace WizardCastle {
     // monster must provide an instance of itself, so it can have an inventory, fight, etc.
+    interface IMonster : IMob { }
 
     static class MonsterFactory {
-        public static IContentFactory[] AllMonsters = new IContentFactory[] {
+        public static IFactory<IMonster>[] All = new IFactory<IMonster>[] {
             new MonsterFactoryImpl("Balrog", strength: 5),
             new MonsterFactoryImpl("Bear", strength: 2),
             new MonsterFactoryImpl("Chimera", strength: 4),
@@ -21,7 +22,7 @@ namespace WizardCastle {
             new MonsterFactoryImpl("Wolf", strength: 1)
         };
 
-        private class MonsterFactoryImpl : IContentFactory {
+        private class MonsterFactoryImpl : IFactory<IMonster> {
             private readonly bool weaponBreakChance;
             private readonly Abilities mods;
             public MonsterFactoryImpl(string name, int dexterity = 0, int intelligence = 0, int strength = 0, bool weaponBreakChance = false) {
@@ -33,11 +34,11 @@ namespace WizardCastle {
             }
             public string Name { get; }
             public override string ToString() => Name;
-            public IContent Create() => new MonsterImpl(Name, mods, weaponBreakChance);
+            public IMonster Create() => new MonsterImpl(Name, mods, weaponBreakChance);
 
         }
 
-        private class MonsterImpl : Mob {
+        private class MonsterImpl : Mob, IMonster {
 
             protected override Abilities Mods { get; }
             private readonly bool weaponBreakChance;

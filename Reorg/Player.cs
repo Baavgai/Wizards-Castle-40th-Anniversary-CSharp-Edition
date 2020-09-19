@@ -24,7 +24,7 @@ namespace WizardCastle {
 
 
         public bool IsBlind => HasItem(Curse.Blind);
-        public bool HasLamp => HasItem(Misc.Lamp);
+        public bool HasLamp => HasItem(Lamp.Instance);
 
 
         public GameAction LastAction { get; set; }

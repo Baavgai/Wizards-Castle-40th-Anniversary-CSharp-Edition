@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace WizardCastle {
-    interface IVendor : IItem, IContent, IAbilitiesMutable, ICanAttack {
-        public bool Mad { get; }
-    }
+    interface IVendor : IMob {    }
 
     static class VendorFactory {
 
-        public static IContent Create() => new Vendor();
+        public static IVendor Create() => new Vendor();
 
         private static int RndAttr() => Util.RandInt(Game.MaxAttrib) + 1;
 
@@ -74,7 +72,7 @@ namespace WizardCastle {
                     if ((player.Gold > Weapon.Dagger.Cost()) && (player.Weapon != Weapon.Sword)) {
                         Game.AddPlayerWeapon(state.Player);
                     }
-                    if ((player.Gold > Misc.Lamp.Cost()) && (!player.HasItem(Misc.Lamp))) {
+                    if ((player.Gold > Lamp.Instance.Cost()) && (!player.HasItem(Lamp.Instance))) {
                         Game.AddPlayerLamp(state.Player);
                     }
                     if (player.Gold > 999) {

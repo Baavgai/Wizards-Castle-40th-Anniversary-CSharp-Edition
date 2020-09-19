@@ -4,10 +4,7 @@ using System.Collections.Generic;
 namespace WizardCastle {
 
     interface IContent : IItem, IHasOnEntry { }
-    interface IContentFactory {
-        string Name { get; }
-        IContent Create();
-    }
+    // interface IContentFactory {        string Name { get; }        IContent Create();    }
 
     class Content : Item, IContent {
         private readonly static List<IContent> all = new List<IContent>();
