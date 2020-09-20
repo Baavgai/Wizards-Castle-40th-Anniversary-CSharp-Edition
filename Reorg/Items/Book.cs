@@ -41,7 +41,7 @@ namespace WizardCastle {
                 return "it's a manual of strength!";
             },
             s => {
-                var loc = Util.RandPick(Game.SearchMap(s, Content.Gold));
+                var loc = Util.RandPick(s.Map.Search(Content.Gold)).pos;
                 return $"it's a treasure map leading to a pile of gold at ({loc.Display}).";
             },
             s => {

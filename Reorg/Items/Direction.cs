@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Direction : IItem, IHasExec {
+    class Direction : IHasName, IHasExec {
         private readonly static List<Direction> all = new List<Direction>();
         public static Direction[] All => all.ToArray();
         public static Direction North = all.Register(new Direction("North",

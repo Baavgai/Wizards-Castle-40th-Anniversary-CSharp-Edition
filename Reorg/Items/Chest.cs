@@ -64,7 +64,7 @@ namespace WizardCastle {
             },
 
             s => {
-                var loc = Game.RandMapPos(s);
+                var loc = s.Map.RandPos();
                 Game.RevealMapArea(s, loc);
                 return $"you find a piece of a map revealing the area around {loc.Display}).";
             }

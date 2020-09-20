@@ -59,37 +59,17 @@ namespace WizardCastle {
 
 
 
-        public static MapPos RandMapPos(Map map) => new MapPos() {
-            Level = Util.RandInt(map.Levels),
-            Row = Util.RandInt(map.Rows),
-            Col = Util.RandInt(map.Cols),
-        };
 
-        public static MapPos RandMapPos(Map map, Func<MapPos, bool> good) {
-            var x = RandMapPos(map);
-            while (!good(x)) { x = RandMapPos(map); }
-            return x;
-        }
-        public static MapPos RandEmptyMapPos(Map map) => RandMapPos(map, p => map[p].IsEmpty);
-
-        public static MapPos RandMapPos(State state, Func<MapPos, bool> good = null) =>
-            good == null ? RandMapPos(state.Map) : RandMapPos(state.Map, good);
+        /*
+        public static MapPos RandEmptyMapPos(State state) => state.Map.RandEmptyPos();
 
 
-        public static MapPos RandEmptyMapPos(State state) => RandEmptyMapPos(state.Map);
+        public static IEnumerable<(Map.Cell cell, MapPos pos)> SearchMap(State state, Func<Map.Cell, MapPos, bool> pred) =>
+            state.Map.Search(pred);
 
-        public static IEnumerable<MapPos> SearchMap(Map map, Func<Map.Cell, MapPos, bool> pred) =>
-            map.AllPos().Where(p => pred(map[p], p));
-
-        public static IEnumerable<MapPos> SearchMap(State state, Func<Map.Cell, MapPos, bool> pred) =>
-            SearchMap(state.Map, pred);
-
-        public static IEnumerable<MapPos> SearchMap(Map map, IItem item) =>
-            SearchMap(map, (x,_) => x.Contents == item);
-
-        public static IEnumerable<MapPos> SearchMap(State state, IItem item) =>
-            SearchMap(state.Map, item);
-
+        public static IEnumerable<(Map.Cell cell, MapPos pos)> SearchMap(State state, IHasName item) =>
+            SearchMap(state, item);
+        */
 
     }
 }

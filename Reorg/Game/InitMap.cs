@@ -60,17 +60,10 @@ namespace WizardCastle {
             });
 
             // give all treasures to monsters
-            var richMonsters = map.AllPos()
-                .Where(p => map[p].Contents != null && map[p].Contents is IMonster)
-                .Select(p => map[p].Contents)
-                .OrderBy(_ => Util.RandInt(1000))
-                .Take(Treasure.All.Length + 1)
-                .Cast<IMonster>()
-                .ToList();
-            richMonsters[0].Inventory.Add(RuneStaff.Instance);
-            for (int i = 1; i < richMonsters.Count; i++) {
-                richMonsters[i].Inventory.Add(Treasure.All[i]);
+            foreach(var item in Treasure.All) {
+                map.RandCellPosContent<IMonster>().content.Inventory.Add(item);
             }
+            map.RandCellPosContent<IMonster>().content.Inventory.Add(RuneStaff.Instance);
 
             return map;
 

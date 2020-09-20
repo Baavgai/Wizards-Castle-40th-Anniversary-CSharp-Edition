@@ -23,7 +23,7 @@ namespace WizardCastle {
             return result;
         }
 
-        public static T PurchaseMenu<T>(Player player, string itemType, IEnumerable<T> items, Func<T, int> getCost) where T : class, IItem =>
+        public static T PurchaseMenu<T>(Player player, string itemType, IEnumerable<T> items, Func<T, int> getCost) where T : class, IHasName =>
             Util.Menu($"You have {player.Gold} Gold Pieces to buy items, what type of {itemType} do you want to purchase",
                 items
                 .Select(x => {

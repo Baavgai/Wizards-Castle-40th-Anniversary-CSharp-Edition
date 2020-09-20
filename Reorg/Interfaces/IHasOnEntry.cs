@@ -4,7 +4,7 @@ using System.Linq;
 
 
 namespace WizardCastle {
-    interface IHasOnEntry : IItem {
+    interface IHasOnEntry : IHasName {
         public void OnEntry(State state);
     }
 

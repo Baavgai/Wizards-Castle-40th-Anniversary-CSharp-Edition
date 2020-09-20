@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-
-    interface IContent : IItem, IHasOnEntry { }
-    // interface IContentFactory {        string Name { get; }        IContent Create();    }
-
     class Content : Item, IContent {
         private readonly static List<IContent> all = new List<IContent>();
         public static IContent Book = all.Register(WizardCastle.Book.Instance);
@@ -25,12 +21,14 @@ namespace WizardCastle {
         public static readonly IContent Exit = all.Register(new Content("Entrance/Exit"));
         public static readonly IContent SinkHole = all.Register(new Content("SinkHole",
             state => {
+                Util.WriteLine("You are falling!");
                 state.Player.Location.Level += 1;
                 Util.Sleep();
             }));
         public static readonly IContent Warp = all.Register(new Content("Warp", 
             state => {
-                state.Player.Location = Game.RandMapPos(state);
+                Util.WriteLine("The world swirls chaotically around you.  You have entered some kind of warp!");
+                state.Player.Location = state.Map.RandPos();
                 Util.Sleep();
             }));
 

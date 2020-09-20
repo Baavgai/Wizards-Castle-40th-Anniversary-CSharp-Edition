@@ -12,6 +12,7 @@ namespace WizardCastle {
                 state.Turn += 1;
                 Game.ShowStatus(state);
                 Game.DisplayLevel(state);
+                state.CurrentCell.Known = true;
                 state.CurrentCell.Contents?.OnEntry(state);
                 state.Player.LastAction = Util.Menu("Your action",
                     GameAction.All.Where(x => x.IsAvailable(state)),
@@ -27,8 +28,9 @@ namespace WizardCastle {
         }
 
         static int Main() {
-            GameLoop(Game.Startup());
-            // GameLoop(Game.CreateTestState());
+            Game.StartupSplash();
+            // GameLoop(Game.Startup());
+            GameLoop(Game.CreateTestState());
             Game.GoodBye();
             return 0;
         }

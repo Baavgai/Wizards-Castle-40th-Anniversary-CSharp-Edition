@@ -15,8 +15,8 @@ namespace WizardCastle {
             } else {
                 Util.Write("\n\t\t");
                 Util.Write("YOU'VE FOUND THE ORB OF ZOT", ConsoleColor.DarkGray);
-                Util.Sleep();
                 Util.ResetColors();
+                Util.Sleep();
                 Util.WriteLine();
                 state.Player.Add(this);
                 state.CurrentCell.Clear();

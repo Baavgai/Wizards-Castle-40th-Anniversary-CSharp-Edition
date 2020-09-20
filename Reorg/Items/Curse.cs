@@ -9,7 +9,7 @@ namespace WizardCastle {
         public static readonly Curse BookStuck = all.Register(new Curse("Book-Stuck-To-Hands"));
         public static readonly Curse Forgetfulness = all.Register(new Curse("Forgetfulness", s => {
             Util.WriteLine("You forget something.");
-            Game.HideMapCell(s, Game.RandMapPos(s));
+            Game.HideMapCell(s, s.Map.RandPos());
         }));
         public static readonly Curse Leech = all.Register(new Curse("Leech", s => {
             var x = Util.RandInt(3);

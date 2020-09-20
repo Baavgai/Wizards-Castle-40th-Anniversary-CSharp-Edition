@@ -4,10 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace WizardCastle {
-    interface IItem : IHasName {
-    }
-
-    abstract class Item : IItem {
+    abstract class Item : IHasName {
         public Item(string name) {
             this.Name = name;
         }

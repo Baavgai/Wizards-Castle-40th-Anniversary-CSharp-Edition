@@ -9,7 +9,6 @@ namespace WizardCastle {
         public const ConsoleColor DefaultForegroundColor = ConsoleColor.White;
         public const ConsoleColor DefaultBackgroundColor = ConsoleColor.Black;
 
-
         public static void ResetColors() {
             Console.ForegroundColor = DefaultForegroundColor;
             Console.BackgroundColor = DefaultBackgroundColor;
@@ -17,18 +16,30 @@ namespace WizardCastle {
 
         public static void WriteLine(string s = "") => Console.WriteLine(s);
         public static void Write(string s = "") => Console.Write(s);
-
-        public static void Write(string s, ConsoleColor fgColor = DefaultForegroundColor, ConsoleColor bgColor = DefaultBackgroundColor) {
-            Console.ForegroundColor = fgColor;
-            Console.BackgroundColor = bgColor;
-            Write(s);
+        public static void Write(params string[] xs) {
+            foreach (var x in xs) {
+                Console.Write(x ?? "");
+            }
+        }
+        public static void WriteLine(params string[] xs) {
+            foreach (var x in xs) {
+                Console.WriteLine(x ?? "");
+            }
         }
 
-        public static void WriteLine(string s, ConsoleColor fgColor = DefaultForegroundColor, ConsoleColor bgColor = DefaultBackgroundColor) {
+        public static void UseColor(Action action, ConsoleColor fgColor = DefaultForegroundColor, ConsoleColor bgColor = DefaultBackgroundColor) {
             Console.ForegroundColor = fgColor;
             Console.BackgroundColor = bgColor;
-            WriteLine(s);
+            action();
+            ResetColors();
         }
+
+        public static void Write(string s, ConsoleColor fgColor = DefaultForegroundColor, ConsoleColor bgColor = DefaultBackgroundColor) =>
+            UseColor(() => Write(s), fgColor, bgColor);
+
+
+        public static void WriteLine(string s, ConsoleColor fgColor = DefaultForegroundColor, ConsoleColor bgColor = DefaultBackgroundColor) =>
+            UseColor(() => WriteLine(s), fgColor, bgColor);
 
         public static string ReadLine() => Console.ReadLine();
 
@@ -46,7 +57,7 @@ namespace WizardCastle {
             translate(Console.ReadKey(true));
 
         public static char ReadChar() => ReadChar(ReadCharDefaultTranslate);
-            // Char.ToUpper(Console.ReadKey(true).KeyChar);
+        // Char.ToUpper(Console.ReadKey(true).KeyChar);
 
 
         public static int ReadDigit(string msg = null) {
@@ -122,4 +133,17 @@ namespace WizardCastle {
             } while ((!(regEx.IsMatch(keyPressed.KeyChar.ToString()))) && keyPressed.KeyChar != (char)13);
         }
 
- * */
+        public static void Write(string s, ConsoleColor fgColor = DefaultForegroundColor, ConsoleColor bgColor = DefaultBackgroundColor) {
+            Console.ForegroundColor = fgColor;
+            Console.BackgroundColor = bgColor;
+            Write(s);
+        }
+
+
+        public static void WriteLine(string s, ConsoleColor fgColor = DefaultForegroundColor, ConsoleColor bgColor = DefaultBackgroundColor) {
+            Console.ForegroundColor = fgColor;
+            Console.BackgroundColor = bgColor;
+            WriteLine(s);
+        }
+
+ */

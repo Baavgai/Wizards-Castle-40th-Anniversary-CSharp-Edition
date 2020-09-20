@@ -79,19 +79,38 @@ namespace WizardCastle {
             Col = Util.RandInt(Cols),
         };
 
-        public MapPos RandPos(Func<MapPos, bool> good) {
-            var x = RandPos();
-            while (!good(x)) { x = RandPos(); }
-            return x;
+        
+
+
+
+        public (Cell cell, MapPos pos) RandCellPos(Func<Map.Cell, MapPos, bool> good) =>
+            Util.RandPick(Search(good));
+
+        public (Cell cell, MapPos pos, T content) RandCellPosContent<T>() where T : class {
+            var (cell, pos) = RandCellPos((cell, _) => !cell.IsEmpty && cell.Contents is T);
+            var x = cell.Contents as T;
+            return (cell, pos, x);
         }
-        public MapPos RandEmptyPos() => RandPos(p => this[p].IsEmpty);
+
+        public (Cell cell, MapPos pos) RandEmptyCellPos() =>
+            RandCellPos((cell, _) => cell.IsEmpty);
 
         public IEnumerable<(Cell cell, MapPos pos)> Search(Func<Map.Cell, MapPos, bool> pred) =>
            AllCellPos().Where(x => pred(x.cell, x.pos));
 
-
-        public IEnumerable<(Cell cell, MapPos pos)> Search(IItem item) =>
+        public IEnumerable<(Cell cell, MapPos pos)> Search(IHasName item) =>
             Search((cell, _) => cell.Contents == item);
 
     }
 }
+
+/*
+public MapPos RandEmptyPos() => RandPos(p => this[p].IsEmpty); *         public MapPos RandPos(Func<MapPos, bool> good) {
+            var x = RandPos();
+            while (!good(x)) { x = RandPos(); }
+            return x;
+        }
+
+        public MapPos RandEmptyPos() => RandPos(p => this[p].IsEmpty);
+
+ * */

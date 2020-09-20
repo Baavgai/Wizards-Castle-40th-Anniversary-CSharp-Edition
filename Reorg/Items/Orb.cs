@@ -31,3 +31,17 @@ namespace WizardCastle {
         });
     }
 }
+
+/*
+ *                 $"a pile of gold at ({goldLocation[0] + 1}, {goldLocation[1] + 1}, {goldLocation[2] + 1}).",
+                $"a chest at ({chestLocation[0] + 1}, {chestLocation[1] + 1}, {chestLocation[2] + 1}).",
+                $"a sinkhole at ({sinkHoleLocation[0] + 1}, {sinkHoleLocation[1] + 1}, {sinkHoleLocation[2] + 1}).",
+                $"a warp at ({warpLocation[0] + 1}, {warpLocation[1] + 1}, {warpLocation[2] + 1}).",
+                $"flares at ({flaresLocation[0] + 1}, {flaresLocation[1] + 1}, {flaresLocation[2] + 1}).",
+                $"{randomTreasure} at ({treasureLocation[0] + 1}, {treasureLocation[1] + 1}, {treasureLocation[2] + 1}).",
+                $"{randomMonster} at ({monsterLocation[0] + 1}, {monsterLocation[1] + 1}, {monsterLocation[2] + 1}).",
+                $"{theMap[stairsLocation[0], stairsLocation[1], stairsLocation[2]]} at ({stairsLocation[0] + 1}, {stairsLocation[1] + 1}, {stairsLocation[2] + 1}).",
+                $"a large mug of ale at ({rand.Next(0, theMap.GetLength(0)) + 1}, {rand.Next(0, theMap.GetLength(1)) + 1}, {rand.Next(0, theMap.GetLength(2)) + 1}) and you feel VERY thristy.",
+                $"THE ORB OF ZOT AT ({orbOfZotLocation[0] + 1}, {orbOfZotLocation[1] + 1}, {orbOfZotLocation[2] + 1})!"
+
+ * */

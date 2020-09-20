@@ -8,11 +8,16 @@ namespace WizardCastle {
     internal static partial class Game {
         public static State CreateTestState() {
             var ab = new Abilities() + Race.Elf;
-            return new State(InitMap(new Map(false)), new Player() {
+            var player = new Player() {
                 Race = Race.Elf,
                 Gender = Gender.Female,
-                Dexterity = ab.Dexterity, Intelligence = ab.Intelligence, Strength = ab.Strength
-            });
+                Dexterity = ab.Dexterity, Intelligence = ab.Intelligence, Strength = ab.Strength,
+                Flares = 2,
+                Armor = Armor.ChainMail,
+                Weapon = Weapon.Mace,
+            };
+            player.Add(Lamp.Instance);
+            return new State(InitMap(new Map(false)), player);
         }
 
     }

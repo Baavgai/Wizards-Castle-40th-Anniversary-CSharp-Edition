@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class VendorItem : Item {
+    abstract class VendorItem : Item {
         public int Cost(bool vendor = true) => vendor ? vendorCost : initCost;
         private readonly int vendorCost;
         private readonly int initCost;
