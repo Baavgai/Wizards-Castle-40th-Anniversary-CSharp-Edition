@@ -37,22 +37,22 @@ namespace WizardCastle {
         public static void DisplayLevel(State state) {
             state.Map.Traverse((map, p) => {
                 if (p == state.Player.Location) {
-                    Util.Write(" * ", bgColor: ConsoleColor.DarkMagenta);
+                    state.SetBgColor(ConsoleColor.DarkMagenta).Write(" * ");
                 } else if (!map[p].Known) {
-                    Util.Write(" X ", ConsoleColor.White);
+                    state.SetColor(ConsoleColor.White).Write(" X ");
                 } else {
                     var content = map[p].Contents;
                     // if (map[player.location[0], j, k] == "Zot") {                    roomValue = "W";
                     if (content == null) {
-                        Util.Write(" - ", ConsoleColor.White);
+                        state.SetColor(ConsoleColor.White).Write(" - ");
                     } else if (content is IMonster) {
-                        Util.Write(" M ", ConsoleColor.Red);
+                        state.SetColor(ConsoleColor.White).Write(" M ");
                     } else {
-                        Util.Write($" {content.Name[0]} ");
+                        state.Write($" {content.Name[0]} ");
                     }
                 }
-                Util.ResetColors();
-                if (p.Col == map.Cols - 1) { Util.WriteLine(); }
+                state.ResetColors();
+                if (p.Col == map.Cols - 1) { state.WriteLine(); }
             }, state.Player.Location.Level);
             
         }

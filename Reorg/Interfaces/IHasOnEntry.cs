@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace WizardCastle {
     interface IHasOnEntry : IHasName {
-        public void OnEntry(State state);
+        void OnEntry(State state);
     }
 
 }

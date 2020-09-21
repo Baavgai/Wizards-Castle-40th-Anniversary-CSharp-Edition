@@ -12,7 +12,7 @@ namespace WizardCastle {
         public static readonly IContent Gold = all.Register(new Content("Gold",
             state => {
                 var goldFound = Util.RandInt(1, 1001);
-                Util.WriteLine($"You've found {goldFound} Gold Pieces");
+                state.WriteLine($"You've found {goldFound} Gold Pieces");
                 state.Player.Gold += goldFound;
                 state.CurrentCell.Clear();
             }));
@@ -21,21 +21,21 @@ namespace WizardCastle {
         public static readonly IContent Exit = all.Register(new Content("Entrance/Exit"));
         public static readonly IContent SinkHole = all.Register(new Content("SinkHole",
             state => {
-                Util.WriteLine("You are falling!");
+                state.WriteLine("You are falling!");
                 state.Player.Location.Level += 1;
-                Util.Sleep();
+                state.Sleep();
             }));
         public static readonly IContent Warp = all.Register(new Content("Warp", 
             state => {
-                Util.WriteLine("The world swirls chaotically around you.  You have entered some kind of warp!");
+                state.WriteLine("The world swirls chaotically around you.  You have entered some kind of warp!");
                 state.Player.Location = state.Map.RandPos();
-                Util.Sleep();
+                state.Sleep();
             }));
 
         public static readonly IContent Flares = all.Register(new Content("Flares", 
         state => {
             int flaresFound = Util.RandInt(1, 11);
-            Util.WriteLine($"You've found {flaresFound} flares");
+            state.WriteLine($"You've found {flaresFound} flares");
             state.Player.Flares += flaresFound;
             state.CurrentCell.Clear();
         }));
@@ -47,10 +47,6 @@ namespace WizardCastle {
             all.Add(item);
         }
 
-
-
-
-
         private readonly Action<State> onEntry;
         public Content(string name, Action<State> onEntry = null) : base(name) {
             this.onEntry = onEntry;
@@ -59,10 +55,8 @@ namespace WizardCastle {
             if (onEntry != null) {
                 onEntry(state);
             } else {
-                Game.DefaultItemMessage(this);
+                Game.DefaultItemMessage(state, this);
             }
         }
-
-
     }
 }

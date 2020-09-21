@@ -14,7 +14,7 @@ namespace WizardCastle {
                 Game.DisplayLevel(state);
                 state.CurrentCell.Known = true;
                 state.CurrentCell.Contents?.OnEntry(state);
-                state.Player.LastAction = Util.Menu("Your action",
+                state.Player.LastAction = state.Menu("Your action",
                     GameAction.All.Where(x => x.IsAvailable(state)),
                     (x, _) => x.Cmd).Item2;
                 state.Player.LastAction.Exec(state);
@@ -28,10 +28,11 @@ namespace WizardCastle {
         }
 
         static int Main() {
-            Game.StartupSplash();
+            var view = new ConsoleView();
+            Game.StartupSplash(view);
             // GameLoop(Game.Startup());
-            GameLoop(Game.CreateTestState());
-            Game.GoodBye();
+            GameLoop(Game.CreateTestState(view));
+            Game.GoodBye(view);
             return 0;
         }
     }

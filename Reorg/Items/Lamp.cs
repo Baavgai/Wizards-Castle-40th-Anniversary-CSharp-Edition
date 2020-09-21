@@ -8,9 +8,9 @@ namespace WizardCastle {
         private Lamp() : base("Lamp", 20, 1000) { }
         public void Exec(State state) {
             if (state.Player.IsBlind) {
-                Util.WriteLine($"You're BLIND and can't see anything, silly {state.Player.Race}.");
+                state.WriteLine($"You're BLIND and can't see anything, silly {state.Player.Race}.");
             } else {
-                var choice = Util.Menu("Shine lamp which direction", Direction.All).Item2;
+                var choice = state.Menu("Shine lamp which direction", Direction.All).Item2;
                 Game.RevealMapCell(state, choice.Translate(state.Map, state.Player.Location));
             }
         }

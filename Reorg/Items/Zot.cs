@@ -13,11 +13,12 @@ namespace WizardCastle {
             if (state.Player.LastAction != GameAction.Teleport) {
                 state.Player.LastAction.Exec(state);
             } else {
-                Util.Write("\n\t\t");
-                Util.Write("YOU'VE FOUND THE ORB OF ZOT", ConsoleColor.DarkGray);
-                Util.ResetColors();
-                Util.Sleep();
-                Util.WriteLine();
+                state.WriteNewLine().WriteIndent()
+                    .SetColor(ConsoleColor.DarkGray)
+                    .WriteLine("YOU'VE FOUND THE ORB OF ZOT")
+                    .ResetColors()
+                    .Sleep()
+                    .WriteNewLine();
                 state.Player.Add(this);
                 state.CurrentCell.Clear();
             }

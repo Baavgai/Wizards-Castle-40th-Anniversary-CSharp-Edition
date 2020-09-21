@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace WizardCastle {
     interface IHasOpen {
-        public void Open(State state);
+        void Open(State state);
     }
 
 }

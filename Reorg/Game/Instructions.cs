@@ -132,7 +132,7 @@ namespace WizardCastle {
             "*** END OF INSTRUCTIONS ***"
         };
 
-        public static void ShowInstructions() => Util.WriteLines(InstructionLines);
+        public static void ShowInstructions(IView view) => view.WriteLines(InstructionLines);
 
 
     }

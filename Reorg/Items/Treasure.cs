@@ -37,7 +37,7 @@ namespace WizardCastle {
             state => {
                 if (state.Player.HasItem(curse)) {
                     state.Player.Remove(curse);
-                    Util.WriteLine(message, bgColor: ConsoleColor.DarkGray);
+                    state.SetBgColor(ConsoleColor.DarkGray).WriteLine(message).ResetColors();
                 }
             };
 
@@ -61,7 +61,7 @@ namespace WizardCastle {
 
         public void OnEntry(State state) {
             // Game.DefaultItemMessage(this);
-            Util.WriteLine($"You've found the {Name}, it's yours!");
+            state.WriteLine($"You've found the {Name}, it's yours!");
             state.Player.Add(this);
             state.CurrentCell.Clear();
         }

@@ -9,14 +9,14 @@ namespace WizardCastle {
 
         private Chest() : base("Chest") { }
 
-        public void OnEntry(State state) => Game.DefaultItemMessage(this);
+        public void OnEntry(State state) => Game.DefaultItemMessage(state, this);
 
         public void Open(State state) {
             if (!state.Player.IsBlind) {
                 state.CurrentCell.Clear();
-                Util.WriteLine($"\nYou open the chest and { Util.RandPick(AllHandlers)(state)}");
+                state.WriteLine($"\nYou open the chest and { Util.RandPick(AllHandlers)(state)}");
             } else {
-                Util.WriteLine($"Sorry, {state.Player.Race}, it's not written in Braille!");
+                state.WriteLine($"Sorry, {state.Player.Race}, it's not written in Braille!");
             }
             // Util.WaitForKey();
         }

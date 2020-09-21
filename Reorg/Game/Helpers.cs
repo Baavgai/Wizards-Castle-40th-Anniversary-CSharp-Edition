@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WizardCastle {
     internal static partial class Game {
-        public static void DefaultItemMessage(IHasName item) => Util.WriteLine($"\nHere you find '{item.Name}'");
+        public static void DefaultItemMessage(IView view, IHasName item) =>
+            view.WriteLine($"\nHere you find '{item.Name}'");
 
-        public static void DefaultOnFoundMessage(IInventoryItem item) => Util.WriteLine($"You've recoverd the {item}");
+        public static void DefaultOnFoundMessage(IView view, IInventoryItem item) =>
+            view.WriteLine($"You've recoverd the {item}");
 
         public static void DefaultOnFound(State state, IInventoryItem item) {
-            DefaultOnFoundMessage(item);
+            DefaultOnFoundMessage(state, item);
             state.Player.Add(item);
         }
 

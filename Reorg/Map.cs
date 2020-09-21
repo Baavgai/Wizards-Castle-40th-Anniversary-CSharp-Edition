@@ -79,20 +79,32 @@ namespace WizardCastle {
             Col = Util.RandInt(Cols),
         };
 
-        
 
 
 
-        public (Cell cell, MapPos pos) RandCellPos(Func<Map.Cell, MapPos, bool> good) =>
-            Util.RandPick(Search(good));
 
-        public (Cell cell, MapPos pos, T content) RandCellPosContent<T>() where T : class {
-            var (cell, pos) = RandCellPos((cell, _) => !cell.IsEmpty && cell.Contents is T);
-            var x = cell.Contents as T;
-            return (cell, pos, x);
+        public (Cell cell, MapPos pos)? RandCellPos(Func<Map.Cell, MapPos, bool> good) {
+            var found = Search(good);
+            if (found.Count() != 0) { return Util.RandPick(found); }
+            return null;
         }
 
-        public (Cell cell, MapPos pos) RandEmptyCellPos() =>
+
+        public (Cell cell, MapPos pos)? RandCellPos(IHasName item) =>
+            RandCellPos((cell, _) => cell.Contents == item);
+
+
+        public (Cell cell, MapPos pos, T content)? RandCellPosContent<T>() where T : class {
+            var found = RandCellPos((cell, _) => !cell.IsEmpty && cell.Contents is T);
+            if (found.HasValue) {
+                var (cell, pos) = found.Value;
+                var x = cell.Contents as T;
+                return (cell, pos, x);
+            }
+            return null;
+        }
+
+        public (Cell cell, MapPos pos)? RandEmptyCellPos() =>
             RandCellPos((cell, _) => cell.IsEmpty);
 
         public IEnumerable<(Cell cell, MapPos pos)> Search(Func<Map.Cell, MapPos, bool> pred) =>

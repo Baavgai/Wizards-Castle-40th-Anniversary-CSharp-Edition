@@ -12,21 +12,21 @@ namespace WizardCastle {
             MapPos location = null;
             while (location == null) {
                 // Util.ClearScreen();
-                Util.Write("\nTeleport where (Example: For Level 3, Row 5, Column 2 type: 3,5,2): ");
-                location = MapPos.Parse(Util.ReadLine());
+                state.Write("\nTeleport where (Example: For Level 3, Row 5, Column 2 type: 3,5,2): ");
+                location = MapPos.Parse(state.ReadLine().Result);
                 if (!state.Map.ValidPos(location)) {
-                    Util.WriteLine("* Invalid * Coordinates");
+                    state.WriteLine("* Invalid * Coordinates");
                     location = null;
                 }
             }
             player.Location = location;
-            Util.WriteLine($"\n\tTeleporting to: {location}");
-            Util.Sleep();
+            state.WriteLine($"\n\tTeleporting to: {location}");
+            state.Sleep();
         }
 
         public void OnFound(State state) {
-            Game.DefaultOnFoundMessage(this);
-            Util.WriteLine("You've found the RuneStaff!");
+            Game.DefaultOnFoundMessage(state, this);
+            state.WriteLine("You've found the RuneStaff!");
             state.Player.Add(this);
         }
 }

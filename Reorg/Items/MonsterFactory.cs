@@ -51,12 +51,12 @@ namespace WizardCastle {
 
             public override void OnEntry(State state) {
                 ResetStats(state);
-                Game.DefaultItemMessage(this);
+                Game.DefaultItemMessage(state, this);
                 if (Mad) {
-                    Util.WriteLine($"\n{Util.RandPick(MadMessages.Value)(this)}\n");
+                    state.WriteLine($"\n{Util.RandPick(MadMessages.Value)(this)}\n");
                     Battle(state);
                 } else {
-                    Util.WriteLine($"\nThe {Name} doesn't seem to notice you.\n");
+                    state.WriteLine($"\nThe {Name} doesn't seem to notice you.\n");
                 }
             }
 

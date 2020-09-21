@@ -18,7 +18,10 @@
     <Compile Remove="Items\RoomItem.cs" />
     <Compile Remove="Items\RoomItemImpl.cs" />
     <Compile Remove="SimpleGameAction.cs" />
+    <Compile Remove="Util\Console.cs" />
+    <Compile Remove="Util\Menu.cs" />
     <Compile Remove="Util\Pool.cs" />
+    <Compile Remove="Util\Util.cs" />
   </ItemGroup>
 
 </Project>

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace WizardCastle {
     interface IFactory<T> : IHasName {
-        public T Create();
+        T Create();
     }
 
 }

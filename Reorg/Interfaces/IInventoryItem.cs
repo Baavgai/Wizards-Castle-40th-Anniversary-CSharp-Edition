@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace WizardCastle {
     interface IInventoryItem : IHasName {
-        public void OnFound(State state);
+        void OnFound(State state);
     }
 
 }

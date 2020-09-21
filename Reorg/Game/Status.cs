@@ -6,9 +6,9 @@ namespace WizardCastle {
     internal static partial class Game {
 
         public static void ShowStatus(State state) {
-            // Util.WriteLines(Lines());
+            // state.WriteLines(Lines());
             foreach(var line in Lines()) {
-                Util.WriteLine(line);
+                state.WriteLine(line);
             }
             IEnumerable<string> Lines() {
                 (var player, var map) = state;

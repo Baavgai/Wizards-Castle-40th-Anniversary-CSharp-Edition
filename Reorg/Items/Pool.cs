@@ -9,11 +9,11 @@ namespace WizardCastle {
 
         private Pool() : base("Pool") { }
 
-        public void OnEntry(State state) => Game.DefaultItemMessage(this);
+        public void OnEntry(State state) => Game.DefaultItemMessage(state, this);
 
         public void Drink(State state) {
             var effect = Util.RandPick(Effects.Value);
-            Util.WriteLine($"\nYou drink from the pool and {effect(state.Player)}");
+            state.WriteLine($"\nYou drink from the pool and {effect(state.Player)}");
         }
 
         private static readonly Lazy<List<Func<Player, string>>> Effects = new Lazy<List<Func<Player, string>>>(() =>

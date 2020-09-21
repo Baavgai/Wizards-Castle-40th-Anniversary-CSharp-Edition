@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace WizardCastle {
     internal static partial class Game {
-        public static State CreateTestState() {
+        public static State CreateTestState(IView view) {
             var ab = new Abilities() + Race.Elf;
             var player = new Player() {
                 Race = Race.Elf,
@@ -17,7 +17,7 @@ namespace WizardCastle {
                 Weapon = Weapon.Mace,
             };
             player.Add(Lamp.Instance);
-            return new State(InitMap(new Map(false)), player);
+            return new State(view, InitMap(new Map(false)), player);
         }
 
     }

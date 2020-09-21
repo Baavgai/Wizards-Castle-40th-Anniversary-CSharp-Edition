@@ -23,10 +23,10 @@ namespace WizardCastle {
 
             public override void OnEntry(State state) {
                 if (Mad) {
-                    Util.WriteLine($"\n{Util.RandPick(MadMessages.Value)(this)}\n");
+                    state.WriteLine($"\n{Util.RandPick(MadMessages.Value)(this)}\n");
                     Battle(state);
                 } else {
-                    Game.DefaultItemMessage(this);
+                    Game.DefaultItemMessage(state, this);
                 }
 
             }
@@ -40,7 +40,7 @@ namespace WizardCastle {
                 foreach (var x in allVendors) {
                     x.Mad = true;
                 }
-                Util.WriteLine($"\n{Util.RandPick(MadMessages.Value)(this)}\n");
+                state.WriteLine($"\n{Util.RandPick(MadMessages.Value)(this)}\n");
                 Battle(state);
             }
 
@@ -48,49 +48,49 @@ namespace WizardCastle {
                 var (player, _) = state;
                 var treasures = player.Inventory.Where(x => x is Treasure).ToList();
                 if (treasures.Count < 1 && player.Gold < 1000) {
-                    Console.WriteLine($"Sorry, {player.Race}. You are too poor to trade.");
+                    state.WriteLine($"Sorry, {player.Race}. You are too poor to trade.");
                     // SharedMethods.WaitForKey();
                 } else {
                     if (treasures.Count > 0) {
                         foreach (var item in treasures) {
                             var offerAmount = Util.RandInt(1, 5001);
-                            if (Util.Menu($"Do you want to sell {item} for {offerAmount}", new string[] { "Yes", "No" }).Item1 == 'Y') {
-                                Console.WriteLine($"\nYou have accepted the Vendor's offer for {item}.");
+                            if (state.Menu($"Do you want to sell {item} for {offerAmount}", new string[] { "Yes", "No" }).Item1 == 'Y') {
+                                state.WriteLine($"\nYou have accepted the Vendor's offer for {item}.");
                                 Inventory.Add(item);
                                 player.Remove(item);
                                 player.Gold += offerAmount;
                             }
                         }
                         if (player.Gold < 1000) {
-                            Console.WriteLine($"\nSorry, {player.Race}. You are too poor to trade.");
+                            state.WriteLine($"\nSorry, {player.Race}. You are too poor to trade.");
                             // SharedMethods.WaitForKey();
                         }
                     }
                     if ((player.Gold >= Armor.Leather.Cost()) && (player.Armor != Armor.Plate)) {
-                        Game.AddPlayerArmor(state.Player);
+                        Game.AddPlayerArmor(state, state.Player);
                     }
                     if ((player.Gold > Weapon.Dagger.Cost()) && (player.Weapon != Weapon.Sword)) {
-                        Game.AddPlayerWeapon(state.Player);
+                        Game.AddPlayerWeapon(state, state.Player);
                     }
                     if ((player.Gold > Lamp.Instance.Cost()) && (!player.HasItem(Lamp.Instance))) {
-                        Game.AddPlayerLamp(state.Player);
+                        Game.AddPlayerLamp(state, state.Player);
                     }
                     if (player.Gold > 999) {
-                        AddPlayerPotion(player);
+                        AddPlayerPotion(state);
                     }
                 }
             }
-            private static void AddPlayerPotion(Player player) {
+            private static void AddPlayerPotion(State state) {
                 const int cost = 1000;
-                var done = player.Gold < cost;
+                var done = state.Player.Gold < cost;
                 while (!done) {
-                    var choice = Game.PurchaseMenu(player, "Potion", AbilityItem.All, _ => cost);
+                    var choice = Game.PurchaseMenu(state, state.Player, "Potion", AbilityItem.All, _ => cost);
                     if (choice == null) {
                         done = true;
                     } else {
-                        Util.WriteLine($"\n{choice}={choice.ApplyAmount(player, Util.RandInt(1, 6))}");
-                        player.Gold -= cost;
-                        done = player.Gold < cost;
+                        state.WriteLine($"\n{choice}={choice.ApplyAmount(state.Player, Util.RandInt(1, 6))}");
+                        state.Player.Gold -= cost;
+                        done = state.Player.Gold < cost;
                     }
                 }
             }

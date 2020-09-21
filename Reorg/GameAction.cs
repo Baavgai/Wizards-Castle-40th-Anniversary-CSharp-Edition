@@ -18,7 +18,7 @@ namespace WizardCastle {
             if (state.CurrentCell.Contents is IHasOpen item) {
                 item.Open(state);
             } else {
-                Util.WriteLine($"\n{Game.RandErrorMsg()}\n");
+                state.WriteLine($"\n{Game.RandErrorMsg()}\n");
             }
         }, s => s.CurrentCell.Contents is IHasOpen
             );
@@ -65,12 +65,12 @@ namespace WizardCastle {
         public static readonly GameAction Flare = Create('F', "Light a flare",
                 state => {
                     if (state.Player.IsBlind) {
-                        Util.WriteLine("Lighting a flare won't do you any good since you are BLIND!");
+                        state.WriteLine("Lighting a flare won't do you any good since you are BLIND!");
                     } else {
                         Game.RevealMapArea(state, state.Player.Location);
                         state.Player.Flares -= 1;
                         Game.DisplayLevel(state);
-                        Util.WriteLine("The flare pierces the darkness.");
+                        state.WriteLine("The flare pierces the darkness.");
                     }
                 }, s => s.Player.Flares > 0);
 
@@ -89,7 +89,7 @@ namespace WizardCastle {
         // public static readonly GameAction Retreat = Create('R', "Retreat from battle", "(R)ETREAT from battle.");
         // public static readonly GameAction Bribe = Create('B', "Bribe monster or vendor", "(B)RIBE a monster or a angry vendor.");
 
-        public static readonly GameAction ViewInstructions = Create('V', "View Instructions", action: _ => Game.ShowInstructions());
+        public static readonly GameAction ViewInstructions = Create('V', "View Instructions", action: s => Game.ShowInstructions(s));
 
         // public static readonly GameAction Trade = Create('Z', "Trade with Vendor");
 
@@ -113,7 +113,7 @@ namespace WizardCastle {
                 action(state);
             } else {
                 // Util.WaitForKey($"\n{Game.RandErrorMsg()}\n");
-                Util.WriteLine($"\n{Game.RandErrorMsg()}\n");
+                state.WriteLine($"\n{Game.RandErrorMsg()}\n");
             }
         }
         public bool IsAvailable(State state) => isAvailable(state);
