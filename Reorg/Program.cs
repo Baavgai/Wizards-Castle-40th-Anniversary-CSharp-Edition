@@ -28,7 +28,7 @@ namespace WizardCastle {
         }
 
         static int Main() {
-            var view = new ConsoleView();
+            var view = new ConsoleView(Game.ErrorMessageProvider);
             Game.StartupSplash(view);
             // GameLoop(Game.Startup());
             GameLoop(Game.CreateTestState(view));

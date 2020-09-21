@@ -7,8 +7,14 @@ using System.Threading.Tasks;
 
 namespace WizardCastle {
     class ConsoleView : IView {
+        private readonly Func<string> errorMessageProvider;
+        public ConsoleView(Func<string> errorMessageProvider) => this.errorMessageProvider = errorMessageProvider;
         private const ConsoleColor DefaultForegroundColor = ConsoleColor.White;
         private const ConsoleColor DefaultBackgroundColor = ConsoleColor.Black;
+
+
+
+        public string ErrorMessage() => errorMessageProvider();
 
         public int Width => Console.WindowWidth;
         public int Height => Console.WindowHeight;

@@ -1,10 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace WizardCastle {
     internal static partial class Game {
         private static IEnumerable<string> ReplaceRandomMonster(IEnumerable<string> list) =>
             list.Select(x => x.Replace("//RandomMonster", Util.RandPick(MonsterFactory.All).Name));
+
+
+        public static Func<string> ErrorMessageProvider =>
+            () => Util.RandPick(ReplaceRandomMonster(errorMesssages));
+
 
         private static readonly string[] errorMesssages = new string[] {
             "How very original, now try again.",
@@ -28,8 +34,7 @@ namespace WizardCastle {
 
         public static List<string> ErrorMesssages =>
             ReplaceRandomMonster(errorMesssages).ToList();
-        public static string RandErrorMesssage() =>
-            Util.RandPick(ErrorMesssages);
+        // public static string RandErrorMesssage() =>            Util.RandPick(ErrorMesssages);
 
         private static readonly string[] gameMessages = {
             "You smell a //RandomMonster frying.",

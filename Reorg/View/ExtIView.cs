@@ -8,6 +8,16 @@ using System.Threading.Tasks;
 namespace WizardCastle {
     public static class ExtIView {
 
+        public static IView WriteNewLine(this IView view, int count) {
+            for (; count > 0; count--) { view.WriteNewLine(); }
+            return view;
+        }
+
+        public static IView WriteIndent(this IView view, int count) {
+            for (; count > 0; count--) { view.WriteIndent(); }
+            return view;
+        }
+
         public static IView Sleep(this IView view) {
             for (int i = 0; i < 30; i++) {
                 view.Write(".");
@@ -56,17 +66,19 @@ namespace WizardCastle {
             view.WaitForKey();
         }
 
+        public static bool AskYN(this IView view, string question, string yes = null, string no = null, bool showChoices = false) =>
+            view.Menu(question, new Dictionary<char, string> { { 'Y', yes ?? "Yes" }, { 'N', no ?? "No" } }, showChoices).Item1 == 'Y';
 
-        public static Tuple<char, string> Menu(this IView view, string question, IEnumerable<string> choices, bool showChoices = false, Func<ConsoleKeyInfo, char> translate = null) =>
-            view.Menu(question, choices, (x, _) => x[0], showChoices, translate);
+        public static Tuple<char, string> Menu(this IView view, string question, IEnumerable<string> choices, bool showChoices = false) =>
+            view.Menu(question, choices, (x, _) => x[0], showChoices);
 
-        public static Tuple<char, T> Menu<T>(this IView view, string question, IEnumerable<T> choices, bool showChoices = false, Func<ConsoleKeyInfo, char> translate = null) where T : IHasName =>
-            view.Menu(question, choices, (x, _) => x.Name[0], showChoices, translate);
+        public static Tuple<char, T> Menu<T>(this IView view, string question, IEnumerable<T> choices, bool showChoices = false) where T : IHasName =>
+            view.Menu(question, choices, (x, _) => x.Name[0], showChoices);
 
-        public static Tuple<char, T> Menu<T>(this IView view, string question, IEnumerable<T> choices, Func<T, int, char> getKey, bool showChoices = false, Func<ConsoleKeyInfo, char> translate = null) =>
-            view.Menu(question, new Dictionary<char, T>(choices.Select((x, i) => new KeyValuePair<char, T>(getKey(x, i), x))), showChoices, translate);
+        public static Tuple<char, T> Menu<T>(this IView view, string question, IEnumerable<T> choices, Func<T, int, char> getKey, bool showChoices = false) =>
+            view.Menu(question, new Dictionary<char, T>(choices.Select((x, i) => new KeyValuePair<char, T>(getKey(x, i), x))), showChoices);
 
-        public static Tuple<char, T> Menu<T>(this IView view, string question, IDictionary<char, T> choices, bool showChoices = false, Func<ConsoleKeyInfo, char> translate = null) {
+        public static Tuple<char, T> Menu<T>(this IView view, string question, IDictionary<char, T> choices, bool showChoices = false) {
             var lookup = new Dictionary<char, T>(choices.Select(x => new KeyValuePair<char, T>(Char.ToUpper(x.Key), x.Value)));
             if (showChoices) { ShowFullChoices(); } else { ShowPrompt(); }
 
@@ -77,8 +89,7 @@ namespace WizardCastle {
                 if (keyChar == '?') {
                     ShowFullChoices();
                 } else if (!lookup.ContainsKey(keyChar)) {
-                    view.WriteLine();
-                    view.WriteLine(Game.RandErrorMsg());
+                    view.WriteNewLine().WriteLine(view.ErrorMessage());
                     ShowPrompt();
                 } else {
                     view.WriteLine();
@@ -93,14 +104,12 @@ namespace WizardCastle {
                 view.Write($"{question}: ");
             }
             void ShowPrompt() {
-                view.WriteLine();
-                foreach (var item in lookup) {
-                    view.Write($"[{item.Key}], ");
-                }
-                view.Write($"[?]\n{question}: ");
+                var line = string.Join(' ', lookup.Select(x => $"[{x.Key}],"));
+                view.WriteNewLine().WriteLine($"{line} [?]").Write($"{question}: ");
             }
         }
 
 
     }
 }
+//         public static Tuple<char, string> Menu<T>(this IView view, string question, string yes = null, string no = null, bool showChoices = false) =>view.Menu(question, new Dictionary<char, string> { { 'Y', yes ?? "Yes" }, { 'N', no ?? "No" } }, showChoices);

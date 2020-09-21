@@ -10,50 +10,38 @@ namespace WizardCastle {
             // Console.SetWindowPosition(0, 0);
             // Console.WindowHeight = System.Console.LargestWindowHeight - 25;
             // Console.WindowWidth = System.Console.LargestWindowWidth - 50;
-            view.WriteLine($"{view.Width}, {view.Height}");
+            // view.WriteLine($"{view.Width}, {view.Height}");
 
-            Console.Write("\n\t\t\t");
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.Write("Wizard's Castle");
-            Console.Write(" (");
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.Write("40th Anniversary Version");
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.Write(")\n\n\t");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write("Copyright (C) 1980 by ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("Joseph R Power");
-            Console.Write("\n\t");
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write("Last Revised - 04/12/80  11:10 PM");
+            view.WriteNewLine().WriteIndent(6)
+            .SetColor(ConsoleColor.DarkGreen).Write("Wizard's Castle (")
+            .SetColor(ConsoleColor.Magenta).SetBgColor(ConsoleColor.Yellow).Write("40th Anniversary Version")
+            .SetColor(ConsoleColor.DarkGreen).SetBgColor(ConsoleColor.Black).WriteLine(")")
+            .WriteNewLine(2);
 
-            Console.Write("\n\n\t");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write("C# version written by ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("Daniel Kill");
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.Write("\n\t");
-            view.SetColor(ConsoleColor.Gray).WriteLine("Modified: 2020-09-07 by Daniel Kill");
+            AuthorSlug("Copyright (C) 1980 by ", "Joseph R Power", "Last Revised - 04/12/80  11:10 PM");
+            AuthorSlug("C# version written by", "Daniel Kill", "Modified: 2020-09-07 by Daniel Kill");
 
-            view.SetColor(ConsoleColor.DarkYellow).Write("\n\n\tC# modifed version written by ")
-                .SetColor(ConsoleColor.Red).Write("Baavgai");
             var lastModified = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).LastWriteTime;
-            view.SetColor(ConsoleColor.Gray).Write($"\n\tModified: {lastModified:yyyy-MM-dd} by Baavgai\n\n");
+            AuthorSlug("C# modifed version written by", "Baavgai", $"Modified: {lastModified:yyyy-MM-dd} by Baavgai");
             view.WaitForKey();
             view.Clear();
+
+            void AuthorSlug(string copy, string author, string revision) {
+                view
+                    .WriteNewLine()
+                    .SetColor(ConsoleColor.DarkYellow).WriteIndent(2).Write(copy)
+                    .SetColor(ConsoleColor.Red).WriteLine($" {author}")
+                    .SetColor(ConsoleColor.Gray).WriteIndent(2).WriteLine(revision)
+                    .WriteNewLine()
+                    ;
+            }
         }
 
 
         public static State Startup(IView view) {
             StartupSplash(view);
 
-            if (view.Menu("Would you like to view the instructions", new Dictionary<char, string> {
-                {'Y', "View the Instructions"},                {'N', "Start the Game"}
-            }, showChoices: true).Item1 == 'Y') {
+            if (view.AskYN("Would you like to view the instructions", "View the Instructions", "Start the Game", true)) { 
                 ShowInstructions(view);
             }
 
@@ -64,13 +52,13 @@ namespace WizardCastle {
             var state = new State(view, map, InitPlayer(view));
             view.Clear();
 
-            state.WriteLine($"\tOk, {state.Player.Race}, you are now entering Zot's castle!\n");
+            state.WriteIndent().WriteLine($"Ok, {state.Player.Race}, you are now entering Zot's castle!").WriteNewLine();
             return state;
         }
 
         public static void GoodBye(IView view) {
             view.Clear();
-            view.WriteNewLine().WriteIndent().WriteLine("\t\tThank you for playing Wizard's Castle!").ResetColors();
+            view.WriteNewLine().WriteIndent(2).WriteLine("Thank you for playing Wizard's Castle!").ResetColors();
             view.Clear();
         }
 

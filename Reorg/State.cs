@@ -39,6 +39,7 @@ namespace WizardCastle {
         public Task<string> ReadLine(string prompt = "") => View.ReadLine(prompt);
         public Task<char> ReadChar(string prompt = "") => View.ReadChar(prompt);
         public void Clear() => View.Clear();
+        public string ErrorMessage() => View.ErrorMessage();
     }
 
 }

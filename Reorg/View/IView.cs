@@ -10,6 +10,8 @@ namespace WizardCastle {
         int Width { get; }
         int Height { get; }
 
+        string ErrorMessage();
+
         IView WriteIndent();
         IView Write(string s = "");
         IView WriteNewLine();
