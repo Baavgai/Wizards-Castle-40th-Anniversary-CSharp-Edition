@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
 
 namespace WizardCastle {
-    interface IAbilities {
+    public interface IAbilities {
         int Dexterity { get; }
         int Intelligence { get; }
         int Strength { get; }
     }
     
-    interface IAbilitiesMutable : IAbilities {
+    public interface IAbilitiesMutable : IAbilities {
         new int Dexterity { get; set; }
         new int Intelligence { get; set; }
         new int Strength { get; set; }
     }
 
-    class Abilities : IAbilitiesMutable {
+    public class Abilities : IAbilitiesMutable {
         public virtual int Dexterity { get; set; } = 0;
         public virtual int Intelligence { get; set; } = 0;
         public virtual int Strength { get; set; } = 0;

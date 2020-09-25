@@ -3,7 +3,14 @@ using System.Linq;
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    // interface IMob : IAbilitiesMutable, IItem {    }
+    
+
+    public interface IMob : IAbilitiesMutable, ICellContent, IHasInventory, IHasName {
+        bool IsDead { get; }
+        bool Mad { get; }
+        int WebbedTurns { get; set; }
+        void InitiateAttack(State state);
+    }
 
     abstract class Mob : Abilities, IMob {
         public string Name { get; }
@@ -27,6 +34,9 @@ namespace WizardCastle {
 
         protected abstract bool CheckWeaponBreak();
         protected abstract Abilities Mods { get; }
+
+        public char Symbol => 'M';
+
         public abstract void OnEntry(State state);
 
         protected static Lazy<List<Func<Mob, string>>> MadMessages = new Lazy<List<Func<Mob, string>>>(() => new List<Func<Mob, string>>() {

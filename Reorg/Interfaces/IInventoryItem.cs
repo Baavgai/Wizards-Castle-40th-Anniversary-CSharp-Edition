@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace WizardCastle {
-    interface IInventoryItem : IHasName {
+    public interface IInventoryItem : IHasName {
         void OnFound(State state);
     }
 

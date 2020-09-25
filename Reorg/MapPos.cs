@@ -5,7 +5,7 @@ using System.Linq;
 
 
 namespace WizardCastle {
-    class MapPos : IEquatable<MapPos> {
+    public class MapPos : IEquatable<MapPos> {
         public int Level { get; set; }
         public int Row { get; set; }
         public int Col { get; set; }

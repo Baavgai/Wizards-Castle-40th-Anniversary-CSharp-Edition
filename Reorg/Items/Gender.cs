@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Gender : Item {
+    public class Gender : Item {
         public static readonly Gender Male = new Gender("Male");
         public static readonly Gender Female = new Gender("Female");
         // public static readonly Gender Other = new Gender("Other");

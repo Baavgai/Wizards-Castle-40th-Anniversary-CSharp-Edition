@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Zot : Item, IContent, IInventoryItem {
+    class Zot : Item, IZot {
         private static Lazy<Zot> instance = new Lazy<Zot>(() => new Zot());
         public static Zot Instance => instance.Value;
 

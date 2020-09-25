@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WizardCastle {
 
-    class Chest : Item, IHasOpen, IContent {
+    class Chest : Item, IChest {
         private static Lazy<Chest> instance = new Lazy<Chest>(() => new Chest());
         public static Chest Instance => instance.Value;
 

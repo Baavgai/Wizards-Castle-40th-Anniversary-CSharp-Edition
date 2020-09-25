@@ -2,48 +2,48 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Content : Item, IContent {
-        private readonly static List<IContent> all = new List<IContent>();
-        public static IContent Book = all.Register(WizardCastle.Book.Instance);
-        public static IContent Chest = all.Register(WizardCastle.Chest.Instance);
-        public static IContent Orb = all.Register(WizardCastle.Orb.Instance);
-        public static IContent Pool = all.Register(WizardCastle.Pool.Instance);
+    class Content : Item, ICellContent {
+        private readonly static List<ICellContent> all = new List<ICellContent>();
+        public static ICellContent Book = all.Register(WizardCastle.Book.Instance);
+        public static ICellContent Chest = all.Register(WizardCastle.Chest.Instance);
+        public static ICellContent Orb = all.Register(WizardCastle.Orb.Instance);
+        public static ICellContent Pool = all.Register(WizardCastle.Pool.Instance);
 
-        public static readonly IContent Gold = all.Register(new Content("Gold",
-            state => {
-                var goldFound = Util.RandInt(1, 1001);
-                state.WriteLine($"You've found {goldFound} Gold Pieces");
-                state.Player.Gold += goldFound;
-                state.CurrentCell.Clear();
-            }));
-        public static readonly IContent DownStairs = all.Register(new Content("DownStairs"));
-        public static readonly IContent UpStairs = all.Register(new Content("UpStairs"));
-        public static readonly IContent Exit = all.Register(new Content("Entrance/Exit"));
-        public static readonly IContent SinkHole = all.Register(new Content("SinkHole",
+        public static readonly ICellContent DownStairs = all.Register(new Content("DownStairs"));
+        public static readonly ICellContent UpStairs = all.Register(new Content("UpStairs"));
+        public static readonly ICellContent Exit = all.Register(new Content("Entrance/Exit"));
+        public static readonly ICellContent SinkHole = all.Register(new Content("SinkHole",
             state => {
                 state.WriteLine("You are falling!");
                 state.Player.Location.Level += 1;
                 state.Sleep();
             }));
-        public static readonly IContent Warp = all.Register(new Content("Warp", 
+        public static readonly ICellContent Warp = all.Register(new Content("Warp", 
             state => {
                 state.WriteLine("The world swirls chaotically around you.  You have entered some kind of warp!");
                 state.Player.Location = state.Map.RandPos();
                 state.Sleep();
             }));
 
-        public static readonly IContent Flares = all.Register(new Content("Flares", 
+        public static readonly ICellContent Flares = all.Register(new Content("Flares", 
         state => {
             int flaresFound = Util.RandInt(1, 11);
             state.WriteLine($"You've found {flaresFound} flares");
             state.Player.Flares += flaresFound;
-            state.CurrentCell.Clear();
+            // state.CurrentCell.Clear();
         }));
+        public static readonly ICellContent Gold = all.Register(new Content("Gold",
+            state => {
+                var goldFound = Util.RandInt(1, 1001);
+                state.WriteLine($"You've found {goldFound} Gold Pieces");
+                state.Player.Gold += goldFound;
+                // state.CurrentCell.Clear();
+            }));
 
 
-        public static IContent[] All => all.ToArray();
+        public static ICellContent[] All => all.ToArray();
 
-        public static void Register(IContent item) {
+        public static void Register(ICellContent item) {
             all.Add(item);
         }
 

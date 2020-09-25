@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Weapon : Item {
+    class Weapon : Item, IWeapon {
         private readonly static List<Weapon> all = new List<Weapon>();
         public readonly static Weapon Dagger = all.Register(new Weapon("Dagger", 1500, 1));
         public readonly static Weapon Mace = all.Register(new Weapon("Mace", 2000, 2));
@@ -18,6 +18,8 @@ namespace WizardCastle {
             BaseDamage = baseDamage;
         }
         public int CalcDamage() => Util.RandInt(1, 6) + BaseDamage;
+
+        public void OnFound(State state) => state.WriteLine($"You have acquired a {Name}");
 
 
     }

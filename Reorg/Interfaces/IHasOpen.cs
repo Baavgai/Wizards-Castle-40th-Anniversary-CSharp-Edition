@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace WizardCastle {
-    interface IHasOpen {
+    public interface IHasOpen {
         void Open(State state);
     }
 

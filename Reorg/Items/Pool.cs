@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Pool : Item, IContent {
+    class Pool : Item, IPool {
         private static Lazy<Pool> instance = new Lazy<Pool>(() => new Pool());
         public static Pool Instance => instance.Value;
 

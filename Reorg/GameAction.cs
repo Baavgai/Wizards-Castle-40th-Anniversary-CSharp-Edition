@@ -4,7 +4,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace WizardCastle {
-    class GameAction : IHasExec, IHasName {
+    public interface IGameAction : IHasExec, IHasName {
+        char Cmd { get; }
+        bool IsAvailable(State state);
+        // string ToString();
+    }
+
+    public class GameAction : IGameAction {
         private readonly static List<GameAction> all = new List<GameAction>();
         public static GameAction[] All => all.ToArray();
         private static GameAction Create(char cmd, string name, Action<State> action, Func<State, bool> isAvailable = null) =>
@@ -15,31 +21,31 @@ namespace WizardCastle {
 
         public static readonly GameAction Open = Create('O', "Open book or chest",
         state => {
-            if (state.CurrentCell.Contents is IHasOpen item) {
+            if (state.CurrentCell.Content is IHasOpen item) {
                 item.Open(state);
             } else {
                 state.WriteLine($"\n{Game.RandErrorMsg()}\n");
             }
-        }, s => s.CurrentCell.Contents is IHasOpen
+        }, s => s.CurrentCell.Content is IHasOpen
             );
 
         public static readonly GameAction PoolDrink = Create('P', "Drink from pool",
-            state => (state.CurrentCell.Contents as Pool).Drink(state),
-            s => s.CurrentCell.Contents is Pool
+            state => (state.CurrentCell.Content as Pool).Drink(state),
+            s => s.CurrentCell.Content is Pool
             );
 
         public static readonly GameAction Teleport = Create('T', "Use the Runestaff to teleport",
-            state => (state.CurrentCell.Contents as RuneStaff).Exec(state),
+            state => (state.CurrentCell.Content as RuneStaff).Exec(state),
             s => s.Player.HasItem(RuneStaff.Instance));
 
         public static readonly GameAction Up = Create('U', "Up stairs",
                 s => s.Player.Location += new MapPos(level: -1),
-                s => s.CurrentCell.Contents == Content.UpStairs && s.Player.Location.Level > 0
+                s => s.CurrentCell.Content == Content.UpStairs && s.Player.Location.Level > 0
                 );
 
         public static readonly GameAction Down = Create('D', "Down stairs",
                 s => s.Player.Location += new MapPos(level: 1),
-                s => s.CurrentCell.Contents == Content.DownStairs && s.Player.Location.Level < s.Map.Levels - 1
+                s => s.CurrentCell.Content == Content.DownStairs && s.Player.Location.Level < s.Map.Levels - 1
                 );
 
         public static readonly GameAction North = Create('N', "North",
@@ -58,8 +64,8 @@ namespace WizardCastle {
         public static readonly GameAction West = Create('W', "West", Direction.West.Exec);
 
         public static readonly GameAction Gaze = Create('G', "Gaze into crystal orb",
-            state => (state.CurrentCell.Contents as Orb).Gaze(state),
-            s => s.CurrentCell.Contents is Orb
+            state => (state.CurrentCell.Content as Orb).Gaze(state),
+            s => s.CurrentCell.Content is Orb
             );
 
         public static readonly GameAction Flare = Create('F', "Light a flare",
@@ -80,9 +86,9 @@ namespace WizardCastle {
 
         public static readonly GameAction Quit = Create('Q', "Quit the game", s => s.Done = true);
 
-        public static readonly GameAction Attack = Create('A', "Attack monster or vendor", 
-            state => (state.CurrentCell.Contents as Mob).InitiateAttack(state),
-            s => s.CurrentCell.Contents is Mob
+        public static readonly GameAction Attack = Create('A', "Attack monster or vendor",
+            state => (state.CurrentCell.Content as Mob).InitiateAttack(state),
+            s => s.CurrentCell.Content is Mob
             );
 
         // won't happen from main menu

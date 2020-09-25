@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace WizardCastle {
-    class Player : IAbilitiesMutable {
+    public class Player : IAbilitiesMutable {
         private readonly List<IInventoryItem> inventory = new List<IInventoryItem>();
         public IInventoryItem[] Inventory => inventory.ToArray();
         public void Add(IInventoryItem item) => inventory.Add(item);
@@ -17,8 +17,8 @@ namespace WizardCastle {
         private int strength = 0;
 
         public int Flares { get; set; } = 0;
-        public Armor Armor { get; set; } = null;
-        public Weapon Weapon { get; set; } = null;
+        public IArmor Armor { get; set; } = null;
+        public IWeapon Weapon { get; set; } = null;
         public Gender Gender { get; set; } = null;
         public Race Race { get; set; }
 
@@ -27,7 +27,7 @@ namespace WizardCastle {
         public bool HasLamp => HasItem(Lamp.Instance);
 
 
-        public GameAction LastAction { get; set; }
+        public IGameAction LastAction { get; set; }
 
         public int Gold { get; set; } = 60;
 

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-
 
 namespace WizardCastle {
-    interface IHasOnEntry : IHasName {
+    public interface ICellContent {
         void OnEntry(State state);
+        char Symbol { get; }
     }
-
 }

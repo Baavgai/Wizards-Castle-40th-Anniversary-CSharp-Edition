@@ -41,14 +41,14 @@ namespace WizardCastle {
                 } else if (!map[p].Known) {
                     state.SetColor(ConsoleColor.White).Write(" X ");
                 } else {
-                    var content = map[p].Contents;
+                    var content = map[p].Content;
                     // if (map[player.location[0], j, k] == "Zot") {                    roomValue = "W";
                     if (content == null) {
                         state.SetColor(ConsoleColor.White).Write(" - ");
                     } else if (content is IMonster) {
                         state.SetColor(ConsoleColor.White).Write(" M ");
                     } else {
-                        state.Write($" {content.Name[0]} ");
+                        state.Write($" {content.Symbol} ");
                     }
                 }
                 state.ResetColors();

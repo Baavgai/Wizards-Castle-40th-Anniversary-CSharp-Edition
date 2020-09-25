@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Armor : VendorItem {
+    class Armor : VendorItem, IArmor {
         private readonly static List<Armor> all = new List<Armor>();
         public static Armor[] All => all.ToArray();
 
@@ -15,5 +15,6 @@ namespace WizardCastle {
             DamageAbsorb = damageAbsorb;
         }
 
+        public void OnFound(State state) => state.WriteLine($"You have acquired {Name} armor");
     }
 }

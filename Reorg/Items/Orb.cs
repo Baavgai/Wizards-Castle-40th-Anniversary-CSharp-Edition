@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Orb : Item, IContent {
+    class Orb : Item, IOrb {
         private static Lazy<Orb> instance = new Lazy<Orb>(() => new Orb());
         public static Orb Instance => instance.Value;
 

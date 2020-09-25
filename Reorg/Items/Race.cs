@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace WizardCastle {
-    class Race : Item, IAbilities {
+    public class Race : Item, IAbilities {
         private readonly static List<Race> all = new List<Race>();
         public static readonly Race Dwarf = all.Register(new Race("Dwarf", dexterity: 6, intelligence: 8, strength: 10));
         public static readonly Race Elf = all.Register(new Race("Elf", dexterity: 10, intelligence: 8, strength: 6));

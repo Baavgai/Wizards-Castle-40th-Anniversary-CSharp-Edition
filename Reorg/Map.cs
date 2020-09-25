@@ -5,16 +5,25 @@ using System.Collections.Generic;
 
 
 namespace WizardCastle {
-    class Map {
-        public class Cell {
+    public class Map {
+        /*
+        public class Cell : ICell {
             public IContent Contents { get; set; }
             public bool Known { get; set; } = false;
 
             public void Clear() => Contents = null;
             public bool IsEmpty => Contents == null;
         }
+        */
+        private class CellImpl : ICell {
+            public CellImpl(MapPos loc) => Location = loc;
+            public MapPos Location { get; }
+            public ICellContent Content { get; set; }
+            public bool Known { get; set; }
+            public void Clear() => Content = null;
+        }
 
-        private readonly Cell[,,] state;
+        private readonly ICell[,,] state;
         public Map(bool random) {
             if (random) {
                 Levels = Util.RandInt(8, 31);
@@ -23,16 +32,16 @@ namespace WizardCastle {
             } else {
                 Levels = Rows = Cols = 8;
             }
-            state = new Cell[Levels, Rows, Cols];
-            Traverse((_, p) => this[p] = new Cell());
+            state = new ICell[Levels, Rows, Cols];
+            Traverse((_, p) => this[p] = new CellImpl(p));
         }
 
         public int Levels { get; private set; }
         public int Rows { get; private set; }
         public int Cols { get; private set; }
 
-        public Cell this[MapPos p] {
-            get => ValidPos(p) ? state[p.Level, p.Row, p.Col] : new Cell();
+        public ICell this[MapPos p] {
+            get => ValidPos(p) ? state[p.Level, p.Row, p.Col] : new CellImpl(p);
             set {
                 if (ValidPos(p)) {
                     state[p.Level, p.Row, p.Col] = value;
@@ -40,7 +49,7 @@ namespace WizardCastle {
             }
         }
 
-        public Cell this[int level, int row, int col] {
+        public ICell this[int level, int row, int col] {
             get => this[new MapPos(level, row, col)];
             set => this[new MapPos(level, row, col)] = value;
         }
@@ -54,7 +63,7 @@ namespace WizardCastle {
                 }
             }
         }
-        public IEnumerable<(Cell cell, MapPos pos)> AllCellPos() =>
+        public IEnumerable<(ICell cell, MapPos pos)> AllCellPos() =>
             AllPos().Select(p => (this[p], p));
 
         public bool ValidPos(MapPos p) =>
@@ -80,38 +89,35 @@ namespace WizardCastle {
         };
 
 
-
-
-
-        public (Cell cell, MapPos pos)? RandCellPos(Func<Map.Cell, MapPos, bool> good) {
+        public (ICell cell, MapPos pos)? RandCellPos(Func<ICell, MapPos, bool> good) {
             var found = Search(good);
             if (found.Count() != 0) { return Util.RandPick(found); }
             return null;
         }
 
 
-        public (Cell cell, MapPos pos)? RandCellPos(IHasName item) =>
-            RandCellPos((cell, _) => cell.Contents == item);
+        public (ICell cell, MapPos pos)? RandCellPos(IHasName item) =>
+            RandCellPos((cell, _) => cell.Content == item);
 
 
-        public (Cell cell, MapPos pos, T content)? RandCellPosContent<T>() where T : class {
-            var found = RandCellPos((cell, _) => !cell.IsEmpty && cell.Contents is T);
+        public (ICell cell, MapPos pos, T content)? RandCellPosContent<T>() where T : class {
+            var found = RandCellPos((cell, _) => !cell.IsEmpty() && cell.Content is T);
             if (found.HasValue) {
                 var (cell, pos) = found.Value;
-                var x = cell.Contents as T;
+                var x = cell.Content as T;
                 return (cell, pos, x);
             }
             return null;
         }
 
-        public (Cell cell, MapPos pos)? RandEmptyCellPos() =>
-            RandCellPos((cell, _) => cell.IsEmpty);
+        public (ICell cell, MapPos pos)? RandEmptyCellPos() =>
+            RandCellPos((cell, _) => cell.IsEmpty());
 
-        public IEnumerable<(Cell cell, MapPos pos)> Search(Func<Map.Cell, MapPos, bool> pred) =>
+        public IEnumerable<(ICell cell, MapPos pos)> Search(Func<ICell, MapPos, bool> pred) =>
            AllCellPos().Where(x => pred(x.cell, x.pos));
 
-        public IEnumerable<(Cell cell, MapPos pos)> Search(IHasName item) =>
-            Search((cell, _) => cell.Contents == item);
+        public IEnumerable<(ICell cell, MapPos pos)> Search(IHasName item) =>
+            Search((cell, _) => cell.Content == item);
 
     }
 }

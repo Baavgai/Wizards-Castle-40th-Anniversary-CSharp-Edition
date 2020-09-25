@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace WizardCastle {
-    class State : IView {
+    public class State : IView {
         public Player Player { get; }
         public Map Map { get; }
         private IView View { get; }
@@ -18,7 +18,7 @@ namespace WizardCastle {
 
         }
 
-        public Map.Cell CurrentCell => Map[Player.Location];
+        public ICell CurrentCell => Map[Player.Location];
 
         public int Width => View.Width;
 

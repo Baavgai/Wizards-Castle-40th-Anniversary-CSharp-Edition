@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <None Remove="Interfaces\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Actions - Copy.cs" />
     <Compile Remove="Game.cs" />
     <Compile Remove="Game\GameCollections.cs" />

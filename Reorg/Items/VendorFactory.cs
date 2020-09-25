@@ -34,8 +34,8 @@ namespace WizardCastle {
             public override void InitiateAttack(State state) {
                 // GameCollections.AllVendorMad = true;
                 var allVendors = state.Map
-                    .Search((cell, pos) => !cell.IsEmpty && cell.Contents is Vendor)
-                    .Select(x => x.cell.Contents)
+                    .Search((cell, pos) => !cell.IsEmpty() && cell.Content is Vendor)
+                    .Select(x => x.cell.Content)
                     .Cast<Vendor>();
                 foreach (var x in allVendors) {
                     x.Mad = true;

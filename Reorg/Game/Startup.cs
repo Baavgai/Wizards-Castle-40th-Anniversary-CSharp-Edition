@@ -73,7 +73,7 @@ namespace WizardCastle {
                     .WriteLine("*** Congratulations, you made it out alive with the Orb Of Zot ***")
                     .ResetColors();
             } else {
-                state.WriteLine("\n\tYour miserable life");
+                state.WriteNewLine().WriteIndent().WriteLine("Your miserable life");
             }
             state.WriteLine($"\nYou were a {player.Gender} {player.Race}.");
             state.WriteLine($"\nYou wore {player.Armor?.ToString() ?? "no" } armor.");

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace WizardCastle {
 
-    class Book : Item, IHasOpen, IContent {
+    class Book : Item, IBook {
         private static Lazy<Book> instance = new Lazy<Book>(() => new Book());
         public static Book Instance => instance.Value;
 
